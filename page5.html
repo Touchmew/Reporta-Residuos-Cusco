@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil — Reporta Residuos Cusco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/page5.css">
+</head>
+<body>
+
+  <!-- ===== HEADER DE PERFIL ===== -->
+  <header class="profile-header">
+    <div class="profile-header-inner">
+      <div class="profile-top-row">
+        <div>
+          <p class="greeting-text">Bienvenido de vuelta,</p>
+          <h1 class="user-name">Carlos <span>Quispe</span></h1>
+        </div>
+        <button class="settings-btn" onclick="mostrarToast('⚙️ Ajustes próximamente')">⚙️</button>
+      </div>
+
+      <!-- Avatar -->
+      <div class="avatar-row">
+        <div class="avatar">🧑</div>
+        <div class="avatar-info">
+          <div class="avatar-fullname">Carlos Quispe Mamani</div>
+          <div class="avatar-location">📍 Cusco, Perú</div>
+        </div>
+        <div class="eco-rank">🌱 Eco-Activo</div>
+      </div>
+
+      <!-- Mini stats -->
+      <div class="header-stats">
+        <div class="h-stat">
+          <div class="h-stat-val" id="totalReportes">12</div>
+          <div class="h-stat-key">Reportes</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-val" id="resueltos">3</div>
+          <div class="h-stat-key">Resueltos</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-val" id="puntos">🌟 45</div>
+          <div class="h-stat-key">Puntos</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== CUERPO ===== -->
+  <main class="profile-body">
+
+    <!-- Barra de progreso al siguiente nivel -->
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Progreso al rango <strong>Guardián Eco</strong></span>
+        <span id="progressPct">45 / 100 pts</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar" style="width:45%"></div>
+      </div>
+    </div>
+
+    <!-- Mis reportes recientes -->
+    <div>
+      <div class="section-header">
+        <span class="section-title">Mis reportes recientes</span>
+        <span class="see-all" onclick="mostrarToast('Historial completo próximamente')">Ver todos →</span>
+      </div>
+
+      <div id="reportesList">
+        <!-- generado por JS -->
+      </div>
+    </div>
+
+    <!-- Logros -->
+    <div>
+      <div class="section-header">
+        <span class="section-title">Mis logros</span>
+      </div>
+      <div class="achievements-grid" id="logrosGrid">
+        <!-- generado por JS -->
+      </div>
+    </div>
+
+    <!-- Botón cerrar sesión -->
+    <button class="logout-btn" onclick="cerrarSesion()">
+      🚪 Cerrar sesión
+    </button>
+
+  </main>
+
+  <!-- ===== NAV INFERIOR ===== -->
+  <nav class="bottom-nav">
+    <a href="page2.html" class="nav-item" style="text-decoration:none">
+      <span class="nav-icon">🗺️</span>
+      <span class="nav-label">Mapa</span>
+    </a>
+    <a href="page3.html" class="nav-item" style="text-decoration:none">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Reportar</span>
+    </a>
+    <div class="nav-item" onclick="mostrarToast('Historial próximamente')">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Historial</span>
+    </div>
+    <div class="nav-item active">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label" style="color:var(--green)">Perfil</span>
+      <div class="nav-active-dot"></div>
+    </div>
+  </nav>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    // ============================================================
+    // DATOS DEL USUARIO (en producción: vendrían del backend PHP)
+    // ============================================================
+    const usuario = {
+      nombre: 'Carlos Quispe Mamani',
+      puntos: 45,
+      puntosMax: 100,
+      totalReportes: 12,
+      resueltos: 3,
+      rango: 'Eco-Activo',
+    };
+
+    // Reportes recientes del usuario
+    const misReportes = [
+      { nombre: 'Parque Industrial Sur', lugar: 'Av. Industrial 890', nivel: 'red',    estado: 'pending', estadoLabel: 'Pendiente',  zonaId: 4 },
+      { nombre: 'Mercado Los Olivos',    lugar: 'Jr. Comercio 120',   nivel: 'green',  estado: 'done',    estadoLabel: 'Resuelto ✓', zonaId: 1 },
+      { nombre: 'Esquina Bolívar',       lugar: 'Calle Bolívar 45',   nivel: 'purple', estado: 'review',  estadoLabel: 'En revisión', zonaId: 2 },
+    ];
+
+    // Logros
+    const logros = [
+      { icon: '🏅', nombre: 'Primer Reporte', pts: '+5 pts', desbloqueado: true },
+      { icon: '🌱', nombre: 'Eco-Activo',     pts: '+15 pts', desbloqueado: true },
+      { icon: '🔟',  nombre: '10 Reportes',   pts: '+20 pts', desbloqueado: true },
+      { icon: '🦸', nombre: 'Guardián',       pts: '+30 pts', desbloqueado: false },
+      { icon: '⭐', nombre: 'Estrella Eco',   pts: '+25 pts', desbloqueado: false },
+      { icon: '🏆', nombre: 'Héroe Cusco',    pts: '+50 pts', desbloqueado: false },
+    ];
+
+    // ============================================================
+    // RENDERIZAR REPORTES
+    // ============================================================
+    const indClasses = { red: 'ind-red', amber: 'ind-amber', green: 'ind-green', purple: 'ind-purple' };
+    const statusClasses = { pending: 'status-pending', done: 'status-done', review: 'status-review' };
+
+    document.getElementById('reportesList').innerHTML = misReportes.map(r => `
+      <a href="page4.html?id=${r.zonaId}" class="report-card">
+        <div class="report-indicator ${indClasses[r.nivel]}"></div>
+        <div class="report-info">
+          <div class="report-name">${r.nombre}</div>
+          <div class="report-loc">📍 ${r.lugar}</div>
+        </div>
+        <div class="report-status ${statusClasses[r.estado]}">${r.estadoLabel}</div>
+      </a>
+    `).join('');
+
+    // ============================================================
+    // RENDERIZAR LOGROS
+    // ============================================================
+    document.getElementById('logrosGrid').innerHTML = logros.map(l => `
+      <div class="achieve-card ${l.desbloqueado ? '' : 'locked'}">
+        <div class="achieve-icon">${l.icon}</div>
+        <div class="achieve-name">${l.nombre}</div>
+        <div class="achieve-pts">${l.desbloqueado ? l.pts : '🔒 Bloqueado'}</div>
+      </div>
+    `).join('');
+
+    // ============================================================
+    // ANIMAR BARRA DE PROGRESO al cargar
+    // ============================================================
+    window.addEventListener('load', () => {
+      const pct = (usuario.puntos / usuario.puntosMax) * 100;
+      setTimeout(() => {
+        document.getElementById('progressBar').style.width = `${pct}%`;
+      }, 300);
+    });
+
+    // ============================================================
+    // CERRAR SESIÓN
+    // ============================================================
+    function cerrarSesion() {
+      if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+        sessionStorage.clear();
+        window.location.href = 'page1.html';
+      }
+    }
+
+    // ============================================================
+    // TOAST
+    // ============================================================
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2600);
+    }
+  </script>
+</body>
+</html>

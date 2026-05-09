@@ -1,0 +1,278 @@
+/* =====================================================
+   PAGE5.CSS — Perfil Ciudadano
+   ===================================================== */
+
+body {
+  background: var(--navy);
+  padding-bottom: 90px;
+}
+
+/* ---- Header de perfil ---- */
+.profile-header {
+  background: linear-gradient(135deg, #0D2535 0%, #0B1F3A 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 24px 20px 22px;
+}
+
+.profile-header-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.greeting-text { font-size: 0.78rem; color: var(--gray); margin-bottom: 3px; }
+
+.user-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.user-name span { color: var(--green); }
+
+.settings-btn {
+  width: 42px; height: 42px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settings-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* Avatar */
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.avatar {
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(29,185,84,0.3);
+}
+
+.avatar-info { flex: 1; }
+.avatar-fullname { font-size: 0.95rem; font-weight: 600; color: #fff; }
+.avatar-location { font-size: 0.72rem; color: var(--gray); margin-top: 2px; }
+
+.eco-rank {
+  background: linear-gradient(135deg, rgba(29,185,84,0.2), rgba(29,185,84,0.08));
+  border: 1px solid rgba(29,185,84,0.3);
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* Mini stats del header */
+.header-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.h-stat {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.h-stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.h-stat-key {
+  font-size: 0.58rem;
+  color: var(--gray);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Cuerpo ---- */
+.profile-body {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Títulos de sección */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.see-all {
+  font-size: 0.72rem;
+  color: var(--green);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.see-all:hover { opacity: 0.75; }
+
+/* Tarjetas de reporte */
+.report-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+
+.report-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+}
+
+.report-indicator {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ind-red    { background: var(--red);   box-shadow: 0 0 8px rgba(239,68,68,0.5); }
+.ind-amber  { background: var(--amber); box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+.ind-green  { background: var(--green); box-shadow: 0 0 8px rgba(29,185,84,0.5); }
+.ind-purple { background: #818CF8;      box-shadow: 0 0 8px rgba(129,140,248,0.5); }
+
+.report-info { flex: 1; min-width: 0; }
+.report-name { font-size: 0.8rem; font-weight: 600; color: #fff; }
+.report-loc  { font-size: 0.65rem; color: var(--gray); margin-top: 2px; }
+
+.report-status {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+
+.status-pending { background: rgba(245,158,11,0.15); color: #FCD34D; }
+.status-done    { background: rgba(29,185,84,0.15);  color: var(--green); }
+.status-review  { background: rgba(99,102,241,0.15); color: #A5B4FC; }
+
+/* Tarjetas de logro */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.achieve-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.achieve-card:hover { border-color: rgba(29,185,84,0.25); }
+.achieve-card.locked { opacity: 0.4; }
+
+.achieve-icon { font-size: 28px; }
+.achieve-name { font-size: 0.65rem; font-weight: 600; color: #fff; }
+.achieve-pts  { font-size: 0.6rem; color: var(--green); font-weight: 600; }
+
+/* Barra de progreso */
+.progress-section { }
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+.progress-label strong { color: #fff; }
+
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.07);
+  border-radius: 8px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(to right, var(--green-dark), var(--green));
+  transition: width 0.6s ease;
+}
+
+/* Botón cerrar sesión */
+.logout-btn {
+  width: 100%;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 14px;
+  padding: 14px;
+  color: #FDA4AF;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  margin-top: 6px;
+}
+
+.logout-btn:hover {
+  background: rgba(239,68,68,0.14);
+  border-color: rgba(239,68,68,0.35);
+}

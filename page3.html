@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo Reporte — Reporta Residuos Cusco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/page3.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="page-header">
+    <div class="header-inner">
+      <a href="page2.html" class="back-btn">←</a>
+      <div class="header-text">
+        <h1 class="header-title">Nuevo Reporte</h1>
+        <p class="header-sub">Tu reporte llega directo a la municipalidad</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== FORMULARIO ===== -->
+  <form class="form-wrapper" id="reportForm" onsubmit="return false;">
+
+    <!-- GPS Card -->
+    <div class="gps-card">
+      <div class="gps-icon-wrap">📡</div>
+      <div class="gps-info">
+        <div class="gps-status-label" id="gpsStatusLabel">⏳ Esperando GPS...</div>
+        <div class="gps-coords" id="gpsCoords">Obteniendo coordenadas...</div>
+        <div class="gps-address" id="gpsAddress">Activa el GPS para continuar</div>
+      </div>
+      <button type="button" class="gps-refresh-btn" id="gpsBtn" onclick="obtenerGPS()">
+        Obtener
+      </button>
+    </div>
+    <input type="hidden" id="latInput" name="latitud">
+    <input type="hidden" id="lngInput" name="longitud">
+    <input type="hidden" id="addressInput" name="direccion">
+
+    <!-- Tipo de residuo -->
+    <div class="field-section">
+      <label class="field-label">Tipo de residuo</label>
+      <div class="type-grid" id="typeGrid">
+        <div class="type-option selected" data-type="residuos" onclick="seleccionarTipo(this)">
+          <span class="type-emoji">🗑️</span>
+          <div>
+            <div class="type-name">Residuos</div>
+            <div class="type-desc">Basura doméstica</div>
+          </div>
+        </div>
+        <div class="type-option" data-type="industrial" onclick="seleccionarTipo(this)">
+          <span class="type-emoji">🏭</span>
+          <div>
+            <div class="type-name">Industrial</div>
+            <div class="type-desc">Escombros / desmonte</div>
+          </div>
+        </div>
+        <div class="type-option" data-type="toxico" onclick="seleccionarTipo(this)">
+          <span class="type-emoji">☣️</span>
+          <div>
+            <div class="type-name">Tóxico</div>
+            <div class="type-desc">Químicos peligrosos</div>
+          </div>
+        </div>
+        <div class="type-option" data-type="organico" onclick="seleccionarTipo(this)">
+          <span class="type-emoji">🌿</span>
+          <div>
+            <div class="type-name">Orgánico</div>
+            <div class="type-desc">Desechos vegetales</div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="tipoInput" name="tipo" value="residuos">
+    </div>
+
+    <!-- Severidad -->
+    <div class="field-section">
+      <label class="field-label">Nivel de gravedad</label>
+      <div class="severity-row">
+        <button type="button" class="sev-btn sev-low"  data-sev="leve"    onclick="seleccionarSev(this)">🟢 Leve</button>
+        <button type="button" class="sev-btn sev-med"  data-sev="moderado" onclick="seleccionarSev(this)">🟡 Moderado</button>
+        <button type="button" class="sev-btn sev-high active" data-sev="grave" onclick="seleccionarSev(this)">🔴 Grave</button>
+      </div>
+      <input type="hidden" id="sevInput" name="severidad" value="grave">
+    </div>
+
+    <!-- Descripción -->
+    <div class="field-section">
+      <label class="field-label" for="descripcion">Descripción</label>
+      <textarea
+        class="field-textarea"
+        id="descripcion"
+        name="descripcion"
+        placeholder="Describe brevemente el problema: cantidad, tipo de residuos, tiempo acumulado..."
+        rows="4"
+      ></textarea>
+    </div>
+
+    <!-- Nombre del reportante (opcional) -->
+    <div class="field-section">
+      <label class="field-label" for="nombreReportante">Tu nombre (opcional)</label>
+      <input
+        type="text"
+        class="field-input"
+        id="nombreReportante"
+        name="nombre"
+        placeholder="Ej: Carlos Quispe"
+      >
+    </div>
+
+    <!-- Foto -->
+    <div class="field-section">
+      <label class="field-label">Evidencia fotográfica (opcional)</label>
+      <div
+        class="photo-dropzone"
+        id="dropzone"
+        onclick="document.getElementById('fotoInput').click()"
+      >
+        <span class="dropzone-icon">📷</span>
+        <p class="dropzone-text">Toca para agregar foto</p>
+        <p class="dropzone-hint">JPG, PNG · Máx. 10 MB</p>
+      </div>
+      <input
+        type="file"
+        id="fotoInput"
+        name="foto"
+        accept="image/*"
+        capture="environment"
+        class="hidden"
+        onchange="previewFoto(this)"
+      >
+      <img id="photo-preview" alt="Vista previa de la foto">
+    </div>
+
+    <!-- Nota informativa -->
+    <div class="info-note">
+      <span class="info-note-icon">ℹ️</span>
+      <span>
+        Al enviar, se abrirá WhatsApp con toda la información (coordenadas GPS, tipo de residuo, severidad y descripción) dirigido al número oficial de la Municipalidad del Cusco.
+      </span>
+    </div>
+
+    <!-- Botón WhatsApp -->
+    <button type="button" class="btn-whatsapp" id="btnWhatsapp" onclick="enviarReporte()">
+      <span class="wa-icon">💬</span>
+      Enviar reporte a Municipalidad
+    </button>
+
+  </form>
+
+  <!-- ===== NAV INFERIOR ===== -->
+  <nav class="bottom-nav">
+    <a href="page2.html" class="nav-item" style="text-decoration:none">
+      <span class="nav-icon">🗺️</span>
+      <span class="nav-label">Mapa</span>
+    </a>
+    <div class="nav-item active">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label" style="color:var(--green)">Reportar</span>
+      <div class="nav-active-dot"></div>
+    </div>
+    <div class="nav-item" onclick="mostrarToast('Historial próximamente')">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Historial</span>
+    </div>
+    <a href="page5.html" class="nav-item" style="text-decoration:none">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label">Perfil</span>
+    </a>
+  </nav>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    // ============================================================
+    // NÚMERO DE WHATSAPP DE LA MUNICIPALIDAD
+    // Cambia este número por el real: formato internacional sin +
+    // Ejemplo: 51984123456 (Perú = 51)
+    // ============================================================
+    const WA_MUNICIPALIDAD = '51984000000'; // ← CAMBIAR AL NÚMERO REAL
+
+    // ============================================================
+    // GPS
+    // ============================================================
+    let gpsData = { lat: null, lng: null, address: '' };
+
+    function obtenerGPS() {
+      const btn = document.getElementById('gpsBtn');
+      const statusLabel = document.getElementById('gpsStatusLabel');
+
+      if (!navigator.geolocation) {
+        mostrarToast('Tu navegador no soporta GPS');
+        return;
+      }
+
+      btn.textContent = '...';
+      btn.disabled = true;
+      statusLabel.textContent = '⏳ Obteniendo ubicación...';
+
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude, longitude, accuracy } = pos.coords;
+          gpsData.lat = latitude;
+          gpsData.lng = longitude;
+
+          document.getElementById('latInput').value   = latitude;
+          document.getElementById('lngInput').value   = longitude;
+          document.getElementById('gpsCoords').textContent = `${latitude.toFixed(5)}°, ${longitude.toFixed(5)}°`;
+
+          // Intentar geocodificación inversa con Nominatim (OpenStreetMap, gratis)
+          try {
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=es`
+            );
+            const data = await res.json();
+            const addr = data.display_name || 'Cusco, Perú';
+            gpsData.address = addr;
+            document.getElementById('gpsAddress').textContent = addr.substring(0, 55) + (addr.length > 55 ? '...' : '');
+            document.getElementById('addressInput').value = addr;
+          } catch {
+            gpsData.address = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+            document.getElementById('gpsAddress').textContent = 'Cusco, Perú';
+          }
+
+          statusLabel.textContent = '✅ GPS Detectado';
+          statusLabel.style.color = 'var(--green)';
+          btn.textContent = 'Actualizar';
+          btn.disabled = false;
+          mostrarToast(`📍 Ubicación obtenida · precisión ${Math.round(accuracy)}m`);
+        },
+        (err) => {
+          statusLabel.textContent = '❌ Error de GPS';
+          btn.textContent = 'Reintentar';
+          btn.disabled = false;
+          mostrarToast('No se pudo obtener la ubicación. Activa el GPS.');
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    // Obtener GPS automáticamente al cargar
+    window.addEventListener('load', obtenerGPS);
+
+    // ============================================================
+    // TIPO DE RESIDUO
+    // ============================================================
+    function seleccionarTipo(el) {
+      document.querySelectorAll('.type-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('tipoInput').value = el.dataset.type;
+    }
+
+    // ============================================================
+    // SEVERIDAD
+    // ============================================================
+    function seleccionarSev(el) {
+      document.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('sevInput').value = el.dataset.sev;
+    }
+
+    // ============================================================
+    // PREVIEW DE FOTO
+    // ============================================================
+    function previewFoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('photo-preview');
+        img.src = e.target.result;
+        img.style.display = 'block';
+
+        const dz = document.getElementById('dropzone');
+        dz.classList.add('has-file');
+        dz.querySelector('.dropzone-text').textContent = '✅ Foto seleccionada · Toca para cambiar';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ============================================================
+    // ENVIAR REPORTE VÍA WHATSAPP
+    // ============================================================
+    function enviarReporte() {
+      const descripcion = document.getElementById('descripcion').value.trim();
+      const nombre      = document.getElementById('nombreReportante').value.trim() || 'Ciudadano anónimo';
+      const tipo        = document.getElementById('tipoInput').value;
+      const severidad   = document.getElementById('sevInput').value;
+      const lat         = document.getElementById('latInput').value;
+      const lng         = document.getElementById('lngInput').value;
+      const direccion   = document.getElementById('addressInput').value || 'Cusco, Perú';
+
+      // Validaciones básicas
+      if (!lat || !lng) {
+        mostrarToast('⚠️ Primero obtén tu ubicación GPS');
+        return;
+      }
+      if (!descripcion) {
+        mostrarToast('⚠️ Escribe una descripción del problema');
+        document.getElementById('descripcion').focus();
+        return;
+      }
+
+      // Etiquetas legibles
+      const tipoLabel = {
+        residuos: '🗑️ Residuos domésticos',
+        industrial: '🏭 Residuos industriales / desmonte',
+        toxico: '☣️ Residuos tóxicos / peligrosos',
+        organico: '🌿 Residuos orgánicos',
+      }[tipo] || tipo;
+
+      const sevLabel = {
+        leve: '🟢 Leve',
+        moderado: '🟡 Moderado',
+        grave: '🔴 Grave / urgente',
+      }[severidad] || severidad;
+
+      const fecha = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
+      const gmapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+
+      // Mensaje estructurado
+      const mensaje = [
+        '🚨 *REPORTE DE RESIDUOS SÓLIDOS*',
+        '🏛️ App: Reporta Residuos Cusco',
+        '',
+        `👤 *Reportante:* ${nombre}`,
+        `📅 *Fecha/Hora:* ${fecha}`,
+        '',
+        `📍 *Ubicación GPS:*`,
+        `   Lat: ${parseFloat(lat).toFixed(6)}`,
+        `   Lng: ${parseFloat(lng).toFixed(6)}`,
+        `   Dirección: ${direccion}`,
+        `   🗺️ Ver en mapa: ${gmapsUrl}`,
+        '',
+        `♻️ *Tipo de residuo:* ${tipoLabel}`,
+        `⚠️ *Severidad:* ${sevLabel}`,
+        '',
+        `📝 *Descripción:*`,
+        descripcion,
+        '',
+        '─────────────────────',
+        '_Enviado desde la app Reporta Residuos Cusco_',
+      ].join('\n');
+
+      const url = `https://wa.me/${WA_MUNICIPALIDAD}?text=${encodeURIComponent(mensaje)}`;
+
+      // También guardar en el servidor vía PHP (si está disponible)
+      guardarEnServidor({ nombre, tipo, severidad, lat, lng, direccion, descripcion, fecha });
+
+      window.open(url, '_blank');
+      mostrarToast('✅ Abriendo WhatsApp...');
+    }
+
+    // ============================================================
+    // GUARDAR EN SERVIDOR PHP (XAMPP)
+    // ============================================================
+    async function guardarEnServidor(datos) {
+      try {
+        const form = new FormData();
+        Object.entries(datos).forEach(([k, v]) => form.append(k, v));
+
+        // Adjuntar foto si hay
+        const fotoInput = document.getElementById('fotoInput');
+        if (fotoInput.files.length > 0) {
+          form.append('foto', fotoInput.files[0]);
+        }
+
+        const res = await fetch('php/guardar_reporte.php', {
+          method: 'POST',
+          body: form,
+        });
+
+        if (res.ok) {
+          const json = await res.json();
+          console.log('Reporte guardado:', json);
+        }
+      } catch (e) {
+        // Si el servidor no está disponible (ej. modo offline), silencioso
+        console.log('Servidor no disponible, solo se envió por WhatsApp');
+      }
+    }
+
+    // ============================================================
+    // TOAST
+    // ============================================================
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+  </script>
+</body>
+</html>

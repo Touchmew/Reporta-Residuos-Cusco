@@ -1,0 +1,293 @@
+/* =====================================================
+   PAGE4.CSS — Detalle de Zona Contaminada
+   ===================================================== */
+
+body {
+  background: var(--navy);
+  padding-bottom: 80px;
+}
+
+/* ---- Hero (mapa/foto) ---- */
+.zone-hero {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+#mini-map {
+  width: 100%;
+  height: 100%;
+  background: #162235;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(11,31,58,0.3) 0%, rgba(11,31,58,0.92) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 16px 18px;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.back-btn {
+  width: 38px; height: 38px;
+  background: rgba(11,31,58,0.7);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+
+.back-btn:hover { background: rgba(11,31,58,0.9); }
+
+.zone-status-badge {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.status-critical { background: rgba(239,68,68,0.8); color: #fff; }
+.status-moderate { background: rgba(245,158,11,0.8); color: #fff; }
+.status-clean    { background: rgba(29,185,84,0.8);  color: #fff; }
+
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; }
+
+.report-count-pill {
+  background: rgba(11,31,58,0.8);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  color: var(--gray);
+  backdrop-filter: blur(8px);
+}
+
+.report-count-pill strong { color: var(--red); }
+
+/* ---- Cuerpo ---- */
+.zone-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Categoría + fecha */
+.zone-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cat-pill {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.pill-red    { background: rgba(239,68,68,0.15); color: #FDA4AF; }
+.pill-amber  { background: rgba(245,158,11,0.15); color: #FCD34D; }
+
+.zone-date { font-size: 0.7rem; color: var(--gray); }
+
+/* Título y descripción */
+.zone-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.zone-desc {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* Grid de estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+/* Strip de ubicación */
+.location-strip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loc-pin { font-size: 22px; flex-shrink: 0; }
+
+.loc-details { flex: 1; min-width: 0; }
+
+.loc-address {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.loc-coords {
+  font-size: 0.65rem;
+  color: var(--gray);
+  margin-top: 2px;
+  font-family: monospace;
+}
+
+.navigate-btn {
+  background: rgba(59,130,246,0.12);
+  color: #93C5FD;
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.navigate-btn:hover { background: rgba(59,130,246,0.22); }
+
+/* Lista de reportes de otros usuarios */
+.reports-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mini-report-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.mini-avatar {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--navy-light), var(--slate));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.mini-user  { font-size: 0.75rem; font-weight: 600; color: #fff; }
+.mini-time  { font-size: 0.62rem; color: var(--gray); margin-top: 1px; }
+.mini-text  { font-size: 0.72rem; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+
+/* Botones de acción */
+.action-row {
+  display: flex;
+  gap: 10px;
+  position: fixed;
+  bottom: 72px; left: 0; right: 0;
+  padding: 12px 18px;
+  background: linear-gradient(to top, var(--navy) 70%, transparent);
+  z-index: 40;
+}
+
+.btn-share {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 15px;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-share:hover { background: rgba(255,255,255,0.1); }
+
+.btn-report {
+  flex: 2;
+  background: var(--red);
+  border: none;
+  border-radius: 16px;
+  padding: 15px;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 6px 20px rgba(239,68,68,0.35);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-report:hover { box-shadow: 0 10px 28px rgba(239,68,68,0.5); transform: translateY(-1px); }

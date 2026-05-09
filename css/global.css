@@ -1,0 +1,112 @@
+/* =====================================================
+   GLOBAL.CSS — Reporta Residuos Cusco
+   Variables, reset y estilos compartidos entre páginas
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ----- Variables de color ----- */
+:root {
+  --green:        #1DB954;
+  --green-dark:   #14833B;
+  --green-pale:   #D6F5E3;
+  --amber:        #F59E0B;
+  --red:          #EF4444;
+  --navy:         #0B1F3A;
+  --navy-mid:     #162D4E;
+  --navy-light:   #1E3A5F;
+  --slate:        #3A5068;
+  --gray:         #8FA8BF;
+  --white:        #F8FEFB;
+  --whatsapp:     #25D366;
+  --whatsapp-dark:#128C7E;
+}
+
+/* ----- Reset ----- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0B1520;
+  color: var(--white);
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea, select { font-family: inherit; outline: none; }
+img { max-width: 100%; display: block; }
+
+/* ----- Utilidades compartidas ----- */
+.hidden   { display: none !important; }
+.sr-only  { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ----- Navbar inferior compartida ----- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--navy-mid);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  padding: 10px 0 18px;
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-item:hover { opacity: 0.8; }
+
+.nav-icon  { font-size: 22px; }
+.nav-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--gray);
+  letter-spacing: 0.5px;
+}
+
+.nav-item.active .nav-label { color: var(--green); }
+.nav-active-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--green);
+  margin: 0 auto;
+}
+
+/* ----- Toast de notificación ----- */
+#toast {
+  position: fixed;
+  bottom: 90px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy-mid);
+  border: 1px solid rgba(29,185,84,0.3);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
