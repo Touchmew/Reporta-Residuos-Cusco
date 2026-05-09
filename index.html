@@ -26,13 +26,18 @@
       <nav class="max-w-7xl mx-auto flex items-center justify-between">
 
         <!-- Logo -->
-        <a href="index.html" class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-green-500 flex items-center justify-center text-2xl shadow-lg shadow-green-500/30">
+        <a href="index.html" class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-3xl shadow-xl shadow-green-500/30">
             ♻️
           </div>
+
           <div>
-            <h1 class="font-bold text-lg leading-tight">Reporta Residuos</h1>
-            <p class="text-xs text-slate-300">Cusco limpio y sostenible</p>
+            <h1 class="font-extrabold text-2xl md:text-3xl leading-tight tracking-tight">
+              Reporta Residuos Cusco
+            </h1>
+            <p class="text-sm md:text-base text-green-200">
+              Plataforma ciudadana para una ciudad más limpia
+            </p>
           </div>
         </a>
 
@@ -72,18 +77,18 @@
 
           <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-sm text-green-200 mb-6">
             <span>🌱</span>
-            <span>Plataforma ciudadana ambiental</span>
+            <span>Sistema web de reportes ambientales ciudadanos</span>
           </div>
 
           <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            Reporta residuos y ayuda a construir un
-            <span class="text-green-400">Cusco más limpio</span>
+            Reporta residuos, puntos críticos y malas prácticas en
+            <span class="text-green-400">Cusco</span>
           </h2>
 
           <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            Informa zonas con acumulación de residuos sólidos, adjunta evidencia,
-            registra la ubicación y facilita que la municipalidad pueda atender el problema
-            de forma más rápida y organizada.
+            Informa zonas con acumulación de residuos sólidos, vecinos que dejan basura fuera
+            del horario establecido, puntos de contaminación y otros problemas ambientales.
+            Adjunta evidencia, registra la ubicación y ayuda a mejorar la respuesta municipal.
           </p>
 
           <!-- Botones -->
@@ -104,20 +109,20 @@
           </div>
 
           <!-- Estadísticas pequeñas -->
-          <div class="mt-10 grid grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0">
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0">
             <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
-              <p class="text-2xl font-bold text-green-300">GPS</p>
-              <p class="text-xs text-slate-300 mt-1">Ubicación</p>
+              <p class="text-xl font-bold text-green-300">Ubicación</p>
+              <p class="text-xs text-slate-300 mt-1">Registro del punto afectado</p>
             </div>
 
             <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
-              <p class="text-2xl font-bold text-green-300">Foto</p>
-              <p class="text-xs text-slate-300 mt-1">Evidencia</p>
+              <p class="text-xl font-bold text-green-300">Evidencia</p>
+              <p class="text-xs text-slate-300 mt-1">Foto o descripción del problema</p>
             </div>
 
             <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
-              <p class="text-2xl font-bold text-green-300">Web</p>
-              <p class="text-xs text-slate-300 mt-1">Reporte</p>
+              <p class="text-xl font-bold text-green-300">Denuncia</p>
+              <p class="text-xs text-slate-300 mt-1">Malas prácticas ciudadanas</p>
             </div>
           </div>
 
@@ -132,7 +137,7 @@
             <!-- Mini ventana superior -->
             <div class="flex items-center justify-between mb-6">
               <div>
-                <p class="text-sm text-slate-300">Panel de reporte</p>
+                <p class="text-sm text-slate-300">Vista previa del sistema</p>
                 <h3 class="text-2xl font-bold">Reporta Residuos Cusco</h3>
               </div>
 
@@ -147,8 +152,8 @@
               <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_#22c55e_1px,_transparent_1px)] [background-size:24px_24px]"></div>
 
               <div class="absolute top-6 left-6 bg-white/90 text-slate-900 rounded-2xl px-4 py-3 shadow-lg max-w-[220px]">
-                <p class="font-bold text-sm">Zona reportada</p>
-                <p class="text-xs text-slate-600">Acumulación de residuos en vía pública.</p>
+                <p class="font-bold text-sm">Reporte ciudadano</p>
+                <p class="text-xs text-slate-600">Basura fuera del horario o acumulada en vía pública.</p>
               </div>
 
               <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -200,9 +205,9 @@
 
           <!-- Tarjeta flotante -->
           <div class="hidden sm:block absolute -bottom-6 -left-6 rounded-3xl bg-green-500 text-slate-950 p-5 shadow-2xl max-w-[230px]">
-            <p class="font-bold">Participación ciudadana</p>
+            <p class="font-bold">Control ciudadano</p>
             <p class="text-sm mt-1">
-              Cada reporte ayuda a identificar puntos críticos de contaminación.
+              Los reportes ayudan a identificar zonas críticas y comportamientos que afectan la limpieza urbana.
             </p>
           </div>
 
@@ -231,21 +236,20 @@
     const features = [
       {
         icon: '📍',
-        title: 'GPS automático',
-        desc: 'Tu ubicación exacta se adjunta a cada reporte para que la municipalidad actúe rápido.'
+        title: 'Ubicación del incidente',
+        desc: 'El sistema permite registrar el lugar donde se acumulan residuos o se incumplen los horarios de recojo.'
       },
       {
         icon: '📸',
-        title: 'Evidencia fotográfica',
-        desc: 'Agrega fotos al reporte para que los inspectores conozcan la magnitud del problema.'
+        title: 'Evidencia del problema',
+        desc: 'El ciudadano puede adjuntar fotos o describir la situación para sustentar el reporte ambiental.'
       },
       {
-        icon: '💬',
-        title: 'Comunicación rápida',
-        desc: 'El reporte puede enviarse o registrarse para facilitar la atención de la municipalidad.'
+        icon: '🚮',
+        title: 'Reporte de malas prácticas',
+        desc: 'También se pueden reportar vecinos que dejan basura fuera del horario indicado o en zonas no permitidas.'
       },
     ];
-
     let current = 0;
 
     const dots = document.querySelectorAll('#dots .dot');
