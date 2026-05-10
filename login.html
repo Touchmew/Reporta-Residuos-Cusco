@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesión — Reporta Residuos Cusco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════ */
+    :root {
+      --green:      #1DB954;
+      --green-dark: #14833B;
+      --green-glow: rgba(29,185,84,0.35);
+      --amber:      #F59E0B;
+      --blue:       #3B82F6;
+      --red:        #EF4444;
+      --navy:       #0B1F3A;
+      --navy-mid:   #162D4E;
+      --slate:      #3A5068;
+      --gray:       #8FA8BF;
+      --white:      #F8FEFB;
+      --bg:         #07101C;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { height: 100%; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      min-height: 100%;
+      display: flex;
+      align-items: stretch;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    input  { font-family: inherit; outline: none; }
+
+    /* ═══════════════════════════════════════
+       LAYOUT — DOS COLUMNAS (PC) / UNA (MÓVIL)
+    ═══════════════════════════════════════ */
+    .page {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    /* ── PANEL IZQUIERDO decorativo (oculto en móvil) ── */
+    .panel-left {
+      display: none;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #061810 0%, #0B2820 40%, #0B1F3A 100%);
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 44px;
+    }
+
+    .panel-left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 20% 10%, rgba(29,185,84,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(11,31,58,0.8)   0%, transparent 60%);
+    }
+
+    .pl-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(29,185,84,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,185,84,0.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .pl-content { position: relative; z-index: 1; }
+
+    .pl-logo { display: flex; align-items: center; gap: 14px; }
+
+    .pl-logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 6px 24px var(--green-glow);
+      flex-shrink: 0;
+    }
+
+    .pl-logo-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 800; line-height: 1.2;
+    }
+    .pl-logo-name span { color: var(--green); }
+    .pl-logo-sub { font-size: 0.68rem; color: var(--gray); margin-top: 3px; }
+
+    .pl-hero { margin-top: auto; padding-top: 56px; }
+
+    .pl-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(29,185,84,0.12);
+      border: 1px solid rgba(29,185,84,0.25);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 0.65rem; font-weight: 600; color: var(--green);
+      margin-bottom: 20px;
+    }
+
+    .pl-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 2.3vw, 2.4rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: -0.5px;
+    }
+    .pl-title em { color: var(--green); font-style: normal; }
+
+    .pl-desc {
+      margin-top: 14px;
+      font-size: 0.84rem; color: var(--gray); line-height: 1.7;
+      max-width: 340px;
+    }
+
+    .pl-stats { display: flex; gap: 10px; margin-top: 32px; }
+
+    .pl-stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 13px 14px;
+      flex: 1;
+    }
+    .pl-stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem; font-weight: 800; color: var(--green);
+    }
+    .pl-stat-lbl { font-size: 0.6rem; color: var(--gray); margin-top: 3px; }
+
+    .pl-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 11px; padding: 8px 14px;
+      font-size: 0.7rem; color: var(--gray);
+      margin-top: 14px;
+    }
+    .pl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 8px var(--green-glow);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* ── PANEL DERECHO (formulario) ── */
+    .panel-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      padding: 28px 16px 36px;
+      min-height: 100vh;
+    }
+
+    .panel-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 0%,   rgba(29,185,84,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 100%, rgba(22,45,78,0.4)   0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── TARJETA ── */
+    .card {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 420px;
+      background: rgba(13, 24, 40, 0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 28px 24px 24px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(29,185,84,0.03) inset;
+      animation: cardIn 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity:0; transform:translateY(20px) scale(0.97); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+
+    /* Logo dentro de la card (visible en móvil, oculto en PC) */
+    .card-logo {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; margin-bottom: 22px; text-align: center;
+    }
+
+    .card-logo-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      border-radius: 17px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 6px 22px var(--green-glow);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{box-shadow:0 6px 22px var(--green-glow)} 50%{box-shadow:0 6px 32px rgba(29,185,84,0.6)} }
+
+    .card-logo-name {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800;
+    }
+    .card-logo-name span { color: var(--green); }
+    .card-logo-sub { font-size: 0.67rem; color: var(--gray); margin-top: -2px; }
+
+    /* Título del form */
+    .form-title {
+      font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .form-sub { font-size: 0.7rem; color: var(--gray); margin-bottom: 20px; }
+
+    /* ── TABS DE ROL ── */
+    .role-lbl {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 8px;
+    }
+
+    .role-tabs {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 7px; margin-bottom: 16px;
+    }
+
+    .role-tab {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px; padding: 10px 6px;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(255,255,255,0.07);
+      border-radius: 12px; cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem; font-weight: 700;
+      color: var(--gray); letter-spacing: 0.3px;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .role-tab:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .role-tab:active { transform: scale(0.95); }
+    .role-tab .r-ico { font-size: 18px; }
+
+    .act-c { background:rgba(29,185,84,0.12);  border-color:rgba(29,185,84,0.45);  color:var(--green); }
+    .act-m { background:rgba(59,130,246,0.12); border-color:rgba(59,130,246,0.45); color:#93C5FD; }
+    .act-a { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.45); color:#FCD34D; }
+
+    /* ── BANNER ── */
+    .role-banner {
+      border-radius: 10px; padding: 9px 12px;
+      font-size: 0.69rem; line-height: 1.45; margin-bottom: 16px;
+      display: flex; align-items: flex-start; gap: 8px;
+      animation: fadeUp 0.25s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+    .bn-c { background:rgba(29,185,84,0.08);  border:1px solid rgba(29,185,84,0.2);  color:#86EFAC; }
+    .bn-m { background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); color:#93C5FD; }
+    .bn-a { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); color:#FCD34D; }
+
+    /* ── CAMPOS ── */
+    .field-group { display:flex; flex-direction:column; gap:12px; margin-bottom:16px; }
+    .field { display:flex; flex-direction:column; gap:5px; }
+
+    .field-lbl {
+      font-family:'Syne',sans-serif; font-size:0.57rem; font-weight:700;
+      letter-spacing:1.4px; text-transform:uppercase; color:var(--gray);
+    }
+
+    .field-wrap { position:relative; }
+
+    .field-ico {
+      position:absolute; left:13px; top:50%;
+      transform:translateY(-50%);
+      font-size:15px; pointer-events:none; opacity:0.55; line-height:1;
+    }
+
+    .field-input {
+      width:100%;
+      background:rgba(255,255,255,0.04);
+      border:1.5px solid rgba(255,255,255,0.08);
+      border-radius:11px;
+      /* font-size mínimo 16px evita zoom en iOS */
+      font-size:max(16px, 0.9rem);
+      padding:13px 14px 13px 40px;
+      color:#fff;
+      transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .field-input::placeholder { color:var(--slate); }
+    .field-input:focus {
+      border-color:rgba(29,185,84,0.5);
+      background:rgba(29,185,84,0.04);
+      box-shadow:0 0 0 3px rgba(29,185,84,0.08);
+    }
+    .field-input.ferr {
+      border-color:rgba(239,68,68,0.55)!important;
+      background:rgba(239,68,68,0.04)!important;
+      box-shadow:0 0 0 3px rgba(239,68,68,0.08)!important;
+    }
+    .field-input.fok { border-color:rgba(29,185,84,0.38); }
+
+    /* focus por rol */
+    .fc-m .field-input:focus { border-color:rgba(59,130,246,0.5); background:rgba(59,130,246,0.04); box-shadow:0 0 0 3px rgba(59,130,246,0.08); }
+    .fc-a .field-input:focus { border-color:rgba(245,158,11,0.5);  background:rgba(245,158,11,0.04);  box-shadow:0 0 0 3px rgba(245,158,11,0.08); }
+
+    .eye-btn {
+      position:absolute; right:11px; top:50%; transform:translateY(-50%);
+      color:var(--slate); font-size:15px; padding:5px;
+      transition:color 0.2s; -webkit-tap-highlight-color:transparent;
+    }
+    .eye-btn:hover { color:var(--gray); }
+
+    .field-err {
+      font-size:0.62rem; color:#FDA4AF; min-height:15px;
+      display:flex; align-items:center; gap:3px;
+    }
+
+    .pwd-hints { display:flex; flex-wrap:wrap; gap:5px; margin-top:-1px; }
+    .hint {
+      font-size:0.57rem; padding:2px 7px; border-radius:6px;
+      background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+      color:var(--slate); transition:all 0.2s;
+    }
+    .hint.ok { background:rgba(29,185,84,0.12); border-color:rgba(29,185,84,0.3); color:#86EFAC; }
+
+    /* ── BOTÓN ── */
+    .btn-login {
+      width:100%; border-radius:13px; padding:15px;
+      font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700;
+      color:#fff; letter-spacing:0.2px;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
+    .btn-c { background:linear-gradient(135deg,var(--green-dark),var(--green)); box-shadow:0 6px 22px rgba(29,185,84,0.35); }
+    .btn-m { background:linear-gradient(135deg,#1D4ED8,#3B82F6);               box-shadow:0 6px 22px rgba(59,130,246,0.35); }
+    .btn-a { background:linear-gradient(135deg,#B45309,var(--amber));           box-shadow:0 6px 22px rgba(245,158,11,0.35); }
+
+    .btn-login:hover:not(:disabled) { transform:translateY(-1px); }
+    .btn-c:hover:not(:disabled) { box-shadow:0 10px 30px rgba(29,185,84,0.5); }
+    .btn-m:hover:not(:disabled) { box-shadow:0 10px 30px rgba(59,130,246,0.5); }
+    .btn-a:hover:not(:disabled) { box-shadow:0 10px 30px rgba(245,158,11,0.5); }
+    .btn-login:active:not(:disabled) { transform:translateY(0); }
+    .btn-login:disabled { opacity:0.5; cursor:not-allowed; }
+
+    .spinner {
+      width:16px; height:16px; border-radius:50%;
+      border:2px solid rgba(255,255,255,0.3); border-top-color:#fff;
+      animation:spin 0.7s linear infinite; flex-shrink:0;
+    }
+    @keyframes spin { to{transform:rotate(360deg)} }
+
+    /* ── PIE DE CARD ── */
+    .divider {
+      display:flex; align-items:center; gap:10px;
+      margin:16px 0; color:var(--slate); font-size:0.68rem;
+    }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.07); }
+
+    .card-footer { text-align:center; font-size:0.69rem; color:var(--gray); line-height:1.9; }
+    .card-footer a { color:var(--green); font-weight:600; }
+    .card-footer a:hover { text-decoration:underline; }
+
+    /* ── TOAST ── */
+    #toast {
+      position:fixed; bottom:22px; left:50%;
+      transform:translateX(-50%) translateY(14px);
+      background:rgba(10,20,34,0.97);
+      border:1px solid rgba(29,185,84,0.3);
+      color:#fff; padding:11px 22px;
+      border-radius:12px; font-size:0.82rem; font-weight:500;
+      opacity:0; transition:all 0.3s ease;
+      z-index:9999; pointer-events:none;
+      white-space:nowrap; max-width:90vw; text-align:center;
+    }
+    #toast.show     { opacity:1; transform:translateX(-50%) translateY(0); }
+    #toast.toast-err{ border-color:rgba(239,68,68,0.4); }
+
+    /* ── OVERLAY ÉXITO ── */
+    .success-overlay {
+      position:fixed; inset:0; z-index:500;
+      background:rgba(7,16,28,0.97);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:14px; opacity:0; pointer-events:none;
+      transition:opacity 0.4s ease;
+    }
+    .success-overlay.show { opacity:1; pointer-events:all; }
+
+    .suc-icon {
+      width:76px; height:76px; border-radius:22px;
+      display:flex; align-items:center; justify-content:center; font-size:36px;
+      animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both 0.1s;
+    }
+    @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+    .suc-title { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; color:#fff; }
+    .suc-sub   { font-size:0.78rem; color:var(--gray); }
+
+    /* Partículas */
+    .particle {
+      position:fixed; pointer-events:none; z-index:0;
+      animation:floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%  { transform:translateY(106vh); opacity:0; }
+      8%  { opacity:0.18; }
+      92% { opacity:0.1; }
+      100%{ transform:translateY(-8vh) rotate(360deg); opacity:0; }
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+
+    /* ── PC ≥ 900px ── */
+    @media (min-width: 900px) {
+      body { overflow: hidden; }
+
+      .panel-left {
+        display: flex;
+        width: 44%;
+        max-width: 500px;
+      }
+
+      /* card: ocultar logo (ya está en panel izq) */
+      .card-logo { display: none; }
+
+      .card {
+        max-width: 440px;
+        padding: 36px 32px 30px;
+      }
+
+      .form-title { font-size: 1.25rem; }
+    }
+
+    /* ── Tablet 600–899px ── */
+    @media (min-width: 600px) and (max-width: 899px) {
+      .panel-right { padding: 40px 24px; }
+      .card { max-width: 480px; padding: 32px 28px 26px; }
+    }
+
+    /* ── Móvil < 600px ── */
+    @media (max-width: 599px) {
+      body { align-items: flex-start; }
+      .panel-right {
+        justify-content: flex-start;
+        padding: 28px 14px 40px;
+        min-height: 100svh; /* svh respeta teclado virtual en iOS */
+      }
+      .card { border-radius: 20px; }
+    }
+
+    /* ── Móvil muy pequeño < 380px ── */
+    @media (max-width: 380px) {
+      .card { padding: 22px 16px 20px; border-radius: 18px; }
+      .role-tab { padding: 8px 4px; font-size: 0.56rem; }
+      .r-ico { font-size: 16px !important; }
+      .btn-login { padding: 14px; font-size: 0.84rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── OVERLAY ÉXITO ── -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="suc-icon" id="sucIcon">🌱</div>
+    <div class="suc-title" id="sucTitle">¡Bienvenido!</div>
+    <div class="suc-sub"   id="sucSub">Redirigiendo al sistema...</div>
+  </div>
+
+  <!-- Partículas -->
+  <div id="particles"></div>
+
+  <div class="page">
+
+    <!-- ══════════════════════════════════
+         PANEL IZQUIERDO (solo PC ≥ 900px)
+    ══════════════════════════════════ -->
+    <aside class="panel-left">
+      <div class="pl-grid"></div>
+
+      <div class="pl-content">
+        <div class="pl-logo">
+          <div class="pl-logo-icon">♻️</div>
+          <div>
+            <div class="pl-logo-name">Reporta Residuos <span>Cusco</span></div>
+            <div class="pl-logo-sub">Plataforma ciudadana ambiental</div>
+          </div>
+        </div>
+
+        <div class="pl-hero">
+          <div class="pl-tag"><span>🌍</span> Cusco, Perú · 2026</div>
+
+          <h2 class="pl-title">
+            Reporta residuos,<br>
+            <em>transforma</em><br>
+            tu ciudad
+          </h2>
+
+          <p class="pl-desc">
+            Únete a la red ciudadana de reporte de residuos sólidos en Cusco.
+            Registra puntos críticos, visualiza el mapa de zonas afectadas
+            y ayuda a que la municipalidad actúe más rápido.
+          </p>
+
+          <div class="pl-stats">
+            <div class="pl-stat">
+              <div class="pl-stat-val">500+</div>
+              <div class="pl-stat-lbl">ton/día generadas</div>
+            </div>
+            <div class="pl-stat">
+              <div class="pl-stat-val">4</div>
+              <div class="pl-stat-lbl">zonas activas</div>
+            </div>
+            <div class="pl-stat">
+              <div class="pl-stat-val">3</div>
+              <div class="pl-stat-lbl">roles de acceso</div>
+            </div>
+          </div>
+
+          <div class="pl-badge">
+            <div class="pl-dot"></div>
+            Sistema activo · San Jerónimo, Cusco
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════
+         PANEL DERECHO — formulario
+    ══════════════════════════════════ -->
+    <main class="panel-right">
+      <div class="card" id="loginCard">
+
+        <!-- Logo (solo visible en móvil) -->
+        <div class="card-logo">
+          <div class="card-logo-icon">♻️</div>
+          <div>
+            <div class="card-logo-name">Reporta Residuos <span>Cusco</span></div>
+            <div class="card-logo-sub">Plataforma ciudadana ambiental</div>
+          </div>
+        </div>
+
+        <!-- Título -->
+        <div class="form-title">Iniciar sesión</div>
+        <div class="form-sub">Selecciona tu rol y accede al sistema</div>
+
+        <!-- Selector de rol -->
+        <div class="role-lbl">¿Quién eres?</div>
+        <div class="role-tabs">
+          <div class="role-tab act-c" data-rol="c" onclick="cambiarRol('c')">
+            <span class="r-ico">👤</span>Ciudadano
+          </div>
+          <div class="role-tab" data-rol="m" onclick="cambiarRol('m')">
+            <span class="r-ico">🏛️</span>Municipalidad
+          </div>
+          <div class="role-tab" data-rol="a" onclick="cambiarRol('a')">
+            <span class="r-ico">🛡️</span>Admin
+          </div>
+        </div>
+
+        <!-- Banner informativo -->
+        <div class="role-banner bn-c" id="roleBanner">
+          <span style="flex-shrink:0">🌱</span>
+          <span id="bannerTxt">Accede para reportar puntos críticos y ver el mapa de residuos.</span>
+        </div>
+
+        <!-- Campos y botón -->
+        <div class="field-group" id="fieldGroup"></div>
+
+        <button class="btn-login btn-c" id="btnLogin" onclick="intentarLogin()">
+          <span id="btnIco">👤</span>
+          <span id="btnTxt">Entrar como ciudadano</span>
+        </button>
+
+        <!-- Pie -->
+        <div class="divider">o</div>
+        <div class="card-footer">
+          ¿Sin cuenta? <a href="#" onclick="toast('Registro próximamente 🚀',false);return false;">Regístrate aquí</a><br>
+          <a href="index.html">← Volver al inicio</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+  // ══════════════════════════════════════════════════════
+  // CREDENCIALES Y CONFIGURACIÓN
+  // ══════════════════════════════════════════════════════
+  const CREDS = {
+    c: [
+      { u:'ciudadano',     p:'Cusco2026!'    },
+      { u:'carlos.quispe', p:'Carlos123#'    },
+      { u:'maria.condori', p:'Maria456@'     },
+    ],
+    m: [
+      { u:'trabajador01',   p:'Muni@2026'    },
+      { u:'limpieza.cusco', p:'Residuos#1'   },
+      { u:'inspector01',    p:'Inspector99!' },
+    ],
+    a: [
+      { u:'admin',       p:'Admin@Cusco2026!' },
+      { u:'superadmin',  p:'SuperAdmin#99'    },
+    ],
+  };
+
+  const REDIRECT = { c:'page2.html', m:'page2.html', a:'page2.html' };
+
+  const CFG = {
+    c: {
+      banner:   'Accede para reportar puntos críticos y ver el mapa de residuos en tu ciudad.',
+      bnCls:    'bn-c', banIco: '🌱',
+      btnCls:   'btn-c', btnIco: '👤', btnTxt: 'Entrar como ciudadano',
+      tabCls:   'act-c', fcCls: '',
+      uLabel:   'Nombre de usuario', uPh: 'Ej: carlos.quispe', uIco: '👤',
+      sucIco:   '🌱', sucBg: 'linear-gradient(135deg,#14833B,#1DB954)',
+      sucTitle: '¡Bienvenido, ciudadano!', sucSub: 'Accediendo al mapa...',
+    },
+    m: {
+      banner:   'Acceso exclusivo para personal de limpieza e inspectores de la Municipalidad del Cusco.',
+      bnCls:    'bn-m', banIco: '🏛️',
+      btnCls:   'btn-m', btnIco: '🏛️', btnTxt: 'Entrar como trabajador',
+      tabCls:   'act-m', fcCls: 'fc-m',
+      uLabel:   'Código de trabajador', uPh: 'Ej: trabajador01', uIco: '🏛️',
+      sucIco:   '🏛️', sucBg: 'linear-gradient(135deg,#1D4ED8,#3B82F6)',
+      sucTitle: '¡Bienvenido, trabajador!', sucSub: 'Cargando panel municipal...',
+    },
+    a: {
+      banner:   'Acceso restringido al panel de administración. Solo personal autorizado.',
+      bnCls:    'bn-a', banIco: '🛡️',
+      btnCls:   'btn-a', btnIco: '🛡️', btnTxt: 'Entrar como administrador',
+      tabCls:   'act-a', fcCls: 'fc-a',
+      uLabel:   'Usuario administrador', uPh: 'Ej: admin', uIco: '🛡️',
+      sucIco:   '🛡️', sucBg: 'linear-gradient(135deg,#B45309,#F59E0B)',
+      sucTitle: '¡Bienvenido, admin!', sucSub: 'Cargando panel de control...',
+    },
+  };
+
+  // Estado
+  let rol = 'c', fallos = 0, bloq = null, verPwd = false;
+
+  // ══════════════════════════════════════════════════════
+  // CAMBIAR ROL
+  // ══════════════════════════════════════════════════════
+  function cambiarRol(r) {
+    rol = r;
+    const c = CFG[r];
+
+    document.querySelectorAll('.role-tab').forEach(t => {
+      t.className = 'role-tab';
+      if (t.dataset.rol === r) t.classList.add(c.tabCls);
+    });
+
+    const bn = g('roleBanner');
+    bn.className = `role-banner ${c.bnCls}`;
+    bn.style.animation = 'none'; void bn.offsetWidth; bn.style.animation = '';
+    bn.innerHTML = `<span style="flex-shrink:0">${c.banIco}</span><span>${c.banner}</span>`;
+
+    const btn = g('btnLogin');
+    btn.className = `btn-login ${c.btnCls}`;
+    g('btnIco').textContent = c.btnIco;
+    g('btnTxt').textContent = c.btnTxt;
+
+    renderCampos();
+    limpiarErr();
+  }
+
+  // ══════════════════════════════════════════════════════
+  // RENDERIZAR CAMPOS
+  // ══════════════════════════════════════════════════════
+  function renderCampos() {
+    const c = CFG[rol];
+    const fg = g('fieldGroup');
+    fg.className = `field-group ${c.fcCls}`;
+    verPwd = false;
+
+    fg.innerHTML = `
+      <div class="field">
+        <label class="field-lbl">${c.uLabel}</label>
+        <div class="field-wrap">
+          <span class="field-ico">${c.uIco}</span>
+          <input class="field-input" id="iUser" type="text"
+            placeholder="${c.uPh}"
+            autocomplete="username" autocorrect="off"
+            autocapitalize="none" spellcheck="false"
+            inputmode="text"
+            oninput="valUser()" onkeydown="enter(event)">
+        </div>
+        <div class="field-err" id="eUser"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-lbl">Contraseña</label>
+        <div class="field-wrap">
+          <span class="field-ico">🔑</span>
+          <input class="field-input" id="iPwd" type="password"
+            placeholder="Tu contraseña segura"
+            autocomplete="current-password"
+            oninput="valPwd()" onkeydown="enter(event)">
+          <button type="button" class="eye-btn" id="eyeBtn"
+            onclick="togglePwd()" aria-label="Mostrar/ocultar contraseña">👁️</button>
+        </div>
+        <div class="field-err" id="ePwd"></div>
+        <div class="pwd-hints">
+          <span class="hint" id="h-len">6+ chars</span>
+          <span class="hint" id="h-may">MAYÚSCULA</span>
+          <span class="hint" id="h-num">número</span>
+          <span class="hint" id="h-esp">especial</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // ══════════════════════════════════════════════════════
+  // VALIDACIONES
+  // ══════════════════════════════════════════════════════
+  function valUser() {
+    const v = g('iUser')?.value.trim() ?? '';
+    if (!v)           return setF('iUser','eUser','',''), false;
+    if (v.length < 3) return setF('iUser','eUser','ferr','⚠ Mínimo 3 caracteres'), false;
+    if (/\s/.test(v)) return setF('iUser','eUser','ferr','⚠ Sin espacios en el usuario'), false;
+    setF('iUser','eUser','fok',''); return true;
+  }
+
+  function valPwd() {
+    const v = g('iPwd')?.value ?? '';
+    ht('h-len', v.length >= 6);
+    ht('h-may', /[A-Z]/.test(v));
+    ht('h-num', /[0-9]/.test(v));
+    ht('h-esp', /[^a-zA-Z0-9]/.test(v));
+    if (!v)           return setF('iPwd','ePwd','',''), false;
+    if (v.length < 6) return setF('iPwd','ePwd','ferr','⚠ Mínimo 6 caracteres'), false;
+    setF('iPwd','ePwd','fok',''); return true;
+  }
+
+  function ht(id, ok) { const el=g(id); if(el) el.classList.toggle('ok',ok); }
+
+  function setF(inpId, errId, cls, msg) {
+    const i=g(inpId), e=g(errId);
+    if(!i||!e) return;
+    i.classList.remove('ferr','fok');
+    if(cls) i.classList.add(cls);
+    e.innerHTML = msg ? `❌ ${msg}` : '';
+  }
+
+  // ══════════════════════════════════════════════════════
+  // LOGIN
+  // ══════════════════════════════════════════════════════
+  function intentarLogin() {
+    if (bloq && Date.now() < bloq) {
+      toast(`⏳ Bloqueado. Espera ${Math.ceil((bloq-Date.now())/1000)}s`, true); return;
+    }
+
+    const u = g('iUser')?.value.trim() ?? '';
+    const p = g('iPwd')?.value ?? '';
+    let ok = true;
+
+    if (!u) { setF('iUser','eUser','ferr','⚠ El usuario es obligatorio'); ok=false; }
+    if (!p) { setF('iPwd','ePwd','ferr','⚠ La contraseña es obligatoria'); ok=false; }
+    if (!ok) return;
+
+    const btn = g('btnLogin');
+    btn.disabled = true;
+    btn.innerHTML = `<div class="spinner"></div><span>Verificando...</span>`;
+
+    setTimeout(() => {
+      const match = (CREDS[rol]||[]).find(c => c.u===u && c.p===p);
+
+      if (match) {
+        fallos = 0;
+        sessionStorage.setItem('loggedIn','true');
+        sessionStorage.setItem('rol',rol);
+        sessionStorage.setItem('usuario',u);
+        mostrarExito();
+      } else {
+        fallos++;
+        btn.disabled = false;
+        const c = CFG[rol];
+        btn.innerHTML = `<span>${c.btnIco}</span><span>${c.btnTxt}</span>`;
+
+        if (fallos >= 5) {
+          bloq = Date.now() + 30000;
+          toast('🔒 5 intentos fallidos. Bloqueado 30 segundos.', true);
+          countdownBloq();
+        } else {
+          const r = 5 - fallos;
+          toast(`❌ Credenciales incorrectas · ${r} intento${r!==1?'s':''} restante${r!==1?'s':''}`, true);
+          sacudir();
+          setF('iUser','eUser','ferr','');
+          setF('iPwd','ePwd','ferr','⚠ Usuario o contraseña incorrectos');
+        }
+      }
+    }, 850);
+  }
+
+  function mostrarExito() {
+    const c = CFG[rol];
+    g('sucIcon').textContent  = c.sucIco;
+    g('sucIcon').style.background = c.sucBg;
+    g('sucIcon').style.boxShadow  = '0 10px 36px rgba(0,0,0,0.5)';
+    g('sucTitle').textContent = c.sucTitle;
+    g('sucSub').textContent   = c.sucSub;
+    g('successOverlay').classList.add('show');
+    setTimeout(() => window.location.href = REDIRECT[rol], 1900);
+  }
+
+  function sacudir() {
+    const card = g('loginCard');
+    const frames = [8,-8,6,-6,3,-2,0];
+    let i = 0;
+    card.style.transition = 'transform 0.05s';
+    const iv = setInterval(() => {
+      card.style.transform = `translateX(${frames[i]}px)`;
+      if (++i >= frames.length) { clearInterval(iv); card.style.transform = ''; }
+    }, 50);
+  }
+
+  function countdownBloq() {
+    const iv = setInterval(() => {
+      if (!bloq || Date.now() >= bloq) {
+        clearInterval(iv); bloq = null; fallos = 0;
+        const btn = g('btnLogin');
+        if (btn) {
+          btn.disabled = false;
+          const c = CFG[rol];
+          btn.innerHTML = `<span>${c.btnIco}</span><span>${c.btnTxt}</span>`;
+        }
+        toast('✅ Desbloqueado. Intenta de nuevo.', false);
+      }
+    }, 1000);
+  }
+
+  // ══════════════════════════════════════════════════════
+  // UTILIDADES
+  // ══════════════════════════════════════════════════════
+  function togglePwd() {
+    verPwd = !verPwd;
+    const i=g('iPwd'), b=g('eyeBtn');
+    if(i) i.type = verPwd ? 'text' : 'password';
+    if(b) b.textContent = verPwd ? '🙈' : '👁️';
+  }
+
+  function enter(e) { if (e.key==='Enter') intentarLogin(); }
+
+  function limpiarErr() {
+    ['iUser','iPwd'].forEach(id => { const el=g(id); if(el) el.classList.remove('ferr','fok'); });
+    ['eUser','ePwd'].forEach(id => { const el=g(id); if(el) el.innerHTML=''; });
+  }
+
+  function g(id) { return document.getElementById(id); }
+
+  let toastTimer;
+  function toast(msg, err=false) {
+    const t = g('toast');
+    t.textContent = msg;
+    t.className = err ? 'toast-err show' : 'show';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.className='', 3400);
+  }
+
+  // ══════════════════════════════════════════════════════
+  // PARTÍCULAS
+  // ══════════════════════════════════════════════════════
+  function crearParticulas() {
+    const cont = g('particles');
+    const emojis = ['♻️','🌿','💧','🌱','🍃','🌎'];
+    const n = window.innerWidth >= 900 ? 14 : 7;
+    for (let i=0; i<n; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const sz = Math.random()*9+7;
+      p.style.cssText = `left:${Math.random()*100}vw;font-size:${sz}px;animation-duration:${14+Math.random()*18}s;animation-delay:${Math.random()*16}s;`;
+      p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      cont.appendChild(p);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  // INIT
+  // ══════════════════════════════════════════════════════
+  window.addEventListener('load', () => {
+    crearParticulas();
+    cambiarRol('c');
+  });
+  </script>
+</body>
+</html>
