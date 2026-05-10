@@ -167,7 +167,7 @@
 
     .panel-right::before {
       content: '';
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; z-index: 0;
       background:
         radial-gradient(ellipse 60% 50% at 80% 0%,   rgba(29,185,84,0.06) 0%, transparent 60%),
         radial-gradient(ellipse 50% 40% at 20% 100%, rgba(22,45,78,0.4)   0%, transparent 60%);
@@ -176,7 +176,7 @@
 
     /* ── TARJETA ── */
     .card {
-      position: relative; z-index: 1;
+      position: relative; z-index: 10;
       width: 100%; max-width: 420px;
       background: rgba(13, 24, 40, 0.92);
       border: 1px solid rgba(255,255,255,0.08);
@@ -409,14 +409,17 @@
 
     /* Partículas */
     .particle {
-      position:fixed; pointer-events:none; z-index:0;
+      position:fixed; pointer-events:none; z-index:1;
+      bottom: -10vh;
       animation:floatUp linear infinite;
+      will-change: transform, opacity;
     }
     @keyframes floatUp {
-      0%  { transform:translateY(106vh); opacity:0; }
-      8%  { opacity:0.18; }
-      92% { opacity:0.1; }
-      100%{ transform:translateY(-8vh) rotate(360deg); opacity:0; }
+      0%  { transform:translateY(0) translateX(0) scale(1) rotate(0deg); opacity:0; }
+      5%  { opacity:0.4; }
+      50% { opacity:0.35; }
+      95% { opacity:0.15; }
+      100%{ transform:translateY(-110vh) translateX(var(--dx)) scale(0.8) rotate(360deg); opacity:0; }
     }
 
     /* ═══════════════════════════════════════
@@ -877,16 +880,74 @@
   // ══════════════════════════════════════════════════════
   function crearParticulas() {
     const cont = g('particles');
-    const emojis = ['♻️','🌿','💧','🌱','🍃','🌎'];
-    const n = window.innerWidth >= 900 ? 14 : 7;
-    for (let i=0; i<n; i++) {
+    if (!cont) return;
+    
+    const emojis = ['♻️','🌿','💧','🌱','🍃','🌍'];
+    const cantidad = window.innerWidth >= 900 ? 22 : 12;
+    
+    for (let i = 0; i < cantidad; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
-      const sz = Math.random()*9+7;
-      p.style.cssText = `left:${Math.random()*100}vw;font-size:${sz}px;animation-duration:${14+Math.random()*18}s;animation-delay:${Math.random()*16}s;`;
-      p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      
+      const tamaño = Math.random() * 12 + 8; // 8px a 20px
+      const izquierda = Math.random() * 100;
+      const duracion = 8 + Math.random() * 12; // 8s a 20s
+      const delay = Math.random() * 8; // 0s a 8s
+      const desplazamiento = (Math.random() - 0.5) * 200; // -100px a 100px horizontal
+      
+      p.style.cssText = `
+        left: ${izquierda}vw;
+        font-size: ${tamaño}px;
+        animation-duration: ${duracion}s;
+        animation-delay: ${delay}s;
+        --dx: ${desplazamiento}px;
+        text-shadow: 0 0 8px rgba(29, 185, 84, 0.3);
+        filter: drop-shadow(0 0 4px rgba(29, 185, 84, 0.2));
+      `;
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       cont.appendChild(p);
     }
+  }
+
+  // Crear partículas continuamente cada 8 segundos
+  function regenerarParticulas() {
+    setInterval(() => {
+      const cont = g('particles');
+      if (!cont) return;
+      
+      // Limpiar partículas antiguas
+      if (cont.children.length > 35) {
+        const toRemove = cont.children.length - 25;
+        for (let i = 0; i < toRemove; i++) {
+          cont.removeChild(cont.firstChild);
+        }
+      }
+      
+      // Añadir nuevas partículas
+      const emojis = ['♻️','🌿','💧','🌱','🍃','🌍'];
+      for (let i = 0; i < 3; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        
+        const tamaño = Math.random() * 12 + 8;
+        const izquierda = Math.random() * 100;
+        const duracion = 8 + Math.random() * 12;
+        const delay = Math.random() * 2;
+        const desplazamiento = (Math.random() - 0.5) * 200;
+        
+        p.style.cssText = `
+          left: ${izquierda}vw;
+          font-size: ${tamaño}px;
+          animation-duration: ${duracion}s;
+          animation-delay: ${delay}s;
+          --dx: ${desplazamiento}px;
+          text-shadow: 0 0 8px rgba(29, 185, 84, 0.3);
+          filter: drop-shadow(0 0 4px rgba(29, 185, 84, 0.2));
+        `;
+        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        cont.appendChild(p);
+      }
+    }, 8000);
   }
 
   // ══════════════════════════════════════════════════════
@@ -894,6 +955,7 @@
   // ══════════════════════════════════════════════════════
   window.addEventListener('load', () => {
     crearParticulas();
+    regenerarParticulas();
     cambiarRol('c');
   });
   </script>
