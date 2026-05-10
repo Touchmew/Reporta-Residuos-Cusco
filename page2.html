@@ -44,8 +44,10 @@
 
   <!-- ===== BOTTOM SHEET ===== -->
   <div class="bottom-sheet" id="bottomSheet">
-    <div class="sheet-handle-wrap" id="sheetHandle">
-      <div class="sheet-handle"></div>
+    <div class="sheet-handle-wrap" id="sheetHandle" onclick="toggleSheet()">
+      <div class="sheet-handle">
+        <span class="handle-arrow">▼</span>
+      </div>
     </div>
     <div class="sheet-header">
       <span class="sheet-title">Alertas cercanas</span>
@@ -292,6 +294,32 @@
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 2600);
     }
+
+    // ============================================================
+    // BOTTOM SHEET: Ocultar y desplegar
+    // ============================================================
+    let sheetExpanded = true;
+
+    function toggleSheet() {
+      sheetExpanded = !sheetExpanded;
+      const sheet = document.getElementById('bottomSheet');
+      const arrow = document.querySelector('.handle-arrow');
+      if (sheetExpanded) {
+        sheet.classList.remove('sheet-collapsed');
+        sheet.classList.add('sheet-expanded');
+        arrow.textContent = '▼';
+      } else {
+        sheet.classList.remove('sheet-expanded');
+        sheet.classList.add('sheet-collapsed');
+        arrow.textContent = '▲';
+      }
+    }
+
+    // Iniciar con el sheet expandido
+    window.addEventListener('load', () => {
+      const sheet = document.getElementById('bottomSheet');
+      sheet.classList.add('sheet-expanded');
+    });
   </script>
 </body>
 </html>
