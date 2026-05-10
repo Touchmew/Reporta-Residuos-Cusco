@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar Sesión — Reporta Residuos Cusco</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ═══════════════════════════════════════
        VARIABLES & RESET
@@ -29,7 +29,7 @@
     html { height: 100%; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--white);
       min-height: 100%;
@@ -92,7 +92,7 @@
     }
 
     .pl-logo-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.1rem; font-weight: 800; line-height: 1.2;
     }
     .pl-logo-name span { color: var(--green); }
@@ -110,9 +110,9 @@
     }
 
     .pl-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: clamp(1.6rem, 2.3vw, 2.4rem);
-      font-weight: 800; line-height: 1.15; letter-spacing: -0.5px;
+      font-weight: 800; line-height: 1.15;
     }
     .pl-title em { color: var(--green); font-style: normal; }
 
@@ -131,7 +131,7 @@
       flex: 1;
     }
     .pl-stat-val {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.25rem; font-weight: 800; color: var(--green);
     }
     .pl-stat-lbl { font-size: 0.6rem; color: var(--gray); margin-top: 3px; }
@@ -210,24 +210,24 @@
     @keyframes pulse { 0%,100%{box-shadow:0 6px 22px var(--green-glow)} 50%{box-shadow:0 6px 32px rgba(29,185,84,0.6)} }
 
     .card-logo-name {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800;
+      font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 800;
     }
     .card-logo-name span { color: var(--green); }
     .card-logo-sub { font-size: 0.67rem; color: var(--gray); margin-top: -2px; }
 
     /* Título del form */
     .form-title {
-      font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800;
-      margin-bottom: 3px;
+      font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 800;
+      margin-bottom: 8px; line-height: 1.3;
     }
-    .form-sub { font-size: 0.7rem; color: var(--gray); margin-bottom: 20px; }
+    .form-sub { font-size: 0.9rem; color: var(--gray); margin-bottom: 20px; line-height: 1.5; }
 
     /* ── TABS DE ROL ── */
     .role-lbl {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.56rem; font-weight: 700;
-      letter-spacing: 1.8px; text-transform: uppercase;
-      color: var(--gray); margin-bottom: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase;
+      color: var(--gray); margin-bottom: 12px;
     }
 
     .role-tabs {
@@ -237,16 +237,16 @@
 
     .role-tab {
       display: flex; flex-direction: column; align-items: center;
-      gap: 4px; padding: 10px 6px;
+      gap: 4px; padding: 12px 8px;
       background: rgba(255,255,255,0.03);
       border: 1.5px solid rgba(255,255,255,0.07);
       border-radius: 12px; cursor: pointer;
       transition: all 0.2s ease;
-      font-family: 'Syne', sans-serif;
-      font-size: 0.6rem; font-weight: 700;
-      color: var(--gray); letter-spacing: 0.3px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--gray);
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      user-select: none; line-height: 1.3;
     }
     .role-tab:hover { background: rgba(255,255,255,0.06); color: #fff; }
     .role-tab:active { transform: scale(0.95); }
@@ -258,8 +258,8 @@
 
     /* ── BANNER ── */
     .role-banner {
-      border-radius: 10px; padding: 9px 12px;
-      font-size: 0.69rem; line-height: 1.45; margin-bottom: 16px;
+      border-radius: 10px; padding: 12px 14px;
+      font-size: 0.85rem; line-height: 1.6; margin-bottom: 18px;
       display: flex; align-items: flex-start; gap: 8px;
       animation: fadeUp 0.25s ease both;
     }
@@ -274,8 +274,8 @@
     .field { display:flex; flex-direction:column; gap:5px; }
 
     .field-lbl {
-      font-family:'Syne',sans-serif; font-size:0.57rem; font-weight:700;
-      letter-spacing:1.4px; text-transform:uppercase; color:var(--gray);
+      font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:700;
+      text-transform:uppercase; color:var(--gray); line-height: 1.4;
     }
 
     .field-wrap { position:relative; }
@@ -292,9 +292,9 @@
       border:1.5px solid rgba(255,255,255,0.08);
       border-radius:11px;
       /* font-size mínimo 16px evita zoom en iOS */
-      font-size:max(16px, 0.9rem);
-      padding:13px 14px 13px 40px;
-      color:#fff;
+      font-size:max(16px, 1rem);
+      padding:15px 14px 15px 40px;
+      color:#fff; line-height: 1.5;
       transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
     }
     .field-input::placeholder { color:var(--slate); }
@@ -322,23 +322,23 @@
     .eye-btn:hover { color:var(--gray); }
 
     .field-err {
-      font-size:0.62rem; color:#FDA4AF; min-height:15px;
-      display:flex; align-items:center; gap:3px;
+      font-size:0.75rem; color:#FDA4AF; min-height:17px;
+      display:flex; align-items:center; gap:3px; line-height: 1.4;
     }
 
     .pwd-hints { display:flex; flex-wrap:wrap; gap:5px; margin-top:-1px; }
     .hint {
-      font-size:0.57rem; padding:2px 7px; border-radius:6px;
+      font-size:0.7rem; padding:4px 8px; border-radius:6px;
       background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
-      color:var(--slate); transition:all 0.2s;
+      color:var(--slate); transition:all 0.2s; line-height: 1.3;
     }
     .hint.ok { background:rgba(29,185,84,0.12); border-color:rgba(29,185,84,0.3); color:#86EFAC; }
 
     /* ── BOTÓN ── */
     .btn-login {
-      width:100%; border-radius:13px; padding:15px;
-      font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700;
-      color:#fff; letter-spacing:0.2px;
+      width:100%; border-radius:13px; padding:16px;
+      font-family:'Inter',sans-serif; font-size:1rem; font-weight:700;
+      color:#fff; line-height: 1.4;
       display:flex; align-items:center; justify-content:center; gap:8px;
       transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s;
       -webkit-tap-highlight-color:transparent; touch-action:manipulation;
@@ -368,7 +368,7 @@
     }
     .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.07); }
 
-    .card-footer { text-align:center; font-size:0.69rem; color:var(--gray); line-height:1.9; }
+    .card-footer { text-align:center; font-size:0.85rem; color:var(--gray); line-height:1.8; }
     .card-footer a { color:var(--green); font-weight:600; }
     .card-footer a:hover { text-decoration:underline; }
 
@@ -378,8 +378,8 @@
       transform:translateX(-50%) translateY(14px);
       background:rgba(10,20,34,0.97);
       border:1px solid rgba(29,185,84,0.3);
-      color:#fff; padding:11px 22px;
-      border-radius:12px; font-size:0.82rem; font-weight:500;
+      color:#fff; padding:13px 24px;
+      border-radius:12px; font-size:0.9rem; font-weight:500; line-height: 1.5;
       opacity:0; transition:all 0.3s ease;
       z-index:9999; pointer-events:none;
       white-space:nowrap; max-width:90vw; text-align:center;
@@ -404,7 +404,7 @@
       animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both 0.1s;
     }
     @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
-    .suc-title { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; color:#fff; }
+    .suc-title { font-family:'Inter',sans-serif; font-size:1.2rem; font-weight:800; color:#fff; }
     .suc-sub   { font-size:0.78rem; color:var(--gray); }
 
     /* Partículas */
