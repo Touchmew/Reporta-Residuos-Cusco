@@ -1,7 +1,7 @@
 <?php
 /**
  * obtener_reportes.php
- * Devuelve todos los reportes como JSON para el mapa (page2.html).
+ * Devuelve todos los reportes como JSON para el mapa (principal.html).
  *
  * Uso desde JavaScript:
  *   const res  = await fetch('php/obtener_reportes.php');

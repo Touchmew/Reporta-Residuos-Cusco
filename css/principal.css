@@ -1,0 +1,793 @@
+/* =====================================================
+   PRINCIPAL.CSS — Dashboard Principal Responsive
+   Reporta Residuos Cusco
+   ===================================================== */
+
+/* -----------------------------------------------------
+   MÓVIL FIRST  (< 1024px)
+   Layout vertical scrolleable. El mapa es una viñeta
+   con altura fija; el resto fluye naturalmente.
+   ----------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #081320;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 90px; /* espacio para bottom-nav fija */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-layout {
+  display: block;
+}
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(10,20,35,0.98), rgba(5,12,20,0.98));
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar-content {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =====================================================
+   BRAND
+   ===================================================== */
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1DB954, #0f8f3e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(29,185,84,0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  flex-shrink: 0;
+}
+
+.brand-text h1 {
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.brand-text p {
+  margin-top: 2px;
+  color: #8FA8BF;
+  font-size: 0.75rem;
+}
+
+/* =====================================================
+   ESTADO SISTEMA
+   ===================================================== */
+
+.system-status {
+  background: rgba(29,185,84,0.12);
+  border: 1px solid rgba(29,185,84,0.22);
+  color: #7EE2A8;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1DB954;
+  box-shadow: 0 0 0 3px rgba(29,185,84,0.15), 0 0 10px rgba(29,185,84,0.7);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.topbar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-bar {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.search-bar:focus-within {
+  border-color: rgba(29,185,84,0.35);
+  box-shadow: 0 0 0 3px rgba(29,185,84,0.08);
+}
+
+.search-icon { font-size: 14px; }
+
+.search-bar input {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.search-bar input::placeholder { color: #8FA8BF; }
+
+.loc-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(29,185,84,0.22), rgba(29,185,84,0.12));
+  border: 1px solid rgba(29,185,84,0.25);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.loc-btn:active {
+  transform: scale(0.98);
+  background: linear-gradient(135deg, rgba(29,185,84,0.32), rgba(29,185,84,0.18));
+}
+
+/* =====================================================
+   ESTADÍSTICAS
+   ===================================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.stat-label {
+  color: #8FA8BF;
+  font-size: 0.7rem;
+}
+
+/* =====================================================
+   FILTROS
+   ===================================================== */
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  color: #8FA8BF;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar { display: none; }
+
+.chip {
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.chip-all {
+  background: #1DB954;
+  color: #fff;
+}
+
+.chip-red {
+  background: rgba(239,68,68,0.14);
+  color: #FDA4AF;
+  border-color: rgba(239,68,68,0.25);
+}
+
+.chip-amber {
+  background: rgba(245,158,11,0.14);
+  color: #FCD34D;
+  border-color: rgba(245,158,11,0.25);
+}
+
+.chip-green {
+  background: rgba(29,185,84,0.14);
+  color: #7EE2A8;
+  border-color: rgba(29,185,84,0.25);
+}
+
+.chip-purple {
+  background: rgba(168,85,247,0.14);
+  color: #D8B4FE;
+  border-color: rgba(168,85,247,0.25);
+}
+
+/* =====================================================
+   INFO BOX
+   ===================================================== */
+
+.info-box {
+  background: linear-gradient(135deg, rgba(29,185,84,0.1), rgba(29,185,84,0.04));
+  border: 1px solid rgba(29,185,84,0.14);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.info-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.info-desc {
+  color: #8FA8BF;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   MAPA  (viñeta en móvil)
+   ===================================================== */
+
+.map-wrapper {
+  width: 100%;
+  height: 340px;
+  position: relative;
+  background: #0a1423;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================================================
+   LEYENDA
+   ===================================================== */
+
+.map-legend {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 40;
+  background: rgba(8,18,32,0.92);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 12px;
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 160px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.legend-title {
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8FA8BF;
+  font-size: 0.7rem;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   PANEL ALERTAS  (móvil: sección estática debajo del mapa)
+   ===================================================== */
+
+.bottom-sheet {
+  position: relative;
+  background: linear-gradient(180deg, rgba(12,22,38,0.98), rgba(6,14,24,0.99));
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px 24px 0 0;
+  margin-top: -20px; /* solapa un poco el mapa, efecto tarjeta */
+  z-index: 20;
+  padding-bottom: 20px;
+}
+
+.sheet-handle-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 8px;
+}
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.sheet-header {
+  padding: 8px 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-subtitle {
+  color: #8FA8BF;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.sheet-title {
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.sheet-count {
+  background: rgba(239,68,68,0.12);
+  color: #FDA4AF;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+/* =====================================================
+   ALERTAS
+   ===================================================== */
+
+.alert-list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.alert-card:active {
+  background: rgba(255,255,255,0.08);
+  transform: scale(0.98);
+}
+
+.alert-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.alert-name {
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.alert-meta {
+  margin-top: 3px;
+  color: #8FA8BF;
+  font-size: 0.7rem;
+}
+
+.alert-badge {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   FAB
+   ===================================================== */
+
+.fab {
+  position: fixed;
+  right: 16px;
+  bottom: 84px;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1DB954, #159947);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24px;
+  z-index: 70;
+  box-shadow: 0 8px 24px rgba(29,185,84,0.35);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.fab:active { transform: scale(0.92); }
+
+/* =====================================================
+   NAVBAR MÓVIL
+   ===================================================== */
+
+.bottom-nav {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  height: 64px;
+  background: rgba(10,20,35,0.95);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  backdrop-filter: blur(18px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #8FA8BF;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active { color: #1DB954; }
+
+.nav-icon { font-size: 20px; }
+
+.nav-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.nav-active-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #1DB954;
+}
+
+/* =====================================================
+   NAVBAR DESKTOP  (oculta en móvil)
+   ===================================================== */
+
+.desktop-nav { display: none; }
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  background: rgba(8,18,32,0.95);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+#toast.show {
+  opacity: 1;
+  bottom: 100px;
+}
+
+/* =====================================================
+   DESKTOP  >= 1024px
+   Layout split: sidebar fijo | mapa fullscreen | alertas flotante
+   ===================================================== */
+
+@media (min-width: 1024px) {
+
+  body {
+    display: flex;
+    padding-bottom: 0;
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .app-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* ---------------------------------------------------
+     SIDEBAR
+     --------------------------------------------------- */
+  .sidebar {
+    width: 360px;
+    height: 100%;
+    flex-shrink: 0;
+    border-bottom: none;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    overflow-y: auto;
+    backdrop-filter: blur(18px);
+  }
+
+  .sidebar-content {
+    padding: 24px;
+    gap: 22px;
+    min-height: 100%;
+  }
+
+  .brand-logo {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    border-radius: 18px;
+  }
+
+  .brand-text h1 { font-size: 1.15rem; }
+
+  .stats-grid { gap: 10px; }
+
+  .stat-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .stat-value { font-size: 1.4rem; }
+
+  .filter-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .chip {
+    padding: 8px 14px;
+    font-size: 0.72rem;
+    border-radius: 14px;
+  }
+
+  .info-box {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  /* ---------------------------------------------------
+     MAIN & MAPA fullscreen
+     --------------------------------------------------- */
+  .main-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-wrapper {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  #map { height: 100%; }
+
+  /* ---------------------------------------------------
+     ALERTAS flotante
+     --------------------------------------------------- */
+  .bottom-sheet {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    left: auto;
+    width: 380px;
+    max-height: calc(100vh - 40px);
+    border-radius: 22px;
+    margin-top: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+  }
+
+  .sheet-handle-wrap { display: none; }
+
+  .sheet-header { padding: 18px 20px 14px; }
+
+  .alert-list {
+    overflow-y: auto;
+    max-height: 60vh;
+    padding: 0 20px 20px;
+  }
+
+  .alert-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .alert-name { font-size: 0.88rem; }
+
+  /* ---------------------------------------------------
+     LEYENDA  (arriba izquierda para no chocar con alertas)
+     --------------------------------------------------- */
+  .map-legend {
+    top: 20px;
+    right: auto;
+    left: 20px;
+    padding: 14px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  /* ---------------------------------------------------
+     FAB
+     --------------------------------------------------- */
+  .fab {
+    right: 30px;
+    bottom: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    font-size: 28px;
+  }
+
+  /* ---------------------------------------------------
+     NAVS
+     --------------------------------------------------- */
+  .bottom-nav.mobile-only { display: none; }
+
+  .desktop-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .desktop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: #8FA8BF;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .desktop-nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+  }
+
+  .desktop-nav-item.active {
+    background: rgba(29,185,84,0.12);
+    color: #1DB954;
+  }
+
+  .desktop-nav-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+  }
+
+  /* Toast */
+  #toast { bottom: 30px; }
+  #toast.show { bottom: 40px; }
+}
