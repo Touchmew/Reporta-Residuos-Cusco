@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio — Reporta Residuos Cusco</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="{{ asset('css/global.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+
+  <!-- Fondos decorativos -->
+  <div class="fixed top-[-120px] left-[-120px] w-80 h-80 bg-green-500/30 rounded-full blur-3xl"></div>
+  <div class="fixed bottom-[-120px] right-[-120px] w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl"></div>
+  <div class="fixed top-1/3 right-1/4 w-64 h-64 bg-cyan-400/10 rounded-full blur-3xl"></div>
+
+  <!-- Página -->
+  <div class="relative z-10 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="w-full px-6 md:px-12 py-5">
+      <nav class="max-w-7xl mx-auto flex items-center justify-between">
+
+        <!-- Logo -->
+        <a href="{{ url("/") }}" class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-3xl shadow-xl shadow-green-500/30">
+            ♻️
+          </div>
+
+          <div>
+            <h1 class="font-extrabold text-2xl md:text-3xl leading-tight tracking-tight">
+              Reporta Residuos Cusco
+            </h1>
+            <p class="text-sm md:text-base text-green-200">
+              Plataforma ciudadana para una ciudad más limpia
+            </p>
+          </div>
+        </a>
+
+        <!-- Links desktop -->
+        <div class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+          <a href="{{ url("/") }}" class="hover:text-green-300 transition">Inicio</a>
+          <a href="{{ url("/principal") }}" class="hover:text-green-300 transition">Mapa</a>
+          <a href="{{ url("/historial") }}" class="hover:text-green-300 transition">Historial</a>
+          <a href="#" class="hover:text-green-300 transition">Contacto</a>
+        </div>
+
+        <!-- Botón desktop -->
+        <button
+          onclick="irAlMapa()"
+          class="hidden md:inline-flex px-5 py-2.5 rounded-full bg-green-500 hover:bg-green-400 text-slate-950 font-semibold transition shadow-lg shadow-green-500/20"
+        >
+          Comenzar
+        </button>
+
+        <!-- Botón móvil simple -->
+        <button
+          onclick="irAlMapa()"
+          class="md:hidden px-4 py-2 rounded-full bg-green-500 text-slate-950 font-semibold text-sm"
+        >
+          Iniciar
+        </button>
+
+      </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 px-6 md:px-12 py-8 md:py-14">
+      <section class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Columna izquierda -->
+        <div class="text-center lg:text-left">
+
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-sm text-green-200 mb-6">
+            <span>🌱</span>
+            <span>Sistema web de reportes ambientales ciudadanos</span>
+          </div>
+
+          <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
+            Reporta residuos, puntos críticos y malas prácticas en
+            <span class="text-green-400">Cusco</span>
+          </h2>
+
+          <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Informa zonas con acumulación de residuos sólidos, vecinos que dejan basura fuera
+            del horario establecido, puntos de contaminación y otros problemas ambientales.
+            Adjunta evidencia, registra la ubicación y ayuda a mejorar la respuesta municipal.
+          </p>
+
+          <!-- Botones -->
+          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button
+              onclick="irAlMapa()"
+              class="px-7 py-3.5 rounded-full bg-green-500 hover:bg-green-400 text-slate-950 font-bold transition shadow-xl shadow-green-500/25"
+            >
+              Comenzar ahora →
+            </button>
+
+            <a
+              href="#funciones"
+              class="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition"
+            >
+              Ver funciones
+            </a>
+          </div>
+
+          <!-- Estadísticas pequeñas -->
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0">
+            <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
+              <p class="text-xl font-bold text-green-300">Ubicación</p>
+              <p class="text-xs text-slate-300 mt-1">Registro del punto afectado</p>
+            </div>
+
+            <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
+              <p class="text-xl font-bold text-green-300">Evidencia</p>
+              <p class="text-xs text-slate-300 mt-1">Foto o descripción del problema</p>
+            </div>
+
+            <div class="rounded-2xl bg-white/10 border border-white/10 p-4">
+              <p class="text-xl font-bold text-green-300">Denuncia</p>
+              <p class="text-xs text-slate-300 mt-1">Malas prácticas ciudadanas</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="relative" id="funciones">
+
+          <!-- Tarjeta principal -->
+          <div class="rounded-[2rem] bg-white/10 border border-white/10 backdrop-blur-xl shadow-2xl p-6 sm:p-8">
+
+            <!-- Mini ventana superior -->
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <p class="text-sm text-slate-300">Vista previa del sistema</p>
+                <h3 class="text-2xl font-bold">Reporta Residuos Cusco</h3>
+              </div>
+
+              <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-3xl shadow-lg shadow-green-500/30">
+                ♻️
+              </div>
+            </div>
+
+            <!-- Mapa simulado -->
+            <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-white/10 h-64 sm:h-80">
+
+              <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_#22c55e_1px,_transparent_1px)] [background-size:24px_24px]"></div>
+
+              <div class="absolute top-6 left-6 bg-white/90 text-slate-900 rounded-2xl px-4 py-3 shadow-lg max-w-[220px]">
+                <p class="font-bold text-sm">Reporte ciudadano</p>
+                <p class="text-xs text-slate-600">Basura fuera del horario o acumulada en vía pública.</p>
+              </div>
+
+              <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="relative">
+                  <div class="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-60"></div>
+                  <div class="relative w-12 h-12 rounded-full bg-red-500 flex items-center justify-center text-white text-2xl shadow-xl">
+                    📍
+                  </div>
+                </div>
+              </div>
+
+              <div class="absolute bottom-5 right-5 bg-green-500 text-slate-950 rounded-full px-4 py-2 text-sm font-bold shadow-lg">
+                Reporte activo
+              </div>
+
+            </div>
+
+            <!-- Dots -->
+            <div class="flex justify-center gap-2 mt-6" id="dots">
+              <div class="dot active w-3 h-3 rounded-full bg-green-400"></div>
+              <div class="dot w-3 h-3 rounded-full bg-white/30"></div>
+              <div class="dot w-3 h-3 rounded-full bg-white/30"></div>
+            </div>
+
+            <!-- Feature highlight -->
+            <div
+              class="mt-6 flex gap-4 rounded-3xl bg-slate-950/70 border border-white/10 p-5"
+              id="featureBox"
+            >
+              <div
+                class="feature-icon w-14 h-14 shrink-0 rounded-2xl bg-green-500/20 flex items-center justify-center text-3xl"
+                id="featureIcon"
+              >
+                📍
+              </div>
+
+              <div>
+                <div class="feature-title font-bold text-lg" id="featureTitle">
+                  GPS automático
+                </div>
+
+                <div class="feature-desc text-sm text-slate-300 mt-1 leading-relaxed" id="featureDesc">
+                  Tu ubicación exacta se adjunta a cada reporte para que la municipalidad actúe rápido.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Tarjeta flotante -->
+          <div class="hidden sm:block absolute -bottom-6 -left-6 rounded-3xl bg-green-500 text-slate-950 p-5 shadow-2xl max-w-[230px]">
+            <p class="font-bold">Control ciudadano</p>
+            <p class="text-sm mt-1">
+              Los reportes ayudan a identificar zonas críticas y comportamientos que afectan la limpieza urbana.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 px-6 md:px-12 py-6">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
+        <p>v1.0.0 · Municipalidad de Cusco</p>
+        <p>Proyecto académico — Reporta Residuos Cusco</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    // ============================================================
+    // ONBOARDING: rota las features cada 3 segundos
+    // ============================================================
+    const features = [
+      {
+        icon: '📍',
+        title: 'Ubicación del incidente',
+        desc: 'El sistema permite registrar el lugar donde se acumulan residuos o se incumplen los horarios de recojo.'
+      },
+      {
+        icon: '📸',
+        title: 'Evidencia del problema',
+        desc: 'El ciudadano puede adjuntar fotos o describir la situación para sustentar el reporte ambiental.'
+      },
+      {
+        icon: '🚮',
+        title: 'Reporte de malas prácticas',
+        desc: 'También se pueden reportar vecinos que dejan basura fuera del horario indicado o en zonas no permitidas.'
+      },
+    ];
+    let current = 0;
+
+    const dots = document.querySelectorAll('#dots .dot');
+    const iconEl = document.getElementById('featureIcon');
+    const titleEl = document.getElementById('featureTitle');
+    const descEl = document.getElementById('featureDesc');
+    const featureBox = document.getElementById('featureBox');
+
+    function updateFeature(idx) {
+      featureBox.style.opacity = '0';
+      featureBox.style.transform = 'translateY(6px)';
+
+      setTimeout(() => {
+        const f = features[idx];
+
+        iconEl.textContent = f.icon;
+        titleEl.textContent = f.title;
+        descEl.textContent = f.desc;
+
+        dots.forEach((d, i) => {
+          d.classList.toggle('bg-green-400', i === idx);
+          d.classList.toggle('bg-white/30', i !== idx);
+        });
+
+        featureBox.style.opacity = '1';
+        featureBox.style.transform = 'translateY(0)';
+      }, 280);
+    }
+
+    featureBox.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+
+    setInterval(() => {
+      current = (current + 1) % features.length;
+      updateFeature(current);
+    }, 5000);
+
+    dots.forEach((dot, i) => {
+      dot.style.cursor = 'pointer';
+      dot.addEventListener('click', () => {
+        current = i;
+        updateFeature(current);
+      });
+    });
+
+    // ============================================================
+    // Navegar al mapa / siguiente página
+    // ============================================================
+    function irAlMapa() {
+      sessionStorage.setItem('loggedIn', 'true');
+      window.location.href = 'login.html';
+    }
+  </script>
+
+</body>
+</html>
