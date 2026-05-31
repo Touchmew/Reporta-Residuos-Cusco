@@ -92,7 +92,7 @@
 
         <!-- Título -->
         <div class="form-title">Iniciar sesión</div>
-        <div class="form-sub">Selecciona tu rol y accede al sistema</div>
+        <div class="form-sub">Accede con tu correo y contraseña</div>
 
         <!-- Selector de rol -->
         <div class="role-lbl">¿Quién eres?</div>
@@ -114,19 +114,74 @@
           <span id="bannerTxt">Accede para reportar puntos críticos y ver el mapa de residuos.</span>
         </div>
 
-        <!-- Campos y botón -->
-        <div class="field-group" id="fieldGroup"></div>
+        <!-- Mensaje de error del servidor -->
+        @if ($errors->has('credenciales'))
+          <div class="server-error" id="serverError">
+            🔒 {{ $errors->first('credenciales') }}
+          </div>
+        @endif
+        @if ($errors->has('sesion'))
+          <div class="server-error" id="serverError">
+            ⚠️ {{ $errors->first('sesion') }}
+          </div>
+        @endif
 
-        <button class="btn-login btn-c" id="btnLogin" onclick="intentarLogin()">
-          <span id="btnIco">👤</span>
-          <span id="btnTxt">Entrar como ciudadano</span>
-        </button>
+        <!-- Formulario real POST -->
+        <form id="loginForm" action="{{ url('/login') }}" method="POST" novalidate>
+          @csrf
+
+          <!-- Campo Correo -->
+          <div class="field-group" id="fieldGroup">
+            <div class="field">
+              <label class="field-lbl" for="iCorreo">Correo electrónico</label>
+              <div class="field-wrap">
+                <span class="field-ico">✉️</span>
+                <input class="field-input {{ $errors->has('correo') ? 'ferr' : '' }}"
+                       id="iCorreo" name="correo" type="email"
+                       placeholder="Ej: alvaro@reporta.pe"
+                       value="{{ old('correo') }}"
+                       autocomplete="email" autocorrect="off"
+                       autocapitalize="none" spellcheck="false"
+                       oninput="valCorreo()" onkeydown="enter(event)">
+              </div>
+              <div class="field-err" id="eCorreo">
+                @error('correo') ❌ {{ $message }} @enderror
+              </div>
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="field">
+              <label class="field-lbl" for="iPwd">Contraseña</label>
+              <div class="field-wrap">
+                <span class="field-ico">🔑</span>
+                <input class="field-input" id="iPwd" name="password" type="password"
+                       placeholder="Tu contraseña segura"
+                       autocomplete="current-password"
+                       oninput="valPwd()" onkeydown="enter(event)">
+                <button type="button" class="eye-btn" id="eyeBtn"
+                  onclick="togglePwd()" aria-label="Mostrar/ocultar contraseña">👁️</button>
+              </div>
+              <div class="field-err" id="ePwd"></div>
+              <div class="pwd-hints">
+                <span class="hint" id="h-len">6+ chars</span>
+                <span class="hint" id="h-may">MAYÚSCULA</span>
+                <span class="hint" id="h-num">número</span>
+                <span class="hint" id="h-esp">especial</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-login btn-c" type="button" id="btnLogin" onclick="intentarLogin()">
+            <span id="btnIco">👤</span>
+            <span id="btnTxt">Entrar como ciudadano</span>
+          </button>
+        </form>
 
         <!-- Pie -->
         <div class="divider">o</div>
         <div class="card-footer">
           ¿Sin cuenta? <a href="#" onclick="toast('Registro próximamente 🚀',false);return false;">Regístrate aquí</a><br>
-          <a href="{{ url("/") }}">← Volver al inicio</a>
+          <a href="{{ url('/') }}">← Volver al inicio</a>
         </div>
 
       </div>
@@ -137,24 +192,8 @@
 
   <script>
   // ══════════════════════════════════════════════════════
-  // CREDENCIALES Y CONFIGURACIÓN
+  // CONFIGURACIÓN DE ROLES (sin credenciales hardcodeadas)
   // ══════════════════════════════════════════════════════
-  const CREDS = {
-    c: [
-      { u:'ciudadano',     p:'Cusco2026!'    },
-      { u:'carlos.quispe', p:'Carlos123#'    },
-      { u:'maria.condori', p:'Maria456@'     },
-    ],
-    m: [
-      { u:'trabajador01',   p:'Muni@2026'    },
-      { u:'limpieza.cusco', p:'Residuos#1'   },
-      { u:'inspector01',    p:'Inspector99!' },
-    ],
-    a: [
-      { u:'admin',       p:'Admin@Cusco2026!' },
-      { u:'superadmin',  p:'SuperAdmin#99'    },
-    ],
-  };
 
   const REDIRECT = { c:'{{ url("/principal") }}', m:'{{ url("/principal") }}', a:'{{ url("/principal") }}' };
 
@@ -218,60 +257,23 @@
   }
 
   // ══════════════════════════════════════════════════════
-  // RENDERIZAR CAMPOS
+  // ACTUALIZAR ESTILO DE CAMPOS según rol seleccionado
   // ══════════════════════════════════════════════════════
   function renderCampos() {
     const c = CFG[rol];
     const fg = g('fieldGroup');
-    fg.className = `field-group ${c.fcCls}`;
+    if (fg) fg.className = `field-group ${c.fcCls}`;
     verPwd = false;
-
-    fg.innerHTML = `
-      <div class="field">
-        <label class="field-lbl">${c.uLabel}</label>
-        <div class="field-wrap">
-          <span class="field-ico">${c.uIco}</span>
-          <input class="field-input" id="iUser" type="text"
-            placeholder="${c.uPh}"
-            autocomplete="username" autocorrect="off"
-            autocapitalize="none" spellcheck="false"
-            inputmode="text"
-            oninput="valUser()" onkeydown="enter(event)">
-        </div>
-        <div class="field-err" id="eUser"></div>
-      </div>
-
-      <div class="field">
-        <label class="field-lbl">Contraseña</label>
-        <div class="field-wrap">
-          <span class="field-ico">🔑</span>
-          <input class="field-input" id="iPwd" type="password"
-            placeholder="Tu contraseña segura"
-            autocomplete="current-password"
-            oninput="valPwd()" onkeydown="enter(event)">
-          <button type="button" class="eye-btn" id="eyeBtn"
-            onclick="togglePwd()" aria-label="Mostrar/ocultar contraseña">👁️</button>
-        </div>
-        <div class="field-err" id="ePwd"></div>
-        <div class="pwd-hints">
-          <span class="hint" id="h-len">6+ chars</span>
-          <span class="hint" id="h-may">MAYÚSCULA</span>
-          <span class="hint" id="h-num">número</span>
-          <span class="hint" id="h-esp">especial</span>
-        </div>
-      </div>
-    `;
   }
 
   // ══════════════════════════════════════════════════════
   // VALIDACIONES
   // ══════════════════════════════════════════════════════
-  function valUser() {
-    const v = g('iUser')?.value.trim() ?? '';
-    if (!v)           return setF('iUser','eUser','',''), false;
-    if (v.length < 3) return setF('iUser','eUser','ferr','⚠ Mínimo 3 caracteres'), false;
-    if (/\s/.test(v)) return setF('iUser','eUser','ferr','⚠ Sin espacios en el usuario'), false;
-    setF('iUser','eUser','fok',''); return true;
+  function valCorreo() {
+    const v = g('iCorreo')?.value.trim() ?? '';
+    if (!v)                       return setF('iCorreo','eCorreo','',''), false;
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(v)) return setF('iCorreo','eCorreo','ferr','⚠ Ingresa un correo válido'), false;
+    setF('iCorreo','eCorreo','fok',''); return true;
   }
 
   function valPwd() {
@@ -296,53 +298,29 @@
   }
 
   // ══════════════════════════════════════════════════════
-  // LOGIN
+  // LOGIN — valida en cliente y envía el formulario POST
   // ══════════════════════════════════════════════════════
   function intentarLogin() {
     if (bloq && Date.now() < bloq) {
       toast(`⏳ Bloqueado. Espera ${Math.ceil((bloq-Date.now())/1000)}s`, true); return;
     }
 
-    const u = g('iUser')?.value.trim() ?? '';
-    const p = g('iPwd')?.value ?? '';
+    const correo = g('iCorreo')?.value.trim() ?? '';
+    const pwd    = g('iPwd')?.value ?? '';
     let ok = true;
 
-    if (!u) { setF('iUser','eUser','ferr','⚠ El usuario es obligatorio'); ok=false; }
-    if (!p) { setF('iPwd','ePwd','ferr','⚠ La contraseña es obligatoria'); ok=false; }
+    if (!correo) { setF('iCorreo','eCorreo','ferr','⚠ El correo es obligatorio'); ok=false; }
+    if (!pwd)    { setF('iPwd','ePwd','ferr','⚠ La contraseña es obligatoria');   ok=false; }
     if (!ok) return;
 
     const btn = g('btnLogin');
     btn.disabled = true;
     btn.innerHTML = `<div class="spinner"></div><span>Verificando...</span>`;
 
+    // Pequeño delay visual antes de submit real
     setTimeout(() => {
-      const match = (CREDS[rol]||[]).find(c => c.u===u && c.p===p);
-
-      if (match) {
-        fallos = 0;
-        sessionStorage.setItem('loggedIn','true');
-        sessionStorage.setItem('rol',rol);
-        sessionStorage.setItem('usuario',u);
-        mostrarExito();
-      } else {
-        fallos++;
-        btn.disabled = false;
-        const c = CFG[rol];
-        btn.innerHTML = `<span>${c.btnIco}</span><span>${c.btnTxt}</span>`;
-
-        if (fallos >= 5) {
-          bloq = Date.now() + 30000;
-          toast('🔒 5 intentos fallidos. Bloqueado 30 segundos.', true);
-          countdownBloq();
-        } else {
-          const r = 5 - fallos;
-          toast(`❌ Credenciales incorrectas · ${r} intento${r!==1?'s':''} restante${r!==1?'s':''}`, true);
-          sacudir();
-          setF('iUser','eUser','ferr','');
-          setF('iPwd','ePwd','ferr','⚠ Usuario o contraseña incorrectos');
-        }
-      }
-    }, 850);
+      g('loginForm').submit();
+    }, 650);
   }
 
   function mostrarExito() {
@@ -395,8 +373,8 @@
   function enter(e) { if (e.key==='Enter') intentarLogin(); }
 
   function limpiarErr() {
-    ['iUser','iPwd'].forEach(id => { const el=g(id); if(el) el.classList.remove('ferr','fok'); });
-    ['eUser','ePwd'].forEach(id => { const el=g(id); if(el) el.innerHTML=''; });
+    ['iCorreo','iPwd'].forEach(id => { const el=g(id); if(el) el.classList.remove('ferr','fok'); });
+    ['eCorreo','ePwd'].forEach(id => { const el=g(id); if(el) el.innerHTML=''; });
   }
 
   function g(id) { return document.getElementById(id); }
@@ -492,6 +470,11 @@
     crearParticulas();
     regenerarParticulas();
     cambiarRol('c');
+
+    // Si hay error del servidor, sacudir la tarjeta
+    if (document.getElementById('serverError')) {
+      setTimeout(() => sacudir(), 300);
+    }
   });
   </script>
 </body>

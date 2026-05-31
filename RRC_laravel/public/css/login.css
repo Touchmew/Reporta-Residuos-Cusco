@@ -325,6 +325,19 @@ input  { font-family: inherit; outline: none; }
 }
 .hint.ok { background:rgba(29,185,84,0.12); border-color:rgba(29,185,84,0.3); color:#86EFAC; }
 
+/* ── ERROR DEL SERVIDOR ── */
+.server-error {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.35);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: #FDA4AF;
+  margin-bottom: 14px;
+  line-height: 1.5;
+  animation: fadeUp 0.3s ease both;
+}
+
 /* ── BOTÓN ── */
 .btn-login {
   width:100%; border-radius:13px; padding:16px;
