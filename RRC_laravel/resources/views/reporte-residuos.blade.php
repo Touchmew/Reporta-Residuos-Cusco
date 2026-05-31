@@ -315,7 +315,7 @@
                 class="w-full rounded-2xl bg-slate-900/60 border border-white/10 px-5 py-4 text-white placeholder:text-slate-400 outline-none focus:border-green-400/70 focus:ring-4 focus:ring-green-500/10 transition"
                 id="nombreReportante"
                 name="nombre"
-                placeholder="Ej: Carlos Quispe"
+                placeholder="Ej: Alvaro Abril"
               />
             </div>
 

@@ -113,37 +113,19 @@
   <!-- Script -->
   <script>
     const URL_UPLOADS = '{{ asset('uploads') }}';
+    const todosLosReportesIniciales = @json($reportes);
     const ITEMS_PER_PAGE = 10;
     let todosLosReportes = [];
     let reportesFiltrados = [];
     let paginaActual = 1;
     let filtroActual = 'todos';
 
-    // Cargar reportes al iniciar
     document.addEventListener('DOMContentLoaded', () => {
-      cargarReportes();
+      todosLosReportes = todosLosReportesIniciales;
+      actualizarCuentasEnFiltros();
+      aplicarFiltros();
       document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
     });
-
-    // Cargar reportes desde el backend
-    async function cargarReportes() {
-      try {
-        const response = await fetch('php/obtener_reportes.php');
-        const data = await response.json();
-
-        if (data.ok && data.reportes) {
-          todosLosReportes = data.reportes;
-          actualizarCuentasEnFiltros();
-          aplicarFiltros();
-        } else {
-          console.error('Error al cargar reportes:', data.error);
-          mostrarSinDatos();
-        }
-      } catch (error) {
-        console.error('Error al conectar:', error);
-        mostrarSinDatos();
-      }
-    }
 
     // Actualizar contadores en los filtros
     function actualizarCuentasEnFiltros() {

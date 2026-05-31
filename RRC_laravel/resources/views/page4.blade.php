@@ -116,103 +116,23 @@
   <div id="toast"></div>
 
   <script>
-    // ============================================================
-    // DATOS DE ZONAS (mismo array que page2 — en producción: fetch PHP)
-    // ============================================================
-    const zonas = [
-      {
-        id: 1,
-        nombre: 'Plaza San Jerónimo',
-        sector: 'Zona Centro',
-        direccion: 'Plazoleta San Jerónimo, San Jerónimo, Cusco',
-        lat: -13.5268, lng: -71.9628,
-        nivel: 'critico',
-        tipo: 'Residuos Sólidos Domésticos',
-        reportes: 9,
-        diasActivo: 3,
-        urgencia: 72,
-        descripcion: 'Acumulación crítica de desechos sólidos en el sector. Se reportan bolsas, cartones y restos orgánicos bloqueando la vía y generando olores.',
-        ultReportes: [
-          { usuario: 'María C.', tiempo: 'Hace 1 hora',  texto: 'El olor es insoportable, hay bolsas apiladas desde hace 3 días.', emoji: '👩' },
-          { usuario: 'Juan P.', tiempo: 'Hace 3 horas', texto: 'Toman fotos pero no recogen. Necesitan intervención urgente.', emoji: '👨' },
-          { usuario: 'Rosa M.', tiempo: 'Hace 5 horas', texto: 'Los comerciantes piden que vengan hoy.', emoji: '👩' },
-        ],
-      },
-      {
-        id: 2,
-        nombre: 'Mercado Vinocanchon',
-        sector: '',
-        direccion: 'Jr. Vinocanchon 456, San Jerónimo, Cusco',
-        lat: -13.5275, lng: -71.9615,
-        nivel: 'moderado',
-        tipo: 'Residuos Sólidos',
-        reportes: 5,
-        diasActivo: 1,
-        urgencia: 45,
-        descripcion: 'Bolsas de basura acumuladas cerca de los puestos. Afecta el flujo de clientes y la zona de ventas.',
-        ultReportes: [
-          { usuario: 'Luis T.', tiempo: 'Hace 2 horas', texto: 'Los clientes no pueden caminar bien entre la basura.', emoji: '👨' },
-          { usuario: 'Ana G.', tiempo: 'Ayer',          texto: 'Segunda vez que reporto el mismo lugar.', emoji: '👩' },
-        ],
-      },
-      {
-        id: 3,
-        nombre: 'Parque Infantil San Jerónimo',
-        sector: 'San Jerónimo',
-        direccion: 'Jr. Los Nevados 45, San Jerónimo, Cusco',
-        lat: -13.5290, lng: -71.9620,
-        nivel: 'limpio',
-        tipo: 'Sin incidencias',
-        reportes: 0,
-        diasActivo: 0,
-        urgencia: 0,
-        descripcion: 'Zona limpia y monitoreada. Ideal para actividades recreativas familiares.',
-        ultReportes: [],
-      },
-      {
-        id: 4,
-        nombre: 'Centro Av. San Jerónimo',
-        sector: '',
-        direccion: 'Av. San Jerónimo 710, San Jerónimo, Cusco',
-        lat: -13.5252, lng: -71.9640,
-        nivel: 'critico',
-        tipo: 'Desmonte / Residuos de Construcción',
-        reportes: 14,
-        diasActivo: 5,
-        urgencia: 88,
-        descripcion: 'Residuos de construcción y escombros invadiendo la vía pública. Hay riesgo para peatones y vehículos.',
-        ultReportes: [
-          { usuario: 'Pedro V.', tiempo: 'Hace 30 min', texto: 'Casi choco porque los materiales están en la pista.', emoji: '👨' },
-          { usuario: 'Carmen R.', tiempo: 'Hace 2 horas', texto: 'Ya van 5 días con esto, necesitan actuar.', emoji: '👩' },
-          { usuario: 'Víctor H.', tiempo: 'Ayer', texto: 'Hay polvo en el aire que afecta la visibilidad.', emoji: '👨' },
-        ],
-      },
-    ];
+    const zona = @json($zona);
 
-    // ============================================================
-    // LEER ID de la URL (?id=1)
-    // ============================================================
-    const params = new URLSearchParams(window.location.search);
-    const zonaId = parseInt(params.get('id')) || 1;
-    const zona = zonas.find(z => z.id === zonaId) || zonas[0];
-
-    // ============================================================
-    // POBLAR LA PÁGINA
-    // ============================================================
     const niveles = {
       critico:  { badge: '🔴 ZONA CRÍTICA', badgeClass: 'status-critical', pillClass: 'pill-red' },
       moderado: { badge: '🟡 ZONA MODERADA', badgeClass: 'status-moderate', pillClass: 'pill-amber' },
-      limpio:   { badge: '✅ ZONA LIMPIA', badgeClass: 'status-clean', pillClass: 'pill-red' },
+      limpio:   { badge: '✅ ZONA LIMPIA', badgeClass: 'status-clean', pillClass: 'pill-green' },
+      conducta: { badge: '🚨 CONDUCTA CIUDADANA', badgeClass: 'status-critical', pillClass: 'pill-purple' },
     };
 
-    const info = niveles[zona.nivel];
+    const info = niveles[zona.nivel] || niveles.critico;
     document.getElementById('heroBadge').textContent  = info.badge;
     document.getElementById('heroBadge').className    = `zone-status-badge ${info.badgeClass}`;
     document.getElementById('heroReportes').textContent = zona.reportes;
     document.getElementById('metaTipo').textContent    = zona.tipo;
     document.getElementById('metaTipo').className      = `cat-pill ${info.pillClass}`;
     document.getElementById('metaFecha').textContent   = zona.diasActivo > 0
-      ? `Hace ${zona.diasActivo * 24}h · ${zona.reportes} reportes`
+      ? `Hace ${zona.diasActivo} día${zona.diasActivo !== 1 ? 's' : ''} · ${zona.reportes} reportes`
       : `Sin incidencias activas`;
     document.getElementById('zonaTitle').textContent   = zona.sector ? `${zona.nombre} — ${zona.sector}` : zona.nombre;
     document.getElementById('zonaDesc').textContent    = zona.descripcion;
@@ -224,7 +144,6 @@
     document.getElementById('reportCount').textContent = `${zona.reportes} reportes`;
     document.title = `${zona.nombre} — Reporta Residuos Cusco`;
 
-    // Renderizar reportes ciudadanos
     const listEl = document.getElementById('reportesList');
     if (zona.ultReportes.length === 0) {
       listEl.innerHTML = `<p style="font-size:0.78rem;color:var(--gray);text-align:center;padding:16px 0">Sin reportes ciudadanos aún</p>`;
@@ -240,9 +159,6 @@
       `).join('');
     }
 
-    // ============================================================
-    // MAPA MINI con Leaflet
-    // ============================================================
     const miniMap = L.map('mini-map', {
       zoomControl: false,
       scrollWheelZoom: false,
@@ -253,7 +169,7 @@
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(miniMap);
 
-    const col = { critico: '#EF4444', moderado: '#F59E0B', limpio: '#1DB954' }[zona.nivel];
+    const col = { critico: '#EF4444', moderado: '#F59E0B', limpio: '#1DB954', conducta: '#A855F7' }[zona.nivel] || '#EF4444';
 
     L.circleMarker([zona.lat, zona.lng], {
       radius: 14,

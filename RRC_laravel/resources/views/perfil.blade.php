@@ -79,7 +79,7 @@
                     Bienvenido de vuelta
                   </p>
                   <h2 class="mt-2 text-3xl md:text-4xl font-extrabold leading-tight">
-                    Carlos <span class="text-green-400">Quispe</span>
+                    {{ $usuario['nombreCorto'] }} <span class="text-green-400">{{ trim($usuario['apellido']) }}</span>
                   </h2>
                   <p class="mt-2 text-slate-300">
                     📍 Cusco, Perú
@@ -88,7 +88,7 @@
               </div>
 
               <div class="px-4 py-2 rounded-full bg-green-500/15 border border-green-400/30 text-green-200 font-bold">
-                🌱 Eco-Activo
+                🌱 {{ $usuario['rango'] }}
               </div>
 
             </div>
@@ -96,17 +96,17 @@
             <!-- Stats -->
             <div class="mt-8 grid grid-cols-3 gap-3">
               <div class="rounded-2xl bg-slate-950/60 border border-white/10 p-4 text-center">
-                <p class="text-3xl font-extrabold text-green-300" id="totalReportes">12</p>
+                <p class="text-3xl font-extrabold text-green-300" id="totalReportes">{{ $usuario['totalReportes'] }}</p>
                 <p class="text-xs text-slate-300 mt-1">Reportes</p>
               </div>
 
               <div class="rounded-2xl bg-slate-950/60 border border-white/10 p-4 text-center">
-                <p class="text-3xl font-extrabold text-green-300" id="resueltos">3</p>
+                <p class="text-3xl font-extrabold text-green-300" id="resueltos">{{ $usuario['resueltos'] }}</p>
                 <p class="text-xs text-slate-300 mt-1">Resueltos</p>
               </div>
 
               <div class="rounded-2xl bg-slate-950/60 border border-white/10 p-4 text-center">
-                <p class="text-3xl font-extrabold text-green-300" id="puntos">45</p>
+                <p class="text-3xl font-extrabold text-green-300" id="puntos">{{ $usuario['puntos'] }}</p>
                 <p class="text-xs text-slate-300 mt-1">Puntos</p>
               </div>
             </div>
@@ -127,8 +127,8 @@
               </div>
 
               <div class="text-right">
-                <p class="text-2xl font-extrabold text-green-300" id="progressPct">45%</p>
-                <p class="text-xs text-slate-300">45 / 100 pts</p>
+                <p class="text-2xl font-extrabold text-green-300" id="progressPct">{{ round(($usuario['puntos'] / $usuario['puntosMax']) * 100) }}%</p>
+                <p class="text-xs text-slate-300">{{ $usuario['puntos'] }} / {{ $usuario['puntosMax'] }} pts</p>
               </div>
             </div>
 
@@ -136,7 +136,7 @@
               <div
                 class="h-full rounded-full bg-gradient-to-r from-green-400 to-emerald-500 shadow-lg shadow-green-500/30 transition-all duration-700"
                 id="progressBar"
-                style="width:45%"
+                style="width:{{ ($usuario['puntos'] / $usuario['puntosMax']) * 100 }}%"
               ></div>
             </div>
 
@@ -257,53 +257,9 @@
     const URL_DETALLE_ZONA = '{{ url('/page4') }}';
     const URL_INICIO = '{{ url('/') }}';
 
-    const usuario = {
-      nombre: 'Carlos Quispe Mamani',
-      puntos: 45,
-      puntosMax: 100,
-      totalReportes: 12,
-      resueltos: 3,
-      rango: 'Eco-Activo',
-    };
-
-    const misReportes = [
-      {
-        nombre: 'Parque Industrial Sur',
-        lugar: 'Av. Industrial 890',
-        tipo: 'Desmonte',
-        nivel: 'red',
-        estado: 'pending',
-        estadoLabel: 'Pendiente',
-        zonaId: 4
-      },
-      {
-        nombre: 'Mercado Los Olivos',
-        lugar: 'Jr. Comercio 120',
-        tipo: 'Residuos domésticos',
-        nivel: 'green',
-        estado: 'done',
-        estadoLabel: 'Resuelto',
-        zonaId: 1
-      },
-      {
-        nombre: 'Esquina Bolívar',
-        lugar: 'Calle Bolívar 45',
-        tipo: 'Basura fuera de horario',
-        nivel: 'purple',
-        estado: 'review',
-        estadoLabel: 'En revisión',
-        zonaId: 2
-      },
-    ];
-
-    const logros = [
-      { icon: '🏅', nombre: 'Primer Reporte', pts: '+5 pts', desbloqueado: true },
-      { icon: '🌱', nombre: 'Eco-Activo', pts: '+15 pts', desbloqueado: true },
-      { icon: '🔟', nombre: '10 Reportes', pts: '+20 pts', desbloqueado: true },
-      { icon: '🦸', nombre: 'Guardián', pts: '+30 pts', desbloqueado: false },
-      { icon: '⭐', nombre: 'Estrella Eco', pts: '+25 pts', desbloqueado: false },
-      { icon: '🏆', nombre: 'Héroe Cusco', pts: '+50 pts', desbloqueado: false },
-    ];
+    const usuario = @json($usuario);
+    const misReportes = @json($misReportes);
+    const logros = @json($logros);
 
     // ============================================================
     // RENDERIZAR REPORTES

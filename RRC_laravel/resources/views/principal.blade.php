@@ -52,19 +52,19 @@
         <!-- Estadísticas -->
         <div class="stats-grid">
           <div class="stat-card">
-            <span class="stat-value">24</span>
+            <span class="stat-value">{{ $stats['reportes_hoy'] }}</span>
             <span class="stat-label">Reportes hoy</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">7</span>
+            <span class="stat-value">{{ $stats['zonas_criticas'] }}</span>
             <span class="stat-label">Zonas críticas</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">89%</span>
+            <span class="stat-value">{{ $stats['atendidos_pct'] }}%</span>
             <span class="stat-label">Atendidos</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value">12</span>
+            <span class="stat-value">{{ $stats['denuncias'] }}</span>
             <span class="stat-label">Denuncias</span>
           </div>
         </div>
@@ -186,53 +186,7 @@
     // =========================================================
     const URL_DETALLE_ZONA = '{{ url('/page4') }}';
 
-    const zonas = [
-      {
-        id: 1,
-        nombre: "Mercado Vinocanchón",
-        direccion: "Mercado Vinocanchón, San Jerónimo, Cusco",
-        nivel: "critico",
-        lat: -13.5437,
-        lng: -71.8879,
-        distancia: "280 m"
-      },
-      {
-        id: 2,
-        nombre: "Plaza San Jerónimo",
-        direccion: "C. Lima 410, San Jerónimo, Cusco",
-        nivel: "moderado",
-        lat: -13.5445,
-        lng: -71.8840,
-        distancia: "120 m"
-      },
-      {
-        id: 3,
-        nombre: "Av. La Cultura - San Jerónimo",
-        direccion: "Av. La Cultura, San Jerónimo, Cusco",
-        nivel: "critico",
-        lat: -13.5450,
-        lng: -71.8810,
-        distancia: "520 m"
-      },
-      {
-        id: 4,
-        nombre: "Parque Vecinal San Jerónimo",
-        direccion: "Zona residencial, San Jerónimo, Cusco",
-        nivel: "limpio",
-        lat: -13.5440,
-        lng: -71.8855,
-        distancia: "420 m"
-      },
-      {
-        id: 5,
-        nombre: "Jr. Principal",
-        direccion: "Jr. Principal, San Jerónimo, Cusco",
-        nivel: "conducta",
-        lat: -13.5448,
-        lng: -71.8835,
-        distancia: "230 m"
-      }
-    ];
+    const zonas = @json($zonas);
 
     const colores = {
       critico: '#EF4444',
