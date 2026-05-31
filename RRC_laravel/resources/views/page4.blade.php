@@ -38,10 +38,9 @@
     </div>
 
     <!-- Título y descripción -->
-    <h1 class="zone-title" id="zonaTitle">Mercado Central — Sector Norte</h1>
+    <h1 class="zone-title" id="zonaTitle">Plaza San Jerónimo — Zona afectada</h1>
     <p class="zone-desc" id="zonaDesc">
-      Acumulación crítica de desechos sólidos domésticos y comerciales sin recoger.
-      Se reportan bolsas, cartones y restos orgánicos afectando la vía pública.
+      Acumulación crítica de desechos sólidos en San Jerónimo. Se reportan bolsas, cartones y restos orgánicos afectando la vía pública.
     </p>
 
     <!-- Estadísticas -->
@@ -64,9 +63,8 @@
     <div class="location-strip">
       <span class="loc-pin">📍</span>
       <div class="loc-details">
-        <div class="loc-address" id="locAddress">Av. Ejército 800, Cusco</div>
-        <div class="loc-coords" id="locCoords">-13.51830°, -71.97840°</div>
-      </div>
+        <div class="loc-address" id="locAddress">Av. Los Arces s/n, San Jerónimo, Cusco</div>
+        <div class="loc-coords" id="locCoords">-13.52680°, -71.96280°</div>
       <button class="navigate-btn" id="navBtn" onclick="navegarZona()">
         🗺️ Navegar
       </button>
@@ -124,16 +122,16 @@
     const zonas = [
       {
         id: 1,
-        nombre: 'Mercado Central',
-        sector: 'Sector Norte',
-        direccion: 'Av. Ejército 800, Cusco',
-        lat: -13.5183, lng: -71.9784,
+        nombre: 'Plaza San Jerónimo',
+        sector: 'Zona Centro',
+        direccion: 'Plazoleta San Jerónimo, San Jerónimo, Cusco',
+        lat: -13.5268, lng: -71.9628,
         nivel: 'critico',
         tipo: 'Residuos Sólidos Domésticos',
-        reportes: 8,
+        reportes: 9,
         diasActivo: 3,
         urgencia: 72,
-        descripcion: 'Acumulación crítica de desechos sólidos domésticos y comerciales sin recoger. Se reportan bolsas, cartones y restos orgánicos afectando la vía pública y generando malos olores.',
+        descripcion: 'Acumulación crítica de desechos sólidos en el sector. Se reportan bolsas, cartones y restos orgánicos bloqueando la vía y generando olores.',
         ultReportes: [
           { usuario: 'María C.', tiempo: 'Hace 1 hora',  texto: 'El olor es insoportable, hay bolsas apiladas desde hace 3 días.', emoji: '👩' },
           { usuario: 'Juan P.', tiempo: 'Hace 3 horas', texto: 'Toman fotos pero no recogen. Necesitan intervención urgente.', emoji: '👨' },
@@ -142,47 +140,47 @@
       },
       {
         id: 2,
-        nombre: 'Parque Los Pinos',
+        nombre: 'Mercado Vinocanchon',
         sector: '',
-        direccion: 'Jr. Las Flores 240, Cusco',
-        lat: -13.5220, lng: -71.9750,
+        direccion: 'Jr. Vinocanchon 456, San Jerónimo, Cusco',
+        lat: -13.5275, lng: -71.9615,
         nivel: 'moderado',
         tipo: 'Residuos Sólidos',
-        reportes: 3,
+        reportes: 5,
         diasActivo: 1,
         urgencia: 45,
-        descripcion: 'Bolsas de basura acumuladas cerca a los bancales del parque. Afecta el área de juegos infantiles.',
+        descripcion: 'Bolsas de basura acumuladas cerca de los puestos. Afecta el flujo de clientes y la zona de ventas.',
         ultReportes: [
-          { usuario: 'Luis T.', tiempo: 'Hace 2 horas', texto: 'Los niños no pueden jugar, hay basura en el tobogán.', emoji: '👨' },
+          { usuario: 'Luis T.', tiempo: 'Hace 2 horas', texto: 'Los clientes no pueden caminar bien entre la basura.', emoji: '👨' },
           { usuario: 'Ana G.', tiempo: 'Ayer',          texto: 'Segunda vez que reporto el mismo lugar.', emoji: '👩' },
         ],
       },
       {
         id: 3,
-        nombre: 'Plaza San Martín',
-        sector: 'Centro Histórico',
-        direccion: 'Centro Histórico, Cusco',
-        lat: -13.5150, lng: -71.9820,
+        nombre: 'Parque Infantil San Jerónimo',
+        sector: 'San Jerónimo',
+        direccion: 'Jr. Los Nevados 45, San Jerónimo, Cusco',
+        lat: -13.5290, lng: -71.9620,
         nivel: 'limpio',
         tipo: 'Sin incidencias',
         reportes: 0,
         diasActivo: 0,
         urgencia: 0,
-        descripcion: 'Zona actualmente limpia y monitoreada. La municipalidad realiza limpieza diaria.',
+        descripcion: 'Zona limpia y monitoreada. Ideal para actividades recreativas familiares.',
         ultReportes: [],
       },
       {
         id: 4,
-        nombre: 'Av. La Cultura - Tramo Norte',
+        nombre: 'Centro Av. San Jerónimo',
         sector: '',
-        direccion: 'Av. La Cultura 1200, Cusco',
-        lat: -13.5210, lng: -71.9700,
+        direccion: 'Av. San Jerónimo 710, San Jerónimo, Cusco',
+        lat: -13.5252, lng: -71.9640,
         nivel: 'critico',
         tipo: 'Desmonte / Residuos de Construcción',
-        reportes: 12,
+        reportes: 14,
         diasActivo: 5,
         urgencia: 88,
-        descripcion: 'Zona con desmonte y residuos de construcción bloqueando parcialmente la berma. Se reportan bolsas de cemento, varillas y restos de mampostería.',
+        descripcion: 'Residuos de construcción y escombros invadiendo la vía pública. Hay riesgo para peatones y vehículos.',
         ultReportes: [
           { usuario: 'Pedro V.', tiempo: 'Hace 30 min', texto: 'Casi choco porque los materiales están en la pista.', emoji: '👨' },
           { usuario: 'Carmen R.', tiempo: 'Hace 2 horas', texto: 'Ya van 5 días con esto, necesitan actuar.', emoji: '👩' },

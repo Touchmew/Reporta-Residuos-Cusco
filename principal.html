@@ -952,53 +952,53 @@
     const zonas = [
       {
         id: 1,
-        nombre: 'Mercado Central',
-        direccion: 'Av. Ejército 800, Cusco',
-        lat: -13.5183,
-        lng: -71.9784,
+        nombre: 'Plaza San Jerónimo',
+        direccion: 'Plazoleta San Jerónimo, San Jerónimo, Cusco',
+        lat: -13.5268,
+        lng: -71.9628,
         nivel: 'critico',
-        reportes: 8,
-        distancia: '230 m',
+        reportes: 9,
+        distancia: '120 m',
       },
       {
         id: 2,
-        nombre: 'Parque Los Pinos',
-        direccion: 'Jr. Las Flores 240, Cusco',
-        lat: -13.5220,
-        lng: -71.9750,
+        nombre: 'Mercado Vinocanchon',
+        direccion: 'Jr. Vinocanchon 456, San Jerónimo, Cusco',
+        lat: -13.5275,
+        lng: -71.9615,
         nivel: 'moderado',
-        reportes: 3,
-        distancia: '510 m',
+        reportes: 5,
+        distancia: '280 m',
       },
       {
         id: 3,
-        nombre: 'Plaza San Martín',
-        direccion: 'Centro Histórico, Cusco',
-        lat: -13.5150,
-        lng: -71.9820,
+        nombre: 'Parque Infantil San Jerónimo',
+        direccion: 'Jr. Los Nevados 45, San Jerónimo, Cusco',
+        lat: -13.5290,
+        lng: -71.9620,
         nivel: 'limpio',
         reportes: 0,
-        distancia: '1.2 km',
+        distancia: '420 m',
       },
       {
         id: 4,
-        nombre: 'Av. La Cultura',
-        direccion: 'Tramo norte',
-        lat: -13.5210,
-        lng: -71.9700,
+        nombre: 'Centro Av. San Jerónimo',
+        direccion: 'Av. San Jerónimo 710, San Jerónimo, Cusco',
+        lat: -13.5252,
+        lng: -71.9640,
         nivel: 'critico',
-        reportes: 12,
-        distancia: '900 m',
+        reportes: 14,
+        distancia: '520 m',
       },
       {
         id: 5,
-        nombre: 'Vecinos dejando basura fuera de horario',
-        direccion: 'Urb. Magisterio',
-        lat: -13.5160,
-        lng: -71.9720,
+        nombre: 'Calle Principal',
+        direccion: 'Jr. Principal 88, San Jerónimo, Cusco',
+        lat: -13.5240,
+        lng: -71.9625,
         nivel: 'conducta',
-        reportes: 5,
-        distancia: '300 m',
+        reportes: 6,
+        distancia: '230 m',
       }
     ];
 
@@ -1028,7 +1028,7 @@
     // =========================================================
     const map = L.map('map', {
       zoomControl: false
-    }).setView([-13.5183, -71.9784], 15);
+    }).setView([-13.5268, -71.9620], 15);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

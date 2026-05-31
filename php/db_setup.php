@@ -65,10 +65,10 @@ try {
     if ((int)$count === 0) {
         $pdo->exec("
             INSERT INTO reportes (nombre, tipo, severidad, latitud, longitud, direccion, descripcion, estado) VALUES
-            ('María Condori',  'residuos',    'grave',    -13.5183,  -71.9784, 'Av. Ejército 800, Cusco',       'Acumulación de bolsas de basura sin recoger por 3 días. Olor intenso y moscas.', 'pendiente'),
-            ('Juan Huanca',    'organico',    'moderado', -13.5220,  -71.9750, 'Jr. Las Flores 240, Cusco',     'Restos orgánicos cerca al parque, afecta a los niños.', 'en_revision'),
-            ('Rosa Quispe',    'industrial',  'grave',    -13.5210,  -71.9700, 'Av. La Cultura 1200, Cusco',    'Desmonte de construcción bloqueando la berma. Peligroso para conductores.', 'pendiente'),
-            ('Pedro Vargas',   'residuos',    'leve',     -13.5150,  -71.9820, 'Plaza San Martín, Centro',      'Algunas bolsas sueltas cerca a los jardines.', 'resuelto')
+            ('María Condori',  'residuos',    'grave',    -13.5268,  -71.9628, 'Av. Los Arces s/n, San Jerónimo, Cusco',       'Acumulación de bolsas de basura sin recoger por 3 días. Olor intenso y moscas.', 'pendiente'),
+            ('Juan Huanca',    'organico',    'moderado', -13.5260,  -71.9612, 'Jr. El Sol 123, San Jerónimo, Cusco',     'Restos orgánicos cerca al parque, afecta a los niños.', 'en_revision'),
+            ('Rosa Quispe',    'industrial',  'grave',    -13.5252,  -71.9634, 'Av. San Jerónimo 710, San Jerónimo, Cusco',    'Desmonte de construcción bloqueando la berma. Peligroso para conductores.', 'pendiente'),
+            ('Pedro Vargas',   'residuos',    'leve',     -13.5280,  -71.9604, 'Parque de la Familia, San Jerónimo, Cusco',      'Algunas bolsas sueltas cerca a los jardines.', 'resuelto')
         ");
         $log[] = "✅ Datos de ejemplo insertados (4 reportes).";
     } else {
