@@ -91,18 +91,6 @@
 
         <!-- Navegación Desktop -->
         <nav class="desktop-nav">
-          <a href="{{ url("/principal") }}" class="desktop-nav-item active">
-            <span class="desktop-nav-icon">🗺️</span>
-            <span>Principal</span>
-          </a>
-          <a href="{{ url("/reporte-residuos") }}" class="desktop-nav-item">
-            <span class="desktop-nav-icon">➕</span>
-            <span>Reportar</span>
-          </a>
-          <a href="{{ url("/historial") }}" class="desktop-nav-item">
-            <span class="desktop-nav-icon">📋</span>
-            <span>Historial</span>
-          </a>
           <a href="{{ url("/perfil") }}" class="desktop-nav-item">
             <span class="desktop-nav-icon">👤</span>
             <span>Perfil</span>
@@ -196,56 +184,53 @@
     // =========================================================
     // DATOS
     // =========================================================
+    const URL_DETALLE_ZONA = '{{ url('/page4') }}';
+
     const zonas = [
       {
         id: 1,
-        nombre: 'Plaza San Jerónimo',
-        direccion: 'Plazoleta San Jerónimo, San Jerónimo, Cusco',
-        lat: -13.5268,
-        lng: -71.9628,
-        nivel: 'critico',
-        reportes: 9,
-        distancia: '120 m',
+        nombre: "Mercado Vinocanchón",
+        direccion: "Mercado Vinocanchón, San Jerónimo, Cusco",
+        nivel: "critico",
+        lat: -13.5437,
+        lng: -71.8879,
+        distancia: "280 m"
       },
       {
         id: 2,
-        nombre: 'Mercado Vinocanchon',
-        direccion: 'Jr. Vinocanchon 456, San Jerónimo, Cusco',
-        lat: -13.5275,
-        lng: -71.9615,
-        nivel: 'moderado',
-        reportes: 5,
-        distancia: '280 m',
+        nombre: "Plaza San Jerónimo",
+        direccion: "C. Lima 410, San Jerónimo, Cusco",
+        nivel: "moderado",
+        lat: -13.5445,
+        lng: -71.8840,
+        distancia: "120 m"
       },
       {
         id: 3,
-        nombre: 'Parque Infantil San Jerónimo',
-        direccion: 'Jr. Los Nevados 45, San Jerónimo, Cusco',
-        lat: -13.5290,
-        lng: -71.9620,
-        nivel: 'limpio',
-        reportes: 0,
-        distancia: '420 m',
+        nombre: "Av. La Cultura - San Jerónimo",
+        direccion: "Av. La Cultura, San Jerónimo, Cusco",
+        nivel: "critico",
+        lat: -13.5450,
+        lng: -71.8810,
+        distancia: "520 m"
       },
       {
         id: 4,
-        nombre: 'Centro Av. San Jerónimo',
-        direccion: 'Av. San Jerónimo 710, San Jerónimo, Cusco',
-        lat: -13.5252,
-        lng: -71.9640,
-        nivel: 'critico',
-        reportes: 14,
-        distancia: '520 m',
+        nombre: "Parque Vecinal San Jerónimo",
+        direccion: "Zona residencial, San Jerónimo, Cusco",
+        nivel: "limpio",
+        lat: -13.5440,
+        lng: -71.8855,
+        distancia: "420 m"
       },
       {
         id: 5,
-        nombre: 'Calle Principal',
-        direccion: 'Jr. Principal 88, San Jerónimo, Cusco',
-        lat: -13.5240,
-        lng: -71.9625,
-        nivel: 'conducta',
-        reportes: 6,
-        distancia: '230 m',
+        nombre: "Jr. Principal",
+        direccion: "Jr. Principal, San Jerónimo, Cusco",
+        nivel: "conducta",
+        lat: -13.5448,
+        lng: -71.8835,
+        distancia: "230 m"
       }
     ];
 
@@ -275,7 +260,7 @@
     // =========================================================
     const map = L.map('map', {
       zoomControl: false
-    }).setView([-13.5268, -71.9620], 15);
+    }).setView([-13.5437, -71.8879], 15);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -371,7 +356,7 @@
               ${zona.reportes} reportes
             </span>
           </div>
-          <a href="detalle-zona.html?id=${zona.id}"
+          <a href="${URL_DETALLE_ZONA}?id=${zona.id}"
              style="
                display:block;
                background:#1DB954;
@@ -443,7 +428,7 @@
         `${filtradas.length} zonas`;
 
       lista.innerHTML = filtradas.map(zona => `
-        <a href="detalle-zona.html?id=${zona.id}"
+        <a href="${URL_DETALLE_ZONA}?id=${zona.id}"
            class="alert-card">
           <div class="alert-indicator"
                style="background:${colores[zona.nivel]}">
@@ -494,6 +479,7 @@
             16
           );
 
+          /* Pin de ubicación desactivado temporalmente
           L.circleMarker(
             [latitude, longitude],
             {
@@ -507,6 +493,7 @@
           .addTo(map)
           .bindPopup('📍 Estás aquí')
           .openPopup();
+          */
 
           mostrarToast('Ubicación encontrada');
         });

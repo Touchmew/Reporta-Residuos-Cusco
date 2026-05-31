@@ -42,7 +42,7 @@
         <div class="hidden md:flex items-center gap-7 text-sm text-slate-300">
           <a href="{{ url("/") }}" class="hover:text-green-300 transition">Inicio</a>
           <a href="{{ url("/principal") }}" class="hover:text-green-300 transition">Mapa</a>
-          <a href="{{ url("/page3") }}"  class="text-green-300 font-semibold">Reportar</a>
+          <a href="{{ url('/reporte-residuos') }}" class="text-green-300 font-semibold">Reportar</a>
           <a href="{{ url("/perfil") }}" class="hover:text-green-300 transition">Perfil</a>
         </div>
 

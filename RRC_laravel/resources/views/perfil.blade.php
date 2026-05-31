@@ -254,6 +254,9 @@
     // DATOS DEL USUARIO
     // En producción: vendrían del backend PHP o Laravel
     // ============================================================
+    const URL_DETALLE_ZONA = '{{ url('/page4') }}';
+    const URL_INICIO = '{{ url('/') }}';
+
     const usuario = {
       nombre: 'Carlos Quispe Mamani',
       puntos: 45,
@@ -320,7 +323,7 @@
 
     document.getElementById('reportesList').innerHTML = misReportes.map(r => `
       <a
-        href="page4.html?id=${r.zonaId}"
+        href="${URL_DETALLE_ZONA}?id=${r.zonaId}"
         class="group flex flex-col sm:flex-row sm:items-center gap-4 rounded-3xl bg-slate-950/60 border border-white/10 hover:border-green-400/40 hover:bg-slate-900/80 transition p-5 text-white no-underline"
       >
         <div class="flex items-center gap-4 flex-1">
@@ -379,7 +382,7 @@
     function cerrarSesion() {
       if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
         sessionStorage.clear();
-        window.location.href = 'index.html';
+        window.location.href = URL_INICIO;
       }
     }
 

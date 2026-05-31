@@ -299,7 +299,7 @@
     // ============================================================
     function irAlMapa() {
       sessionStorage.setItem('loggedIn', 'true');
-      window.location.href = 'login.html';
+      window.location.href = '{{ url('/login') }}';
     }
   </script>
 

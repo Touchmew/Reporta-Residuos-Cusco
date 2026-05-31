@@ -1,4 +1,4 @@
-reporte-residuos<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -112,6 +112,7 @@ reporte-residuos<!DOCTYPE html>
 
   <!-- Script -->
   <script>
+    const URL_UPLOADS = '{{ asset('uploads') }}';
     const ITEMS_PER_PAGE = 10;
     let todosLosReportes = [];
     let reportesFiltrados = [];
@@ -233,7 +234,7 @@ reporte-residuos<!DOCTYPE html>
 
           ${reporte.foto ? `
             <div class="mt-3">
-              <img src="uploads/${reporte.foto}" alt="Foto del reporte" class="w-full max-h-64 rounded-lg object-cover border border-white/10">
+              <img src="${URL_UPLOADS}/${reporte.foto}" alt="Foto del reporte" class="w-full max-h-64 rounded-lg object-cover border border-white/10">
             </div>
           ` : ''}
         </div>

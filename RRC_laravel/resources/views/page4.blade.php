@@ -88,7 +88,7 @@
   <!-- ===== BOTONES FIJOS ===== -->
   <div class="action-row">
     <button class="btn-share" onclick="compartirZona()">🔗 Compartir</button>
-    <a href="{{ url("/page3") }}"  class="btn-report">🚨 Reportar también</a>
+    <a href="{{ url('/reporte-residuos') }}" class="btn-report">🚨 Reportar también</a>
   </div>
 
   <!-- ===== NAV INFERIOR ===== -->
@@ -98,14 +98,14 @@
       <span class="nav-label" style="color:var(--green)">Mapa</span>
       <div class="nav-active-dot"></div>
     </a>
-    <a href="{{ url("/page3") }}"  class="nav-item" style="text-decoration:none">
+    <a href="{{ url('/reporte-residuos') }}" class="nav-item" style="text-decoration:none">
       <span class="nav-icon">➕</span>
       <span class="nav-label">Reportar</span>
     </a>
-    <div class="nav-item" onclick="mostrarToast('Historial próximamente')">
+    <a href="{{ url('/historial') }}" class="nav-item" style="text-decoration:none">
       <span class="nav-icon">📋</span>
       <span class="nav-label">Historial</span>
-    </div>
+    </a>
     <a href="{{ url("/perfil") }}" class="nav-item" style="text-decoration:none">
       <span class="nav-icon">👤</span>
       <span class="nav-label">Perfil</span>
