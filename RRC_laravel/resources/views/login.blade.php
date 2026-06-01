@@ -177,7 +177,7 @@
         <!-- Pie -->
         <div class="divider">o</div>
         <div class="card-footer">
-          ¿Sin cuenta? <a href="#" onclick="toast('Registro próximamente 🚀',false);return false;">Regístrate aquí</a><br>
+          ¿Sin cuenta? <a href="{{ url('/registro') }}">Regístrate aquí</a><br>
           <a href="{{ url('/') }}">← Volver al inicio</a>
         </div>
 

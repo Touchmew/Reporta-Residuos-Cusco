@@ -10,6 +10,7 @@ class HistorialController extends Controller
     public function index(): View
     {
         $reportes = Reporte::with('usuario')
+            ->where('usuario_id', session('usuario_id'))
             ->orderByDesc('fecha_reporte')
             ->get()
             ->map(fn (Reporte $r) => $r->toHistorialArray())

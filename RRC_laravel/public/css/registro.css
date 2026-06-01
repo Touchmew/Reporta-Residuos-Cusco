@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════
+   REGISTRO.CSS — Solo estilos adicionales no cubiertos por login.css
+   ═══════════════════════════════════════ */
+
+/* Etiqueta "(opcional)" inline en el label */
+.opt-label {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--slate);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+
+/* El card de registro puede ser un poco más alto que el de login
+   en pantallas pequeñas, aseguramos scroll suave */
+@media (max-width: 599px) {
+  .panel-right {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+}
