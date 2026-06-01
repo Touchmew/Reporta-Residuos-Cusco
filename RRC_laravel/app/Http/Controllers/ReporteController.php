@@ -42,7 +42,7 @@ class ReporteController extends Controller
         $categoria = $categoriaMap[$request->tipo] ?? 'residuos';
 
         // Insertar en la base de datos
-        DB::table('reportes')->insert([
+        $reporteId = DB::table('reportes')->insertGetId([
             'usuario_id'  => session('usuario_id'),
             'titulo'      => $titulo,
             'descripcion' => $request->descripcion,
@@ -53,6 +53,13 @@ class ReporteController extends Controller
             'latitud'     => $request->latitud,
             'longitud'    => $request->longitud,
             'distrito'    => 'San Jerónimo',
+        ]);
+
+        DB::table('comentarios')->insert([
+            'reporte_id' => $reporteId,
+            'usuario_id' => session('usuario_id'),
+            'comentario' => $request->descripcion,
+            'fecha_comentario' => now()
         ]);
 
         return redirect('/historial')->with('success', 'Reporte enviado correctamente');
