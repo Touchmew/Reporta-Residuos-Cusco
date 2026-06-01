@@ -144,9 +144,6 @@
         </div>
       </div>
 
-      <!-- FAB -->
-      <a href="{{ url("/reporte-residuos") }}" class="fab" title="Nuevo reporte">➕</a>
-
     </main>
 
     <!-- =========================================================

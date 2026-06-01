@@ -142,8 +142,10 @@
         <form
           class="rounded-[2rem] bg-white/10 border border-white/10 backdrop-blur-xl p-6 md:p-8 shadow-2xl"
           id="reportForm"
-          onsubmit="return false;"
+          action="{{ url('/reportes/guardar') }}"
+          method="POST"
         >
+          @csrf
 
           <div class="mb-8">
             <p class="text-sm uppercase tracking-[0.25em] text-green-300 font-bold">
@@ -370,20 +372,14 @@
             />
           </div>
 
-          <!-- Nota informativa -->
-          <div class="rounded-2xl bg-blue-500/10 border border-blue-400/20 p-4 text-sm text-blue-100 leading-relaxed mb-6">
-            ℹ️ Al enviar, se abrirá WhatsApp con la información del reporte:
-            coordenadas GPS, tipo de problema, gravedad, referencia y descripción.
-          </div>
-
-          <!-- Botón WhatsApp -->
+          <!-- Botón de envío -->
           <button
             type="button"
             class="w-full rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-slate-950 font-extrabold px-6 py-4 text-lg transition shadow-xl shadow-green-500/20"
-            id="btnWhatsapp"
+            id="btnEnviar"
             onclick="enviarReporte()"
           >
-            💬 Enviar reporte a Municipalidad
+            ✅ Enviar reporte a Municipalidad
           </button>
 
         </form>
@@ -537,17 +533,12 @@
     }
 
     // ============================================================
-    // ENVIAR REPORTE VÍA WHATSAPP
+    // ENVIAR REPORTE AL SERVIDOR
     // ============================================================
     function enviarReporte() {
       const descripcion = document.getElementById('descripcion').value.trim();
-      const nombre = document.getElementById('nombreReportante').value.trim() || 'Ciudadano anónimo';
-      const referencia = document.getElementById('referencia').value.trim() || 'Sin referencia adicional';
-      const tipo = document.getElementById('tipoInput').value;
-      const severidad = document.getElementById('sevInput').value;
       const lat = document.getElementById('latInput').value;
       const lng = document.getElementById('lngInput').value;
-      const direccion = document.getElementById('addressInput').value || 'Cusco, Perú';
 
       if (!lat || !lng) {
         mostrarToast('⚠️ Primero obtén tu ubicación GPS');
@@ -560,98 +551,8 @@
         return;
       }
 
-      const tipoLabel = {
-        residuos: '🗑️ Residuos domésticos',
-        fuera_horario: '⏰ Basura fuera del horario establecido',
-        industrial: '🏗️ Desmonte / residuos de construcción',
-        toxico: '☣️ Residuos peligrosos o contaminantes',
-        organico: '🌿 Residuos orgánicos',
-        punto_critico: '📍 Punto crítico de acumulación',
-      }[tipo] || tipo;
-
-      const sevLabel = {
-        leve: '🟢 Leve',
-        moderado: '🟡 Moderado',
-        grave: '🔴 Grave / urgente',
-      }[severidad] || severidad;
-
-      const fecha = new Date().toLocaleString('es-PE', {
-        timeZone: 'America/Lima'
-      });
-
-      const gmapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
-
-      const mensaje = [
-        '🚨 *REPORTE DE RESIDUOS SÓLIDOS*',
-        '🏛️ Sistema: Reporta Residuos Cusco',
-        '',
-        `👤 *Reportante:* ${nombre}`,
-        `📅 *Fecha/Hora:* ${fecha}`,
-        '',
-        `📍 *Ubicación GPS:*`,
-        `Lat: ${parseFloat(lat).toFixed(6)}`,
-        `Lng: ${parseFloat(lng).toFixed(6)}`,
-        `Dirección: ${direccion}`,
-        `Referencia: ${referencia}`,
-        `🗺️ Ver en mapa: ${gmapsUrl}`,
-        '',
-        `♻️ *Tipo de reporte:* ${tipoLabel}`,
-        `⚠️ *Gravedad:* ${sevLabel}`,
-        '',
-        `📝 *Descripción:*`,
-        descripcion,
-        '',
-        '─────────────────────',
-        '_Enviado desde Reporta Residuos Cusco_',
-      ].join('\n');
-
-      const url = `https://wa.me/${WA_MUNICIPALIDAD}?text=${encodeURIComponent(mensaje)}`;
-
-      guardarEnServidor({
-        nombre,
-        tipo,
-        severidad,
-        lat,
-        lng,
-        direccion,
-        referencia,
-        descripcion,
-        fecha
-      });
-
-      window.open(url, '_blank');
-      mostrarToast('✅ Abriendo WhatsApp...');
-    }
-
-    // ============================================================
-    // GUARDAR EN SERVIDOR PHP
-    // ============================================================
-    async function guardarEnServidor(datos) {
-      try {
-        const form = new FormData();
-
-        Object.entries(datos).forEach(([key, value]) => {
-          form.append(key, value);
-        });
-
-        const fotoInput = document.getElementById('fotoInput');
-
-        if (fotoInput.files.length > 0) {
-          form.append('foto', fotoInput.files[0]);
-        }
-
-        const res = await fetch('php/guardar_reporte.php', {
-          method: 'POST',
-          body: form,
-        });
-
-        if (res.ok) {
-          const json = await res.json();
-          console.log('Reporte guardado:', json);
-        }
-      } catch {
-        console.log('Servidor no disponible, solo se envió por WhatsApp');
-      }
+      // Enviar el formulario al backend
+      document.getElementById('reportForm').submit();
     }
 
     // ============================================================

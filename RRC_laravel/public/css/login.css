@@ -224,7 +224,7 @@ input  { font-family: inherit; outline: none; }
 }
 
 .role-tabs {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 7px; margin-bottom: 16px;
 }
 

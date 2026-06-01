@@ -4,6 +4,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ZonaController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,13 @@ Route::middleware('auth.sesion')->group(function () {
     Route::get('/historial', [HistorialController::class, 'index']);
     Route::get('/perfil',    [PerfilController::class,    'index']);
     Route::get('/page4',     [ZonaController::class,      'show']);
+    
+    // Guardar reportes
+    Route::post('/reportes/guardar', [ReporteController::class, 'guardar']);
+    
+    // Panel municipal
+    Route::get('/municipalidad', [App\Http\Controllers\MunicipalidadController::class, 'index']);
+    Route::post('/municipalidad/reporte/{id}/estado', [App\Http\Controllers\MunicipalidadController::class, 'cambiarEstado']);
+    Route::get('/municipalidad/perfil', [App\Http\Controllers\MunicipalidadController::class, 'perfil']);
 });
 

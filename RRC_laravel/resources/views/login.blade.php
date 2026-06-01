@@ -103,9 +103,6 @@
           <div class="role-tab" data-rol="m" onclick="cambiarRol('m')">
             <span class="r-ico">🏛️</span>Municipalidad
           </div>
-          <div class="role-tab" data-rol="a" onclick="cambiarRol('a')">
-            <span class="r-ico">🛡️</span>Admin
-          </div>
         </div>
 
         <!-- Banner informativo -->
@@ -195,7 +192,7 @@
   // CONFIGURACIÓN DE ROLES (sin credenciales hardcodeadas)
   // ══════════════════════════════════════════════════════
 
-  const REDIRECT = { c:'{{ url("/principal") }}', m:'{{ url("/principal") }}', a:'{{ url("/principal") }}' };
+  const REDIRECT = { c:'{{ url("/principal") }}', m:'{{ url("/principal") }}' };
 
   const CFG = {
     c: {
@@ -215,15 +212,6 @@
       uLabel:   'Código de trabajador', uPh: 'Ej: trabajador01', uIco: '🏛️',
       sucIco:   '🏛️', sucBg: 'linear-gradient(135deg,#1D4ED8,#3B82F6)',
       sucTitle: '¡Bienvenido, trabajador!', sucSub: 'Cargando panel municipal...',
-    },
-    a: {
-      banner:   'Acceso restringido al panel de administración. Solo personal autorizado.',
-      bnCls:    'bn-a', banIco: '🛡️',
-      btnCls:   'btn-a', btnIco: '🛡️', btnTxt: 'Entrar como administrador',
-      tabCls:   'act-a', fcCls: 'fc-a',
-      uLabel:   'Usuario administrador', uPh: 'Ej: admin', uIco: '🛡️',
-      sucIco:   '🛡️', sucBg: 'linear-gradient(135deg,#B45309,#F59E0B)',
-      sucTitle: '¡Bienvenido, admin!', sucSub: 'Cargando panel de control...',
     },
   };
 

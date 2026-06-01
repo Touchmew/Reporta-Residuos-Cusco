@@ -42,6 +42,10 @@ class LoginController extends Controller
         $request->session()->put('correo',     $usuario->correo);
         $request->session()->put('rol',        $usuario->rol);
 
+        if ($usuario->rol === 'municipalidad') {
+            return redirect('/municipalidad');
+        }
+
         return redirect('/principal');
     }
 
