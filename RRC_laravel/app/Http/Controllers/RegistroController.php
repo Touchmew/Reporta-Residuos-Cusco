@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controlador para el registro de nuevos usuarios.
+ * Maneja la validación y creación de cuentas de ciudadanos.
+ */
 class RegistroController extends Controller
 {
     /**

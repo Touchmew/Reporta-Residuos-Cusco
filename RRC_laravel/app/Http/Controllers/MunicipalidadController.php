@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Controlador para gestionar la vista de municipalidad.
+ * Permite visualizar, cambiar estado de reportes y ver estadísticas.
+ */
 class MunicipalidadController extends Controller
 {
+    /**
+     * Muestra todos los reportes con estadísticas resumidas.
+     */
     public function index()
     {
         $reportes = DB::table('reportes')->get()->map(function ($r) {
@@ -25,6 +32,9 @@ class MunicipalidadController extends Controller
         return view('municipalidad', compact('reportes', 'estadisticas'));
     }
 
+    /**
+     * Actualiza el estado de un reporte (pendiente, en_proceso, resuelto).
+     */
     public function cambiarEstado(Request $request, $id)
     {
         $request->validate([
@@ -40,6 +50,9 @@ class MunicipalidadController extends Controller
         return back()->with('success', 'Estado actualizado');
     }
 
+    /**
+     * Muestra el perfil de la municipalidad con sus estadísticas.
+     */
     public function perfil()
     {
         $reportes = DB::table('reportes')->get();
@@ -53,6 +66,9 @@ class MunicipalidadController extends Controller
         return view('municipalidad_perfil', compact('estadisticas'));
     }
 
+    /**
+     * Calcula y muestra estadísticas detalladas por zona y categoría.
+     */
     public function estadisticas()
     {
         $reportes = DB::table('reportes')->get();

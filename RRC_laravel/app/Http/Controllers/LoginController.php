@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controlador para autenticación de usuarios.
+ * Maneja login, logout y visualización del formulario de login.
+ */
 class LoginController extends Controller
 {
     /**

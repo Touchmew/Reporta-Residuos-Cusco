@@ -6,8 +6,15 @@ use App\Models\Reporte;
 use App\Models\Usuario;
 use Illuminate\View\View;
 
+/**
+ * Controlador para el perfil del usuario ciudadano.
+ * Muestra estadísticas, reportes y logros del usuario.
+ */
 class PerfilController extends Controller
 {
+    /**
+     * Obtiene datos del usuario incluyendo puntos, reportes y logros desbloqueados.
+     */
     public function index(): View
     {
         $usuarioDb = Usuario::findOrFail(session('usuario_id'));

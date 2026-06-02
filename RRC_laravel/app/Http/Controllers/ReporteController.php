@@ -5,8 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Controlador para crear y gestionar reportes de residuos.
+ * Maneja la creación de nuevos reportes con validación y categorización.
+ */
 class ReporteController extends Controller
 {
+    /**
+     * Guarda un nuevo reporte de residuos.
+     * Valida coordenadas, tipo y severidad del reporte.
+     */
     public function guardar(Request $request)
     {
         // Validar datos básicos

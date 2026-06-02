@@ -6,8 +6,16 @@ use App\Models\Reporte;
 use App\Models\Usuario;
 use Illuminate\View\View;
 
+/**
+ * Controlador para la página principal con mapa de reportes.
+ * Muestra todos los reportes y estadísticas generales.
+ */
 class PrincipalController extends Controller
 {
+    /**
+     * Obtiene todos los reportes con sus comentarios para el mapa.
+     * También calcula estadísticas generales del sistema.
+     */
     public function index(): View
     {
         $reportes = Reporte::withCount('comentarios')->orderBy('id')->get();
