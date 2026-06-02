@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Aprende a clasificar y desechar correctamente los residuos sólidos en Cusco. Guía ciudadana para un manejo responsable de la basura." />
+  <meta name="theme-color" content="#1a0f00" />
+  <title>Conciencia Ambiental — Residuos Sólidos Cusco</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================================================================
+       VARIABLES & RESET
+    ================================================================ */
+    :root {
+      --yellow:        #F5C200;
+      --yellow-light:  #FFE066;
+      --yellow-dark:   #C49A00;
+      --orange:        #F57C00;
+      --orange-light:  #FFA040;
+      --orange-dark:   #BF5E00;
+      --bg:            #110A00;
+      --bg2:           #1C1100;
+      --surface:       rgba(255,255,255,0.04);
+      --surface2:      rgba(255,255,255,0.08);
+      --border:        rgba(255,255,255,0.07);
+      --border-accent: rgba(245,194,0,0.25);
+      --text:          #FFF8EC;
+      --text-muted:    #A08050;
+      --text-sub:      #C9A86C;
+      --sidebar-w:     280px;
+      --sidebar-w-collapsed: 70px;
+      --radius:        16px;
+      --transition:    all 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ================================================================
+       LAYOUT SHELL
+    ================================================================ */
+    .shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ================================================================
+       SIDEBAR
+    ================================================================ */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #1C1200 0%, #110A00 100%);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    /* ---- Brand ---- */
+    .sidebar-brand {
+      padding: 24px 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(245,194,0,0.35);
+    }
+    .brand-texts {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .brand-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .brand-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ---- Nav links ---- */
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px;
+      scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-nav::-webkit-scrollbar { display: none; }
+
+    .nav-section-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      padding: 10px 8px 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--text-sub);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+    }
+    .nav-link:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+    .nav-link.active {
+      background: linear-gradient(90deg, rgba(245,194,0,0.18), rgba(245,124,0,0.10));
+      color: var(--yellow-light);
+      border: 1px solid var(--border-accent);
+    }
+    .nav-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--yellow);
+    }
+    .nav-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+    .nav-text { overflow: hidden; text-overflow: ellipsis; }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ---- Sidebar footer ---- */
+    .sidebar-footer {
+      padding: 16px 12px 20px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sidebar-footer a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--text-sub);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .sidebar-footer a:hover { background: var(--surface2); color: var(--text); }
+
+    /* ================================================================
+       HAMBURGER (mobile)
+    ================================================================ */
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 14px; left: 14px;
+      z-index: 200;
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: rgba(28,18,0,0.95);
+      border: 1px solid var(--border-accent);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      backdrop-filter: blur(10px);
+    }
+    .hamburger span {
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--yellow);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+      backdrop-filter: blur(2px);
+    }
+    .overlay.show { display: block; }
+
+    /* ================================================================
+       MAIN CONTENT
+    ================================================================ */
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    /* ================================================================
+       TOPBAR
+    ================================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(17,10,0,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--yellow-light), var(--orange-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a0a00;
+      font-weight: 800;
+      font-size: 0.82rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(245,124,0,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(245,124,0,0.45);
+    }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-weight: 600;
+      font-size: 0.82rem;
+      transition: var(--transition);
+    }
+    .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+
+    /* ================================================================
+       CONTENT SECTIONS (each section = a "page")
+    ================================================================ */
+    .content-area {
+      flex: 1;
+      padding: 32px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .section-page { display: none; animation: fadeUp 0.35s ease; }
+    .section-page.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================================
+       HERO BANNER
+    ================================================================ */
+    .hero {
+      border-radius: 24px;
+      background: linear-gradient(135deg, #2D1A00 0%, #1C1000 50%, #0E0800 100%);
+      border: 1px solid var(--border-accent);
+      padding: 40px 40px 36px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(245,194,0,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(245,124,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(245,194,0,0.12);
+      border: 1px solid rgba(245,194,0,0.25);
+      color: var(--yellow-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .hero h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h2 span {
+      background: linear-gradient(90deg, var(--yellow-light), var(--orange-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-stat-lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* ================================================================
+       SECTION TITLE
+    ================================================================ */
+    .sec-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .sec-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(245,194,0,0.2), rgba(245,124,0,0.1));
+      border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .sec-sub { color: var(--text-muted); font-size: 0.75rem; margin-top: 2px; }
+
+    /* ================================================================
+       WASTE TYPE CARDS (grid)
+    ================================================================ */
+    .waste-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .waste-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .waste-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--card-glow, transparent);
+      opacity: 0;
+      transition: var(--transition);
+      border-radius: inherit;
+    }
+    .waste-card:hover::before { opacity: 1; }
+    .waste-card:hover {
+      border-color: var(--card-border, var(--border-accent));
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .waste-card-icon {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .waste-card-name {
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .waste-card-desc {
+      color: var(--text-sub);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+    .waste-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      width: fit-content;
+    }
+
+    /* Examples per waste */
+    .waste-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .example-pill {
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+
+    /* ================================================================
+       COLOR-CODED WASTE CARDS
+    ================================================================ */
+    /* Organic */
+    .wc-organic { --card-glow: linear-gradient(135deg,rgba(74,222,128,.06),transparent); --card-border: rgba(74,222,128,.3); }
+    .wc-organic .waste-card-icon { background: rgba(74,222,128,.15); }
+    .wc-organic .waste-card-name { color: #7EE2A8; }
+    .wc-organic .waste-card-tag { background: rgba(74,222,128,.12); color: #7EE2A8; border: 1px solid rgba(74,222,128,.25); }
+
+    /* Paper */
+    .wc-paper { --card-glow: linear-gradient(135deg,rgba(96,165,250,.06),transparent); --card-border: rgba(96,165,250,.3); }
+    .wc-paper .waste-card-icon { background: rgba(96,165,250,.15); }
+    .wc-paper .waste-card-name { color: #93C5FD; }
+    .wc-paper .waste-card-tag { background: rgba(96,165,250,.12); color: #93C5FD; border: 1px solid rgba(96,165,250,.25); }
+
+    /* Plastic */
+    .wc-plastic { --card-glow: linear-gradient(135deg,rgba(251,191,36,.08),transparent); --card-border: rgba(251,191,36,.35); }
+    .wc-plastic .waste-card-icon { background: rgba(251,191,36,.15); }
+    .wc-plastic .waste-card-name { color: var(--yellow-light); }
+    .wc-plastic .waste-card-tag { background: rgba(251,191,36,.12); color: var(--yellow-light); border: 1px solid rgba(251,191,36,.25); }
+
+    /* Glass */
+    .wc-glass { --card-glow: linear-gradient(135deg,rgba(34,211,238,.06),transparent); --card-border: rgba(34,211,238,.3); }
+    .wc-glass .waste-card-icon { background: rgba(34,211,238,.15); }
+    .wc-glass .waste-card-name { color: #67E8F9; }
+    .wc-glass .waste-card-tag { background: rgba(34,211,238,.12); color: #67E8F9; border: 1px solid rgba(34,211,238,.25); }
+
+    /* Metal */
+    .wc-metal { --card-glow: linear-gradient(135deg,rgba(156,163,175,.06),transparent); --card-border: rgba(156,163,175,.3); }
+    .wc-metal .waste-card-icon { background: rgba(156,163,175,.15); }
+    .wc-metal .waste-card-name { color: #D1D5DB; }
+    .wc-metal .waste-card-tag { background: rgba(156,163,175,.12); color: #D1D5DB; border: 1px solid rgba(156,163,175,.25); }
+
+    /* Hazardous */
+    .wc-hazard { --card-glow: linear-gradient(135deg,rgba(239,68,68,.06),transparent); --card-border: rgba(239,68,68,.3); }
+    .wc-hazard .waste-card-icon { background: rgba(239,68,68,.15); }
+    .wc-hazard .waste-card-name { color: #FCA5A5; }
+    .wc-hazard .waste-card-tag { background: rgba(239,68,68,.12); color: #FCA5A5; border: 1px solid rgba(239,68,68,.25); }
+
+    /* Electronic */
+    .wc-electronic { --card-glow: linear-gradient(135deg,rgba(168,85,247,.06),transparent); --card-border: rgba(168,85,247,.3); }
+    .wc-electronic .waste-card-icon { background: rgba(168,85,247,.15); }
+    .wc-electronic .waste-card-name { color: #D8B4FE; }
+    .wc-electronic .waste-card-tag { background: rgba(168,85,247,.12); color: #D8B4FE; border: 1px solid rgba(168,85,247,.25); }
+
+    /* Sanitary */
+    .wc-sanitary { --card-glow: linear-gradient(135deg,rgba(245,124,0,.07),transparent); --card-border: rgba(245,124,0,.3); }
+    .wc-sanitary .waste-card-icon { background: rgba(245,124,0,.15); }
+    .wc-sanitary .waste-card-name { color: var(--orange-light); }
+    .wc-sanitary .waste-card-tag { background: rgba(245,124,0,.12); color: var(--orange-light); border: 1px solid rgba(245,124,0,.25); }
+
+    /* ================================================================
+       BIN COLOR LEGEND
+    ================================================================ */
+    .bin-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .bin-card {
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+    .bin-card:hover { transform: translateY(-2px); }
+    .bin-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .bin-name { font-weight: 800; font-size: 0.85rem; }
+    .bin-items { color: var(--text-muted); font-size: 0.72rem; line-height: 1.5; margin-top: 3px; }
+
+    /* ================================================================
+       STEPS / HOW TO
+    ================================================================ */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: var(--transition);
+    }
+    .step-item:hover {
+      background: var(--surface2);
+      border-color: var(--border-accent);
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a0a00;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .step-text p { color: var(--text-sub); font-size: 0.8rem; line-height: 1.6; }
+
+    /* ================================================================
+       TIPS / FACTS
+    ================================================================ */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .tip-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+    .tip-card:hover {
+      background: var(--surface2);
+      transform: translateY(-2px);
+    }
+    .tip-emoji { font-size: 28px; margin-bottom: 10px; }
+    .tip-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+    .tip-desc { color: var(--text-sub); font-size: 0.78rem; line-height: 1.6; }
+
+    /* ================================================================
+       QUIZ / INTERACTIVE
+    ================================================================ */
+    .quiz-box {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 36px;
+    }
+    .quiz-q {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--yellow-light);
+    }
+    .quiz-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .quiz-opt {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: left;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--border-accent); background: rgba(245,194,0,0.08); }
+    .quiz-opt.correct { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.4); color: #7EE2A8; }
+    .quiz-opt.wrong   { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.4); color: #FCA5A5; }
+    .quiz-result { margin-top: 16px; font-size: 0.85rem; font-weight: 700; display: none; }
+    .quiz-result.show { display: block; }
+    .quiz-result.ok  { color: #7EE2A8; }
+    .quiz-result.bad { color: #FCA5A5; }
+
+    .quiz-progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .quiz-score-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(245,194,0,0.15), rgba(245,124,0,0.1));
+      border: 1px solid var(--border-accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yellow-light);
+    }
+    .quiz-nav { display: flex; gap: 8px; margin-top: 18px; }
+
+    /* ================================================================
+       IMPACT COUNTER
+    ================================================================ */
+    .impact-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .impact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .impact-card:hover { border-color: var(--border-accent); }
+    .impact-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--yellow-light), var(--orange-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .impact-unit { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+    .impact-label { font-size: 0.78rem; color: var(--text-sub); margin-top: 6px; line-height: 1.4; }
+
+    /* ================================================================
+       ACCORDION (FAQ)
+    ================================================================ */
+    .faq-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .faq-item.open { border-color: var(--border-accent); }
+    .faq-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .faq-q { font-weight: 700; font-size: 0.88rem; }
+    .faq-arrow {
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--yellow); }
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s ease;
+      padding: 0 18px;
+    }
+    .faq-item.open .faq-body { max-height: 300px; padding: 0 18px 16px; }
+    .faq-body p { color: var(--text-sub); font-size: 0.82rem; line-height: 1.7; }
+
+    /* ================================================================
+       ALERTS / PROHIBITIONS
+    ================================================================ */
+    .prohib-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .prohib-card {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+    .prohib-card:hover { background: rgba(239,68,68,0.1); transform: translateY(-2px); }
+    .prohib-icon { font-size: 24px; flex-shrink: 0; }
+    .prohib-text h4 { font-weight: 700; font-size: 0.85rem; color: #FCA5A5; margin-bottom: 4px; }
+    .prohib-text p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* CTA Banner */
+    .cta-banner {
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(245,194,0,0.14), rgba(245,124,0,0.08));
+      border: 1px solid var(--border-accent);
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .cta-banner h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .cta-banner p { color: var(--text-sub); font-size: 0.88rem; line-height: 1.7; margin-bottom: 20px; }
+    .cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* ================================================================
+       MOBILE BOTTOM NAV
+    ================================================================ */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      left: 10px; right: 10px; bottom: 10px;
+      height: 62px;
+      background: rgba(28,18,0,0.97);
+      border: 1px solid var(--border-accent);
+      border-radius: 20px;
+      z-index: 80;
+      align-items: center;
+      justify-content: space-around;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .mob-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 0.6rem;
+      font-weight: 700;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .mob-nav-item.active { color: var(--yellow-light); }
+    .mob-nav-icon { font-size: 20px; }
+
+    /* ================================================================
+       PROGRESS BAR (recycling rate visual)
+    ================================================================ */
+    .progress-item {
+      margin-bottom: 16px;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .progress-label { font-size: 0.82rem; font-weight: 600; }
+    .progress-pct { font-size: 0.78rem; font-weight: 800; color: var(--yellow); }
+    .progress-bar {
+      height: 8px;
+      border-radius: 10px;
+      background: var(--surface2);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+      width: 0;
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .hamburger { display: flex; }
+      .topbar { padding: 14px 20px 14px 68px; }
+      .content-area { padding: 20px 16px 100px; }
+      .mobile-bottom-nav { display: flex; }
+      .hero { padding: 24px 20px; }
+      .quiz-options { grid-template-columns: 1fr; }
+      .waste-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    }
+
+    @media (max-width: 480px) {
+      .hero h2 { font-size: 1.4rem; }
+      .hero-stats { gap: 18px; }
+      .hero-stat-num { font-size: 1.4rem; }
+      .topbar-title { font-size: 0.9rem; }
+      .topbar-actions .btn-primary span { display: none; }
+    }
+
+    /* ================================================================
+       SCROLL INDICATOR
+    ================================================================ */
+    .scroll-top {
+      position: fixed;
+      bottom: 90px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a0a00;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      z-index: 70;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(245,124,0,0.4);
+    }
+    .scroll-top.show { opacity: 1; pointer-events: all; }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      left: 50%; bottom: 90px;
+      transform: translateX(-50%);
+      background: rgba(28,18,0,0.97);
+      border: 1px solid var(--border-accent);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 999;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; bottom: 100px; }
+
+  </style>
+</head>
+<body>
+
+<!-- ===============================================================
+     HAMBURGER
+================================================================ -->
+<button class="hamburger" id="hamburger" aria-label="Menú">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<div class="shell">
+
+  <!-- =============================================================
+       SIDEBAR
+  ============================================================= -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">♻️</div>
+      <div class="brand-texts">
+        <div class="brand-title">EcoConciencia</div>
+        <div class="brand-sub">Cusco · Guía de Residuos</div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="sidebar-nav" id="sideNav">
+
+      <div class="nav-section-label">APRENDER</div>
+
+      <a class="nav-link active" data-section="inicio" onclick="showSection('inicio',this)">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Inicio</span>
+      </a>
+      <a class="nav-link" data-section="tipos" onclick="showSection('tipos',this)">
+        <span class="nav-icon">🗑️</span>
+        <span class="nav-text">Tipos de Residuos</span>
+      </a>
+      <a class="nav-link" data-section="colores" onclick="showSection('colores',this)">
+        <span class="nav-icon">🎨</span>
+        <span class="nav-text">Código de Colores</span>
+      </a>
+      <a class="nav-link" data-section="como" onclick="showSection('como',this)">
+        <span class="nav-icon">📋</span>
+        <span class="nav-text">¿Cómo Desechar?</span>
+      </a>
+
+      <div class="nav-section-label">IMPACTO</div>
+
+      <a class="nav-link" data-section="impacto" onclick="showSection('impacto',this)">
+        <span class="nav-icon">🌍</span>
+        <span class="nav-text">Impacto Ambiental</span>
+      </a>
+      <a class="nav-link" data-section="tips" onclick="showSection('tips',this)">
+        <span class="nav-icon">💡</span>
+        <span class="nav-text">Consejos Prácticos</span>
+      </a>
+      <a class="nav-link" data-section="prohibido" onclick="showSection('prohibido',this)">
+        <span class="nav-icon">⛔</span>
+        <span class="nav-text">Lo que NO hacer</span>
+        <span class="nav-badge">!</span>
+      </a>
+
+      <div class="nav-section-label">INTERACTIVO</div>
+
+      <a class="nav-link" data-section="quiz" onclick="showSection('quiz',this)">
+        <span class="nav-icon">🧠</span>
+        <span class="nav-text">Quiz Ambiental</span>
+        <span class="nav-badge">5</span>
+      </a>
+      <a class="nav-link" data-section="faq" onclick="showSection('faq',this)">
+        <span class="nav-icon">❓</span>
+        <span class="nav-text">Preguntas Frecuentes</span>
+      </a>
+
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+      <a href="principal.html">
+        <span class="nav-icon">🗺️</span>
+        <span>Ir al Mapa de Reportes</span>
+      </a>
+      <a href="reporte-residuos.html" style="margin-top:4px">
+        <span class="nav-icon">➕</span>
+        <span>Hacer un Reporte</span>
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- =============================================================
+       MAIN
+  ============================================================= -->
+  <div class="main" id="mainContent">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Inicio — EcoConciencia</div>
+      <div class="topbar-actions">
+        <a href="reporte-residuos.html" class="btn-primary">
+          <span>➕</span><span>Reportar</span>
+        </a>
+        <a href="principal.html" class="btn-ghost">🗺️</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+
+      <!-- ============================================================
+           SECCIÓN: INICIO
+      ============================================================ -->
+      <div class="section-page active" id="sec-inicio">
+
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-tag">🌱 Plataforma de Educación Ambiental · Cusco</div>
+          <h2>Conoce y clasifica bien<br/><span>tus residuos sólidos</span></h2>
+          <p>El mal manejo de la basura contamina ríos, suelos y el aire que respiramos. Aprende aquí cómo separar, reducir y reciclar correctamente en Cusco para construir una ciudad más limpia y saludable.</p>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-num">340+</span>
+              <span class="hero-stat-lbl">Ton/día generadas en Cusco</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-num">60%</span>
+              <span class="hero-stat-lbl">Son reciclables</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-num">8 min</span>
+              <span class="hero-stat-lbl">Para aprender a separar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen rápido de secciones -->
+        <div class="sec-header">
+          <div class="sec-icon">🧭</div>
+          <div>
+            <div class="sec-title">¿Qué vas a aprender?</div>
+            <div class="sec-sub">Explora cada sección con el menú lateral</div>
+          </div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card" onclick="showSection('tipos', document.querySelector('[data-section=tipos]'))">
+            <div class="tip-emoji">🗑️</div>
+            <div class="tip-title">Tipos de Residuos</div>
+            <div class="tip-desc">Orgánicos, plásticos, vidrio, metales, peligrosos y más. Identifica cada uno correctamente.</div>
+          </div>
+          <div class="tip-card" onclick="showSection('colores', document.querySelector('[data-section=colores]'))">
+            <div class="tip-emoji">🎨</div>
+            <div class="tip-title">Código de Colores</div>
+            <div class="tip-desc">Cada contenedor tiene un color. Aprende cuál usar según el tipo de residuo.</div>
+          </div>
+          <div class="tip-card" onclick="showSection('como', document.querySelector('[data-section=como]'))">
+            <div class="tip-emoji">📋</div>
+            <div class="tip-title">¿Cómo Desechar?</div>
+            <div class="tip-desc">Pasos concretos para preparar y desechar cada tipo de residuo de forma correcta.</div>
+          </div>
+          <div class="tip-card" onclick="showSection('quiz', document.querySelector('[data-section=quiz]'))">
+            <div class="tip-emoji">🧠</div>
+            <div class="tip-title">Quiz Interactivo</div>
+            <div class="tip-desc">Pon a prueba tus conocimientos con 5 preguntas sobre residuos sólidos en Cusco.</div>
+          </div>
+        </div>
+
+        <!-- Impacto rápido -->
+        <div class="sec-header">
+          <div class="sec-icon">📊</div>
+          <div>
+            <div class="sec-title">Datos que importan</div>
+            <div class="sec-sub">Impacto de los residuos en nuestra región</div>
+          </div>
+        </div>
+        <div class="impact-row">
+          <div class="impact-card">
+            <div class="impact-num">500</div>
+            <div class="impact-unit">AÑOS</div>
+            <div class="impact-label">tarda en degradarse una botella de plástico</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-num">1M</div>
+            <div class="impact-unit">ANIMALES</div>
+            <div class="impact-label">mueren anualmente por basura plástica en el mundo</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-num">70%</div>
+            <div class="impact-unit">RESIDUOS</div>
+            <div class="impact-label">van a rellenos sin clasificar en Cusco</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-num">3kg</div>
+            <div class="impact-unit">POR PERSONA</div>
+            <div class="impact-label">genera cada habitante de Cusco por semana</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-banner">
+          <h3>🌿 ¡Sé parte del cambio en Cusco!</h3>
+          <p>Reporta puntos de acumulación de residuos, aprende a separar correctamente y ayuda a mantener nuestra ciudad limpia para las generaciones futuras.</p>
+          <div class="cta-btns">
+            <a href="reporte-residuos.html" class="btn-primary">➕ Hacer un Reporte</a>
+            <button class="btn-ghost" onclick="showSection('tipos', document.querySelector('[data-section=tipos]'))">📖 Aprender más</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: TIPOS DE RESIDUOS
+      ============================================================ -->
+      <div class="section-page" id="sec-tipos">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">🗑️ Clasificación</div>
+          <h2 style="font-size:1.7rem;">Tipos de <span>Residuos Sólidos</span></h2>
+          <p>Conocer la clasificación te permite saber exactamente dónde depositar cada residuo para que pueda ser tratado correctamente.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">🗑️</div>
+          <div>
+            <div class="sec-title">Clasificación por tipo</div>
+            <div class="sec-sub">Haz clic en cada tarjeta para ver ejemplos</div>
+          </div>
+        </div>
+
+        <div class="waste-grid">
+
+          <div class="waste-card wc-organic" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">🍃</div>
+            <div class="waste-card-name">Residuos Orgánicos</div>
+            <div class="waste-card-desc">Provienen de seres vivos. Se descomponen de forma natural y pueden convertirse en compost.</div>
+            <div class="waste-card-tag">♻️ Compostable</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🍌 Cáscaras de fruta</span>
+              <span class="example-pill">☕ Restos de café</span>
+              <span class="example-pill">🥗 Comida cocinada</span>
+              <span class="example-pill">🌿 Poda de jardín</span>
+              <span class="example-pill">🥚 Cáscaras de huevo</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-paper" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">📄</div>
+            <div class="waste-card-name">Papel y Cartón</div>
+            <div class="waste-card-desc">Material muy reciclable. Su reciclaje ahorra árboles, agua y energía eléctrica.</div>
+            <div class="waste-card-tag">♻️ Reciclable</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">📰 Periódicos</span>
+              <span class="example-pill">📦 Cajas de cartón</span>
+              <span class="example-pill">📃 Cuadernos usados</span>
+              <span class="example-pill">🛍️ Bolsas de papel</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-plastic" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">🧴</div>
+            <div class="waste-card-name">Plásticos</div>
+            <div class="waste-card-desc">Tarda cientos de años en degradarse. Enjuaga los envases antes de reciclarlos.</div>
+            <div class="waste-card-tag">♻️ Reciclable (limpio)</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🍶 Botellas PET</span>
+              <span class="example-pill">🥛 Envases de yogur</span>
+              <span class="example-pill">🛍️ Bolsas plásticas</span>
+              <span class="example-pill">💊 Envases de medicina</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-glass" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">🍾</div>
+            <div class="waste-card-name">Vidrio</div>
+            <div class="waste-card-desc">Se puede reciclar infinitas veces sin perder calidad. No va en la misma bolsa que otros residuos.</div>
+            <div class="waste-card-tag">♻️ Reciclable infinito</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🍾 Botellas de vidrio</span>
+              <span class="example-pill">🫙 Frascos de conserva</span>
+              <span class="example-pill">🧴 Perfumeros</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-metal" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">🥫</div>
+            <div class="waste-card-name">Metales</div>
+            <div class="waste-card-desc">Aluminio y acero son altamente reciclables. Aplastar latas reduce volumen de residuos.</div>
+            <div class="waste-card-tag">♻️ Alta rentabilidad</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🥫 Latas de conserva</span>
+              <span class="example-pill">🍺 Latas de aluminio</span>
+              <span class="example-pill">🔩 Tornillería</span>
+              <span class="example-pill">🍴 Cubiertos viejos</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-hazard" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">☢️</div>
+            <div class="waste-card-name">Residuos Peligrosos</div>
+            <div class="waste-card-desc">¡Nunca mezclar con basura doméstica! Requieren puntos de acopio especializados.</div>
+            <div class="waste-card-tag">⚠️ Manejo especial</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🔋 Baterías y pilas</span>
+              <span class="example-pill">💡 Focos fluorescentes</span>
+              <span class="example-pill">🎨 Pinturas y solventes</span>
+              <span class="example-pill">💊 Medicamentos vencidos</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-electronic" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">📱</div>
+            <div class="waste-card-name">Residuos Electrónicos</div>
+            <div class="waste-card-desc">Contienen metales valiosos y sustancias tóxicas. Llevar a centros de reciclaje RAEE.</div>
+            <div class="waste-card-tag">🔌 RAEE</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">📱 Celulares viejos</span>
+              <span class="example-pill">💻 Computadoras</span>
+              <span class="example-pill">📺 Televisores</span>
+              <span class="example-pill">🖨️ Impresoras</span>
+            </div>
+          </div>
+
+          <div class="waste-card wc-sanitary" onclick="toggleExamples(this)">
+            <div class="waste-card-icon">🧻</div>
+            <div class="waste-card-name">Residuos Sanitarios</div>
+            <div class="waste-card-desc">Por higiene van en bolsa cerrada al contenedor de residuo no reciclable. No se reciclan.</div>
+            <div class="waste-card-tag">🚫 No reciclable</div>
+            <div class="waste-examples" style="display:none">
+              <span class="example-pill">🧻 Papel higiénico</span>
+              <span class="example-pill">😷 Mascarillas usadas</span>
+              <span class="example-pill">🩹 Vendas</span>
+              <span class="example-pill">🧤 Guantes usados</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: CÓDIGO DE COLORES
+      ============================================================ -->
+      <div class="section-page" id="sec-colores">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">🎨 Identificación Visual</div>
+          <h2 style="font-size:1.7rem;">Código de <span>Colores de Contenedores</span></h2>
+          <p>En Perú, el sistema de colores para contenedores de residuos sólidos está normado por la NTP 900.058 del MINAM. Conocerlo es esencial para reciclar bien.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">🎨</div>
+          <div>
+            <div class="sec-title">¿Qué color para cada residuo?</div>
+            <div class="sec-sub">Sistema normado por el MINAM · NTP 900.058</div>
+          </div>
+        </div>
+
+        <div class="bin-legend">
+
+          <div class="bin-card" style="background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.3);">
+            <div class="bin-dot" style="background:#4ADE80;box-shadow:0 0 10px rgba(74,222,128,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#7EE2A8">🟢 Verde</div>
+              <div class="bin-items">Residuos orgánicos: restos de comida, cáscaras, hojas y poda de jardín.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.3);">
+            <div class="bin-dot" style="background:#FBBF24;box-shadow:0 0 10px rgba(251,191,36,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#FDE68A">🟡 Amarillo</div>
+              <div class="bin-items">Plásticos limpios: botellas PET, envases, bolsas y empaques plásticos.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(96,165,250,0.08);border-color:rgba(96,165,250,0.3);">
+            <div class="bin-dot" style="background:#60A5FA;box-shadow:0 0 10px rgba(96,165,250,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#93C5FD">🔵 Azul</div>
+              <div class="bin-items">Papel y cartón: periódicos, cajas, cuadernos, papel de impresora.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.2);">
+            <div class="bin-dot" style="background:#E5E7EB;box-shadow:0 0 10px rgba(229,231,235,0.4)"></div>
+            <div>
+              <div class="bin-name" style="color:#F3F4F6">⚪ Blanco</div>
+              <div class="bin-items">Vidrio: botellas, frascos y envases de vidrio limpios y sin tapa.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(156,163,175,0.08);border-color:rgba(156,163,175,0.3);">
+            <div class="bin-dot" style="background:#9CA3AF;box-shadow:0 0 10px rgba(156,163,175,0.5)"></div>
+            <div>
+              <div class="bin-name" style="color:#D1D5DB">⚫ Plomo / Gris</div>
+              <div class="bin-items">Metales: latas de aluminio y conserva, cubiertos y envases metálicos.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.3);">
+            <div class="bin-dot" style="background:#EF4444;box-shadow:0 0 10px rgba(239,68,68,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#FCA5A5">🔴 Rojo</div>
+              <div class="bin-items">Residuos peligrosos: pilas, baterías, químicos, medicamentos vencidos.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(168,85,247,0.08);border-color:rgba(168,85,247,0.3);">
+            <div class="bin-dot" style="background:#A855F7;box-shadow:0 0 10px rgba(168,85,247,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#D8B4FE">🟣 Morado / Violeta</div>
+              <div class="bin-items">Residuos electrónicos (RAEE): celulares, computadoras, cables.</div>
+            </div>
+          </div>
+
+          <div class="bin-card" style="background:rgba(245,124,0,0.08);border-color:rgba(245,124,0,0.3);">
+            <div class="bin-dot" style="background:#F57C00;box-shadow:0 0 10px rgba(245,124,0,0.6)"></div>
+            <div>
+              <div class="bin-name" style="color:#FFA040">🟠 Naranja</div>
+              <div class="bin-items">Residuos no aprovechables: sanitarios, papel sucio, residuos contaminados.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tip de regla fácil -->
+        <div class="tip-card" style="background:linear-gradient(135deg,rgba(245,194,0,0.1),rgba(245,124,0,0.06));border-color:var(--border-accent);margin-bottom:32px;">
+          <div class="tip-emoji">💡</div>
+          <div class="tip-title">Regla fácil para recordar</div>
+          <div class="tip-desc">Si no estás seguro del color, usa el contenedor <strong style="color:var(--orange-light)">naranja (no aprovechable)</strong> antes de mezclar con un contenedor equivocado. Lo peor es contaminar una bolsa de reciclables con un residuo peligroso o sanitario.</div>
+        </div>
+
+        <!-- Tasas de reciclaje visual -->
+        <div class="sec-header">
+          <div class="sec-icon">📊</div>
+          <div>
+            <div class="sec-title">Tasa de reciclaje por material</div>
+            <div class="sec-sub">Potencial de recuperación en Cusco</div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;margin-bottom:32px;" id="progressBox">
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">⚪ Vidrio</span>
+              <span class="progress-pct">90%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" data-width="90"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">⚫ Metales (aluminio)</span>
+              <span class="progress-pct">85%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">🔵 Papel y cartón</span>
+              <span class="progress-pct">75%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" data-width="75"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">🟡 Plástico PET</span>
+              <span class="progress-pct">55%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" data-width="55"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-label">🟢 Orgánico (compost)</span>
+              <span class="progress-pct">40%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" data-width="40"></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: CÓMO DESECHAR
+      ============================================================ -->
+      <div class="section-page" id="sec-como">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">📋 Guía Práctica</div>
+          <h2 style="font-size:1.7rem;">¿Cómo <span>desechar correctamente?</span></h2>
+          <p>Sigue estos pasos sencillos para garantizar que tus residuos sean aprovechados al máximo y no contaminen el medio ambiente.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">📋</div>
+          <div>
+            <div class="sec-title">Proceso paso a paso</div>
+            <div class="sec-sub">Rutina diaria para el manejo de residuos en casa</div>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>🏠 Coloca 3 tachos en casa</h4>
+              <p>Identifica un tacho para orgánicos (verde), uno para reciclables (amarillo/azul) y uno para no aprovechables (naranja). Esto facilita la separación diaria sin esfuerzo extra.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>♻️ Limpia los envases reciclables</h4>
+              <p>Enjuaga botellas, frascos y latas antes de reciclarlos. Los residuos de comida contaminan los materiales reciclables y hacen que todo el lote sea desechado.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>🗜️ Compacta para reducir volumen</h4>
+              <p>Aplasta las botellas plásticas, dobla las cajas de cartón y aplana las latas. Esto reduce el volumen y facilita el transporte y acopio de reciclables.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>📅 Conoce el horario de recojo</h4>
+              <p>La Municipalidad de Cusco tiene horarios establecidos. Sacar la basura fuera del horario genera puntos críticos. Consulta el cronograma de tu distrito.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-text">
+              <h4>⚠️ Separa los residuos peligrosos</h4>
+              <p>Pilas, medicamentos vencidos, pinturas y productos químicos NUNCA van con la basura doméstica. Lleva estos residuos a los puntos de acopio especiales de la municipalidad.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">6</div>
+            <div class="step-text">
+              <h4>🧑‍🤝‍🧑 Comunica a tu familia y vecinos</h4>
+              <p>El impacto multiplica cuando toda la familia separa correctamente. Comparte este conocimiento y reporta conductas irresponsables a través de la plataforma.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tip especial -->
+        <div class="tip-card" style="background:linear-gradient(135deg,rgba(245,194,0,0.1),rgba(245,124,0,0.06));border-color:var(--border-accent);margin-bottom:24px;">
+          <div class="tip-emoji">🕐</div>
+          <div class="tip-title">Horarios de recojo en Cusco</div>
+          <div class="tip-desc">El horario habitual de recojo de residuos domiciliarios en Cusco es entre las <strong style="color:var(--yellow)">6:00 y 10:00 am</strong> y en algunos distritos también entre las <strong style="color:var(--yellow)">6:00 y 9:00 pm</strong>. Sacar la basura antes de ese horario atrae animales y genera malos olores. Consulta con tu municipio distrital para el horario exacto.</div>
+        </div>
+
+        <div class="cta-banner">
+          <h3>¿Encontraste basura en la vía pública?</h3>
+          <p>Reporta puntos de acumulación de residuos para que la municipalidad actúe. Tu reporte hace la diferencia.</p>
+          <div class="cta-btns">
+            <a href="reporte-residuos.html" class="btn-primary">➕ Hacer Reporte Ahora</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: IMPACTO AMBIENTAL
+      ============================================================ -->
+      <div class="section-page" id="sec-impacto">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">🌍 Datos y Cifras</div>
+          <h2 style="font-size:1.7rem;">El <span>Impacto Ambiental</span> de los Residuos</h2>
+          <p>Los residuos sólidos mal gestionados son una de las principales causas de contaminación en Cusco. Conocer el impacto nos motiva a actuar.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">⏳</div>
+          <div>
+            <div class="sec-title">¿Cuánto tarda en degradarse?</div>
+            <div class="sec-sub">Tiempo de descomposición de residuos comunes</div>
+          </div>
+        </div>
+
+        <div class="tips-grid" style="margin-bottom:32px;">
+          <div class="tip-card">
+            <div class="tip-emoji">🍌</div>
+            <div class="tip-title">Cáscaras de frutas</div>
+            <div class="tip-desc" style="color:#7EE2A8;font-weight:700;">2 a 5 semanas</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">📰</div>
+            <div class="tip-title">Papel de periódico</div>
+            <div class="tip-desc" style="color:#93C5FD;font-weight:700;">3 a 12 meses</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🥫</div>
+            <div class="tip-title">Lata de aluminio</div>
+            <div class="tip-desc" style="color:#D1D5DB;font-weight:700;">80 a 100 años</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🍶</div>
+            <div class="tip-title">Botella de plástico</div>
+            <div class="tip-desc" style="color:var(--yellow-light);font-weight:700;">100 a 500 años</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🍾</div>
+            <div class="tip-title">Botella de vidrio</div>
+            <div class="tip-desc" style="color:#67E8F9;font-weight:700;">4,000 años</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🔋</div>
+            <div class="tip-title">Batería alcalina</div>
+            <div class="tip-desc" style="color:#FCA5A5;font-weight:700;">Contamina suelo y agua por décadas</div>
+          </div>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">🏔️</div>
+          <div>
+            <div class="sec-title">Impacto específico en Cusco</div>
+            <div class="sec-sub">Nuestra realidad ambiental local</div>
+          </div>
+        </div>
+
+        <div class="steps-list" style="margin-bottom:32px;">
+          <div class="step-item">
+            <div class="step-num">🏔️</div>
+            <div class="step-text">
+              <h4>Contaminación de ríos sagrados</h4>
+              <p>El río Huatanay, afluente del Vilcanota, recibe residuos sólidos y aguas servidas que afectan la biodiversidad y el ecosistema de la región.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">🦜</div>
+            <div class="step-text">
+              <h4>Pérdida de fauna silvestre</h4>
+              <p>Animales nativos de los Andes consumen plásticos y residuos peligrosos por error, causando muertes y alteraciones en los ecosistemas de alta montaña.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">🏛️</div>
+            <div class="step-text">
+              <h4>Afectación al patrimonio turístico</h4>
+              <p>Los residuos en calles y zonas arqueológicas deterioran la imagen de Cusco como destino turístico y afectan la economía local de cientos de familias.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">😷</div>
+            <div class="step-text">
+              <h4>Riesgo para la salud pública</h4>
+              <p>La acumulación de basura genera focos de mosquitos, roedores y bacterias que pueden causar enfermedades como el dengue, leptospirosis y problemas respiratorios.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: CONSEJOS
+      ============================================================ -->
+      <div class="section-page" id="sec-tips">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">💡 Acción Ciudadana</div>
+          <h2 style="font-size:1.7rem;">Consejos <span>Prácticos</span> para el Día a Día</h2>
+          <p>Pequeñas acciones diarias que suman un gran impacto colectivo para Cusco y el medio ambiente.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">💡</div>
+          <div>
+            <div class="sec-title">Hábitos que marcan la diferencia</div>
+            <div class="sec-sub">Aplícalos desde hoy</div>
+          </div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-emoji">🛍️</div>
+            <div class="tip-title">Usa bolsas reutilizables</div>
+            <div class="tip-desc">Una bolsa de tela puede reemplazar hasta 700 bolsas plásticas a lo largo de su vida útil. Llévala siempre al mercado.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🚿</div>
+            <div class="tip-title">Cierra bien los envases</div>
+            <div class="tip-desc">Los residuos húmedos o con restos de comida contaminan el reciclaje. Vacía y enjuaga siempre antes de separar.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🌱</div>
+            <div class="tip-title">Haz compost en casa</div>
+            <div class="tip-desc">Los restos de comida, cáscaras y hojas pueden convertirse en abono natural para plantas en solo 4 semanas.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">📦</div>
+            <div class="tip-title">Reduce el empaque</div>
+            <div class="tip-desc">Elige productos con menos empaque o empaques reciclables. Un consumidor informado impulsa a las empresas a cambiar.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">💊</div>
+            <div class="tip-title">Medicamentos vencidos</div>
+            <div class="tip-desc">Las farmacias están obligadas a recibir medicamentos vencidos. Nunca los tires al baño ni a la basura doméstica.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">📱</div>
+            <div class="tip-title">Dona o vende lo que no usas</div>
+            <div class="tip-desc">Ropa, electrónicos y muebles en buen estado pueden tener una segunda vida. Reduce la generación de residuos sólidos.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">🎒</div>
+            <div class="tip-title">Cuida los espacios públicos</div>
+            <div class="tip-desc">No tires basura en la calle aunque no haya contenedor cerca. Carga una bolsa pequeña para tu basura cuando estás fuera.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-emoji">📢</div>
+            <div class="tip-title">Reporta y denuncia</div>
+            <div class="tip-desc">Si ves puntos de acumulación ilegal o vecinos que no respetan los horarios, repórtalo en la plataforma Reporta Residuos Cusco.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: PROHIBIDO
+      ============================================================ -->
+      <div class="section-page" id="sec-prohibido">
+
+        <div class="hero" style="padding:28px 32px;margin-bottom:24px;background:linear-gradient(135deg,#2D0A00,#1a0600,#0E0400);border-color:rgba(239,68,68,0.25);">
+          <div class="hero-tag" style="background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.3);color:#FCA5A5;">⛔ Conductas Prohibidas</div>
+          <h2 style="font-size:1.7rem;">Lo que <span style="background:linear-gradient(90deg,#FCA5A5,#F87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">NO debes hacer</span></h2>
+          <p>Estas conductas son sancionadas por la Municipalidad de Cusco y afectan directamente la salud pública y el medio ambiente de nuestra ciudad.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">⛔</div>
+          <div>
+            <div class="sec-title">Infracciones más comunes</div>
+            <div class="sec-sub">Estas conductas pueden generar multas y afectan a toda la comunidad</div>
+          </div>
+        </div>
+
+        <div class="prohib-grid">
+          <div class="prohib-card">
+            <div class="prohib-icon">🕐</div>
+            <div class="prohib-text">
+              <h4>Sacar basura fuera del horario</h4>
+              <p>Dejar bolsas en la vía pública fuera del horario de recojo genera focos infecciosos y atrae animales.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🏔️</div>
+            <div class="prohib-text">
+              <h4>Arrojar residuos en zonas arqueológicas</h4>
+              <p>Dejar basura cerca de sitios históricos está penado y daña el patrimonio cultural de Cusco.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🌊</div>
+            <div class="prohib-text">
+              <h4>Arrojar residuos a ríos o quebradas</h4>
+              <p>Contamina el agua que consumen miles de personas y destruye el ecosistema acuático andino.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🔥</div>
+            <div class="prohib-text">
+              <h4>Quemar basura a cielo abierto</h4>
+              <p>Los plásticos quemados liberan dioxinas y furanos, sustancias altamente cancerígenas. Está prohibido en todo el país.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🔋</div>
+            <div class="prohib-text">
+              <h4>Tirar pilas a la basura común</h4>
+              <p>Una pila contamina 600 litros de agua y 1m² de suelo. Requieren puntos de acopio especializados.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">💊</div>
+            <div class="prohib-text">
+              <h4>Desechar medicamentos en el baño</h4>
+              <p>Los fármacos en el agua afectan la fauna acuática y llegan a los sistemas de agua potable.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🐄</div>
+            <div class="prohib-text">
+              <h4>Alimentar animales con basura</h4>
+              <p>Los plásticos y residuos que consumen los animales en botaderos informales pasan a la cadena alimentaria.</p>
+            </div>
+          </div>
+          <div class="prohib-card">
+            <div class="prohib-icon">🚗</div>
+            <div class="prohib-text">
+              <h4>Arrojar basura desde vehículos</h4>
+              <p>Es una infracción sancionable con multa. Mantén una bolsa en tu vehículo para los residuos generados en ruta.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-banner" style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(245,124,0,0.07));border-color:rgba(239,68,68,0.2);">
+          <h3>🚨 ¿Viste alguna de estas conductas?</h3>
+          <p>Puedes reportar infracciones ambientales a través de la plataforma. Tu denuncia ciudadana ayuda a las autoridades a actuar.</p>
+          <div class="cta-btns">
+            <a href="reporte-residuos.html" class="btn-primary">📢 Denunciar Ahora</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: QUIZ
+      ============================================================ -->
+      <div class="section-page" id="sec-quiz">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">🧠 Interactivo</div>
+          <h2 style="font-size:1.7rem;">Quiz <span>Ambiental</span></h2>
+          <p>Pon a prueba tus conocimientos sobre residuos sólidos en Cusco. 5 preguntas, aprende mientras juegas.</p>
+        </div>
+
+        <div class="quiz-box">
+          <div class="quiz-progress">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--text-muted);">Pregunta <span id="qNum">1</span> de 5</div>
+            <div class="quiz-score-badge">🏆 Puntos: <span id="qScore">0</span></div>
+          </div>
+
+          <div class="quiz-q" id="quizQuestion">¿Qué color de contenedor se usa para los plásticos en Perú?</div>
+          <div class="quiz-hint" id="quizHint">Selecciona la respuesta correcta</div>
+
+          <div class="quiz-options" id="quizOptions">
+            <!-- generado por JS -->
+          </div>
+
+          <div class="quiz-result" id="quizResult"></div>
+
+          <div class="quiz-nav">
+            <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;">Siguiente →</button>
+            <button class="btn-ghost" id="restartBtn" onclick="restartQuiz()" style="display:none;">🔄 Jugar otra vez</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           SECCIÓN: FAQ
+      ============================================================ -->
+      <div class="section-page" id="sec-faq">
+
+        <div class="hero" style="padding:28px 32px; margin-bottom:24px;">
+          <div class="hero-tag">❓ Dudas Comunes</div>
+          <h2 style="font-size:1.7rem;">Preguntas <span>Frecuentes</span></h2>
+          <p>Respondemos las dudas más comunes sobre el manejo de residuos sólidos en Cusco.</p>
+        </div>
+
+        <div class="sec-header">
+          <div class="sec-icon">❓</div>
+          <div>
+            <div class="sec-title">Preguntas frecuentes</div>
+            <div class="sec-sub">Haz clic en cada pregunta para ver la respuesta</div>
+          </div>
+        </div>
+
+        <div class="faq-list" id="faqList">
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Qué hago si no sé en qué contenedor va un residuo?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>Si tienes duda, usa el contenedor naranja (no aprovechable) como última opción antes de mezclarlo incorrectamente. También puedes consultar esta guía o contactar a la municipalidad de tu distrito para orientación específica.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Las bolsas plásticas se pueden reciclar?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>La mayoría de plantas de reciclaje no aceptan bolsas plásticas porque atoran las máquinas. Sin embargo, algunos supermercados y tiendas tienen puntos de acopio especiales para bolsas plásticas limpias y secas. Lo ideal es reemplazarlas por bolsas reutilizables de tela.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Dónde puedo llevar mis pilas y baterías usadas?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>La Municipalidad del Cusco tiene puntos de acopio para pilas y baterías. También algunas cadenas de supermercados (como Plaza Vea y Tottus) tienen contenedores rojos para pilas. Nunca las tires a la basura doméstica porque contaminan suelo y agua subterránea.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿El papel sucio o húmedo se puede reciclar?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>No. El papel sucio con grasa, húmedo o con restos de comida (como pizza o servilletas usadas) NO se puede reciclar y contamina los demás papeles. En ese caso, va al contenedor naranja de no aprovechables.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Qué pasa con los residuos que se arrojan a los ríos?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>Los residuos en ríos como el Huatanay o el Vilcanota afectan la calidad del agua, matan fauna acuática, obstruyen canales de irrigación y finalmente llegan al Amazonas. Además, cuando se secan los ríos en época seca, generan contaminación del aire por polvo tóxico.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Cómo puedo hacer compost en casa?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>Necesitas un recipiente con tapa (puede ser un balde o caja), tierra, y capas alternas de residuos húmedos (cáscaras, restos de comida) y secos (hojas, cartón). Mezcla cada 3-4 días, mantén húmedo pero no encharcado. En 4-8 semanas tendrás abono natural para tus plantas.</p></div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header" onclick="toggleFaq(this)">
+              <span class="faq-q">¿Puedo reportar vecinos que no respetan los horarios?</span>
+              <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-body"><p>Sí. La plataforma Reporta Residuos Cusco permite reportar conductas ciudadanas que afectan la limpieza urbana, como vecinos que sacan basura fuera del horario establecido. Tu reporte queda registrado y puede ser atendido por la municipalidad. También puedes llamar a la línea de denuncias ambientales.</p></div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- END SECTIONS -->
+
+    </div><!-- content-area -->
+  </div><!-- main -->
+</div><!-- shell -->
+
+<!-- Bottom nav móvil -->
+<nav class="mobile-bottom-nav" id="mobileNav">
+  <div class="mob-nav-item active" data-section="inicio" onclick="showSection('inicio',this);setMobActive(this)">
+    <span class="mob-nav-icon">🏠</span><span>Inicio</span>
+  </div>
+  <div class="mob-nav-item" data-section="tipos" onclick="showSection('tipos',this);setMobActive(this)">
+    <span class="mob-nav-icon">🗑️</span><span>Tipos</span>
+  </div>
+  <div class="mob-nav-item" data-section="colores" onclick="showSection('colores',this);setMobActive(this)">
+    <span class="mob-nav-icon">🎨</span><span>Colores</span>
+  </div>
+  <div class="mob-nav-item" data-section="quiz" onclick="showSection('quiz',this);setMobActive(this)">
+    <span class="mob-nav-icon">🧠</span><span>Quiz</span>
+  </div>
+  <div class="mob-nav-item" data-section="faq" onclick="showSection('faq',this);setMobActive(this)">
+    <span class="mob-nav-icon">❓</span><span>FAQ</span>
+  </div>
+</nav>
+
+<!-- Scroll top -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Subir">↑</button>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+  /* ================================================================
+     SIDEBAR TOGGLE (mobile)
+  ================================================================ */
+  const sidebar  = document.getElementById('sidebar');
+  const hamburger= document.getElementById('hamburger');
+  const overlay  = document.getElementById('overlay');
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    hamburger.classList.toggle('open');
+    overlay.classList.toggle('show');
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    hamburger.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  /* ================================================================
+     SECTION NAVIGATION
+  ================================================================ */
+  const titles = {
+    inicio:   'Inicio — EcoConciencia',
+    tipos:    'Tipos de Residuos',
+    colores:  'Código de Colores',
+    como:     '¿Cómo Desechar?',
+    impacto:  'Impacto Ambiental',
+    tips:     'Consejos Prácticos',
+    prohibido:'Lo que NO hacer',
+    quiz:     'Quiz Ambiental',
+    faq:      'Preguntas Frecuentes',
+  };
+
+  function showSection(id, triggerEl) {
+    // Hide all
+    document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+    // Show target
+    const sec = document.getElementById('sec-' + id);
+    if (sec) sec.classList.add('active');
+
+    // Topbar
+    document.getElementById('topbarTitle').textContent = titles[id] || id;
+
+    // Sidebar active
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    const sideLink = document.querySelector(`.nav-link[data-section="${id}"]`);
+    if (sideLink) sideLink.classList.add('active');
+
+    // Scroll top
+    const contentArea = document.querySelector('.content-area');
+    if (contentArea) contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // If colores: trigger progress bars
+    if (id === 'colores') {
+      setTimeout(animateProgress, 200);
+    }
+
+    // Close mobile sidebar
+    closeSidebar();
+  }
+
+  function setMobActive(el) {
+    document.querySelectorAll('.mob-nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  /* ================================================================
+     WASTE CARD EXPAND
+  ================================================================ */
+  function toggleExamples(card) {
+    const ex = card.querySelector('.waste-examples');
+    if (!ex) return;
+    const isHidden = ex.style.display === 'none' || ex.style.display === '';
+    ex.style.display = isHidden ? 'flex' : 'none';
+    if (isHidden) {
+      ex.style.animation = 'fadeUp 0.25s ease';
+    }
+  }
+
+  /* ================================================================
+     PROGRESS BARS
+  ================================================================ */
+  function animateProgress() {
+    document.querySelectorAll('.progress-fill').forEach(fill => {
+      const w = fill.dataset.width;
+      fill.style.width = w + '%';
+    });
+  }
+
+  /* ================================================================
+     FAQ ACCORDION
+  ================================================================ */
+  function toggleFaq(header) {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+  }
+
+  /* ================================================================
+     QUIZ
+  ================================================================ */
+  const quizData = [
+    {
+      q: '¿Qué color de contenedor se usa para los plásticos en Perú (NTP 900.058)?',
+      opts: ['🟡 Amarillo', '🔵 Azul', '🟢 Verde', '🟠 Naranja'],
+      ans: 0,
+      exp: '¡Correcto! El contenedor amarillo es para plásticos limpios (botellas PET, envases, etc.).'
+    },
+    {
+      q: '¿Cuánto tiempo tarda en degradarse aproximadamente una botella de plástico?',
+      opts: ['5 años', '50 años', '100 a 500 años', '10,000 años'],
+      ans: 2,
+      exp: '¡Correcto! Una botella plástica puede tardar entre 100 y 500 años en degradarse.'
+    },
+    {
+      q: '¿Dónde deben ir las pilas y baterías usadas?',
+      opts: ['Contenedor verde', 'Basura doméstica', 'Al baño', 'Punto de acopio especial (rojo)'],
+      ans: 3,
+      exp: '¡Correcto! Las pilas van en puntos de acopio especiales. Una pila contamina 600L de agua.'
+    },
+    {
+      q: '¿Qué se debe hacer con los envases plásticos antes de reciclarlos?',
+      opts: ['Nada, van directos', 'Enjuagarlos y vaciarlos', 'Quemarlos', 'Romperlos en pedazos'],
+      ans: 1,
+      exp: '¡Correcto! Siempre enjuaga y vacía los envases antes de reciclarlos para no contaminar el lote.'
+    },
+    {
+      q: '¿Cuál de estas acciones está PROHIBIDA y puede generar multa en Cusco?',
+      opts: ['Compostar residuos orgánicos', 'Usar bolsas reutilizables', 'Sacar basura fuera del horario de recojo', 'Llevar pilas a puntos de acopio'],
+      ans: 2,
+      exp: '¡Correcto! Sacar la basura fuera del horario establecido es una infracción sancionada por la municipalidad.'
+    },
+  ];
+
+  let qIndex = 0, score = 0, answered = false;
+
+  function renderQuestion() {
+    answered = false;
+    const q = quizData[qIndex];
+    document.getElementById('qNum').textContent = qIndex + 1;
+    document.getElementById('quizQuestion').textContent = q.q;
+    document.getElementById('quizHint').textContent = 'Selecciona la respuesta correcta';
+    document.getElementById('quizResult').className = 'quiz-result';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('restartBtn').style.display = 'none';
+
+    const optsEl = document.getElementById('quizOptions');
+    optsEl.innerHTML = q.opts.map((opt, i) =>
+      `<button class="quiz-opt" onclick="answerQuiz(${i})">${opt}</button>`
+    ).join('');
+  }
+
+  function answerQuiz(idx) {
+    if (answered) return;
+    answered = true;
+    const q = quizData[qIndex];
+    const opts = document.querySelectorAll('.quiz-opt');
+    const resultEl = document.getElementById('quizResult');
+
+    opts.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.ans) btn.classList.add('correct');
+      else if (i === idx) btn.classList.add('wrong');
+    });
+
+    if (idx === q.ans) {
+      score++;
+      document.getElementById('qScore').textContent = score;
+      resultEl.className = 'quiz-result show ok';
+      resultEl.textContent = '✅ ' + q.exp;
+    } else {
+      resultEl.className = 'quiz-result show bad';
+      resultEl.textContent = '❌ Incorrecto. ' + q.exp;
+    }
+
+    if (qIndex < quizData.length - 1) {
+      document.getElementById('nextBtn').style.display = 'inline-flex';
+    } else {
+      showFinalScore();
+    }
+  }
+
+  function nextQuestion() {
+    qIndex++;
+    renderQuestion();
+  }
+
+  function showFinalScore() {
+    const resultEl = document.getElementById('quizResult');
+    let msg = '';
+    if (score === 5) msg = '🏆 ¡Perfecto! Eres un experto en residuos sólidos.';
+    else if (score >= 3) msg = `🌟 ¡Muy bien! ${score}/5 correctas. Sigue aprendiendo.`;
+    else msg = `💪 ${score}/5. Repasa las secciones y vuelve a intentarlo.`;
+    resultEl.className = 'quiz-result show ' + (score >= 3 ? 'ok' : 'bad');
+    resultEl.textContent = msg;
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('restartBtn').style.display = 'inline-flex';
+  }
+
+  function restartQuiz() {
+    qIndex = 0; score = 0;
+    document.getElementById('qScore').textContent = 0;
+    renderQuestion();
+  }
+
+  // Init quiz
+  renderQuestion();
+
+  /* ================================================================
+     SCROLL TO TOP BUTTON
+  ================================================================ */
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('show', window.scrollY > 300);
+  });
+
+  /* ================================================================
+     TOAST
+  ================================================================ */
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ================================================================
+     ENTRANCE ANIMATION for progress bars on load if colores is first
+  ================================================================ */
+  // Only if directly landing on colores
+  if (window.location.hash === '#colores') {
+    showSection('colores', null);
+  }
+</script>
+
+</body>
+</html>
