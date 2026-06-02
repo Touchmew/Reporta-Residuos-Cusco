@@ -52,4 +52,42 @@ class MunicipalidadController extends Controller
 
         return view('municipalidad_perfil', compact('estadisticas'));
     }
+
+    public function estadisticas()
+    {
+        $reportes = DB::table('reportes')->get();
+        
+        $estadisticas = [
+            'total'       => $reportes->count(),
+            'pendientes'  => $reportes->where('estado', 'pendiente')->count(),
+            'proceso'     => $reportes->where('estado', 'en_proceso')->count(),
+            'resueltos'   => $reportes->where('estado', 'resuelto')->count(),
+        ];
+
+        // Estadísticas por zona
+        $reportesPorZona = $reportes->groupBy(function($item) {
+            return $item->direccion ?? $item->distrito;
+        })->map(function($group) {
+            return [
+                'zona' => $group->first()->direccion ?? $group->first()->distrito,
+                'total' => $group->count(),
+                'pendientes' => $group->where('estado', 'pendiente')->count(),
+                'proceso' => $group->where('estado', 'en_proceso')->count(),
+                'resueltos' => $group->where('estado', 'resuelto')->count(),
+            ];
+        })->values();
+
+        // Estadísticas por categoría
+        $reportesPorCategoria = $reportes->groupBy('categoria')->map(function($group) {
+            return [
+                'categoria' => $group->first()->categoria,
+                'total' => $group->count(),
+                'pendientes' => $group->where('estado', 'pendiente')->count(),
+                'proceso' => $group->where('estado', 'en_proceso')->count(),
+                'resueltos' => $group->where('estado', 'resuelto')->count(),
+            ];
+        })->values();
+
+        return view('estadisticas', compact('estadisticas', 'reportesPorZona', 'reportesPorCategoria'));
+    }
 }
