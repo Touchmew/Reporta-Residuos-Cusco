@@ -10,7 +10,7 @@ class PerfilController extends Controller
 {
     public function index(): View
     {
-        $usuarioDb = Usuario::where('correo', 'alvaro@reporta.pe')->firstOrFail();
+        $usuarioDb = Usuario::findOrFail(session('usuario_id'));
 
         $reportes = Reporte::where('usuario_id', $usuarioDb->id)
             ->orderByDesc('fecha_reporte')

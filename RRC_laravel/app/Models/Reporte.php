@@ -139,7 +139,7 @@ class Reporte extends Model
             'lng' => (float) $this->longitud,
             'nivel' => $this->nivelMapa(),
             'tipo' => $this->categoriaLabel(),
-            'reportes' => $this->comentarios->count() + 1,
+            'reportes' => $this->comentarios->count(),
             'diasActivo' => $this->diasActivo(),
             'urgencia' => $this->urgenciaPorcentaje(),
             'descripcion' => $this->descripcion,

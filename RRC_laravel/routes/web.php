@@ -4,6 +4,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ZonaController;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +15,11 @@ Route::get('/', function () {
 });
 
 // ── Autenticación ─────────────────────────────────────────────────────────────
-Route::get('/login',  [LoginController::class, 'mostrar']);
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/login',    [LoginController::class,   'mostrar']);
+Route::post('/login',   [LoginController::class,   'login'])->name('login');
+Route::post('/logout',  [LoginController::class,   'logout'])->name('logout');
+Route::get('/registro', [RegistroController::class, 'mostrar']);
+Route::post('/registro',[RegistroController::class, 'registrar']);
 
 // ── Rutas públicas adicionales ────────────────────────────────────────────────
 Route::get('/reporte-residuos', function () {
