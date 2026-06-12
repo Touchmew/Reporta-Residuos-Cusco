@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,11 +17,16 @@ class MunicipalidadController extends Controller
      */
     public function index()
     {
+        $reportesModel = Reporte::withCount('comentarios')->orderBy('id')->get();
+
         $reportes = DB::table('reportes')->get()->map(function ($r) {
             // Adaptar para la vista municipalidad.blade.php
             $r->zona = $r->direccion ?? $r->distrito;
             return $r;
         });
+
+        // Datos para el mapa (igual que PrincipalController)
+        $zonas = $reportesModel->map(fn (Reporte $r) => $r->toMapaArray())->values();
 
         $estadisticas = [
             'total'      => $reportes->count(),
@@ -29,7 +35,7 @@ class MunicipalidadController extends Controller
             'resueltos'  => $reportes->where('estado', 'resuelto')->count(),
         ];
 
-        return view('municipalidad', compact('reportes', 'estadisticas'));
+        return view('municipalidad', compact('reportes', 'estadisticas', 'zonas'));
     }
 
     /**
