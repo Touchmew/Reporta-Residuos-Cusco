@@ -30,6 +30,7 @@ class RegistroController extends Controller
             'correo'   => 'required|email|max:150',
             'telefono' => 'nullable|string|max:20',
             'password' => 'required|string|min:6|confirmed',
+            'terminos' => 'accepted',
         ], [
             'nombre.required'   => 'El nombre es obligatorio.',
             'nombre.min'        => 'El nombre debe tener al menos 3 caracteres.',
@@ -38,6 +39,7 @@ class RegistroController extends Controller
             'password.required' => 'La contraseña es obligatoria.',
             'password.min'      => 'La contraseña debe tener al menos 6 caracteres.',
             'password.confirmed'=> 'Las contraseñas no coinciden.',
+            'terminos.accepted' => 'Debes aceptar los términos y condiciones.',
         ]);
 
         // Verificar que el correo no esté ya registrado
