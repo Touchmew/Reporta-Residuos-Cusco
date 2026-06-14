@@ -26,6 +26,10 @@ Route::get('/reporte-residuos', function () {
     return view('reporte-residuos');
 });
 
+Route::get('/conciencia-residuos', function () {
+    return view('conciencia-residuos');
+});
+
 // ── Rutas protegidas (requieren sesión iniciada) ───────────────────────────────
 Route::middleware('auth.sesion')->group(function () {
     Route::get('/principal', [PrincipalController::class, 'index']);

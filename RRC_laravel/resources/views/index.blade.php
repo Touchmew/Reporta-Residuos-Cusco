@@ -49,21 +49,39 @@
           <a href="#" class="hover:text-green-300 transition">Contacto</a>
         </div>
 
-        <!-- Botón desktop -->
-        <button
-          onclick="irAlMapa()"
-          class="hidden md:inline-flex px-5 py-2.5 rounded-full bg-green-500 hover:bg-green-400 text-slate-950 font-semibold transition shadow-lg shadow-green-500/20"
-        >
-          Comenzar
-        </button>
+        <!-- Botones desktop -->
+        <div class="hidden md:flex items-center gap-3">
+          <a
+            href="{{ url('/conciencia-residuos') }}"
+            style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:9999px;background:rgba(6,78,59,0.7);border:1px solid rgba(52,211,153,0.35);color:#6ee7b7;font-weight:600;font-size:0.875rem;text-decoration:none;transition:all 0.2s;"
+            onmouseover="this.style.background='rgba(6,95,70,0.85)';this.style.color='#a7f3d0';"
+            onmouseout="this.style.background='rgba(6,78,59,0.7)';this.style.color='#6ee7b7';"
+          >
+            🌿 EcoConciencia
+          </a>
+          <button
+            onclick="irAlMapa()"
+            class="inline-flex px-5 py-2.5 rounded-full bg-green-500 hover:bg-green-400 text-slate-950 font-semibold transition shadow-lg"
+          >
+            Comenzar
+          </button>
+        </div>
 
-        <!-- Botón móvil simple -->
-        <button
-          onclick="irAlMapa()"
-          class="md:hidden px-4 py-2 rounded-full bg-green-500 text-slate-950 font-semibold text-sm"
-        >
-          Iniciar
-        </button>
+        <!-- Botones móvil -->
+        <div class="md:hidden flex items-center gap-2">
+          <a
+            href="{{ url('/conciencia-residuos') }}"
+            style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:9999px;background:rgba(6,78,59,0.7);border:1px solid rgba(52,211,153,0.35);color:#6ee7b7;font-weight:600;font-size:0.75rem;text-decoration:none;"
+          >
+            🌿
+          </a>
+          <button
+            onclick="irAlMapa()"
+            class="px-4 py-2 rounded-full bg-green-500 text-slate-950 font-semibold text-sm"
+          >
+            Iniciar
+          </button>
+        </div>
 
       </nav>
     </header>
@@ -105,6 +123,15 @@
               class="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition"
             >
               Ver funciones
+            </a>
+
+            <a
+              href="{{ url('/conciencia-residuos') }}"
+              style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:9999px;background:rgba(6,78,59,0.65);border:1px solid rgba(52,211,153,0.4);color:#6ee7b7;font-weight:700;font-size:1rem;text-decoration:none;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(6,95,70,0.9)';this.style.color='#a7f3d0';this.style.transform='translateY(-1px)';"
+              onmouseout="this.style.background='rgba(6,78,59,0.65)';this.style.color='#6ee7b7';this.style.transform='translateY(0)';"
+            >
+              🌿 EcoConciencia
             </a>
           </div>
 
