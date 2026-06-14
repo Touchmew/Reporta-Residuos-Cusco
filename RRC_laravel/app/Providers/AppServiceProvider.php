@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL; // <-- ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AQUÍ Arriba
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Si la variable FORCE_HTTPS que pusimos en Railway está activa, forzamos https
+        if (env('FORCE_HTTPS') === true || config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
+
+
