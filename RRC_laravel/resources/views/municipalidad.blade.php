@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <!-- Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Estilos específicos del panel municipal -->
   <link rel="stylesheet" href="{{ asset('css/municipalidad.css') }}">
 </head>
@@ -51,25 +54,6 @@
           Sistema activo
         </div>
 
-        <!-- Estadísticas -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-value">{{ $estadisticas['total'] ?? 0 }}</span>
-            <span class="stat-label">Total</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #EF4444;">{{ $estadisticas['pendientes'] ?? 0 }}</span>
-            <span class="stat-label">Pendientes</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #F59E0B;">{{ $estadisticas['proceso'] ?? 0 }}</span>
-            <span class="stat-label">En Proceso</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #1DB954;">{{ $estadisticas['resueltos'] ?? 0 }}</span>
-            <span class="stat-label">Resueltos</span>
-          </div>
-        </div>
 
         <!-- Navegación Principal -->
         <nav class="desktop-nav">
@@ -120,46 +104,83 @@
         <aside class="right-panel">
            <div class="panel-header">
              <h2 class="form-title">Gestión de Reportes</h2>
-             <p class="form-sub">Listado en tiempo real</p>
+             <p class="form-sub">Listado en tiempo real y estadísticas de atención</p>
           </div>
 
-          <div class="reportes-list" id="reportesList">
-             @forelse($reportes as $reporte)
-             <div class="report-card">
-                <div class="report-header">
-                    <div class="report-title">{{ $reporte->titulo ?? $reporte->categoria }}</div>
-                    @php
-                        $color = match($reporte->estado) {
-                            'pendiente' => 'chip-red',
-                            'en_proceso' => 'chip-amber',
-                            'resuelto' => 'chip-green',
-                            default => 'chip-purple'
-                        };
-                        
-                        $label = match($reporte->estado) {
-                            'pendiente' => '🔴 CRÍTICO',
-                            'en_proceso' => '🟡 MODERADO',
-                            'resuelto' => '✅ LIMPIO',
-                            default => 'ESTADO'
-                        };
-                    @endphp
-                    <span class="chip {{ $color }}">{{ $label }}</span>
+          <div class="dashboard-content-grid">
+             <!-- Listado de reportes (Columna Izquierda) -->
+             <div class="reportes-list" id="reportesList">
+                @forelse($reportes as $reporte)
+                <div class="report-card">
+                   <div class="report-header">
+                       <div class="report-title">{{ $reporte->titulo ?? $reporte->categoria }}</div>
+                       @php
+                           $color = match($reporte->estado) {
+                               'pendiente' => 'chip-red',
+                               'en_proceso' => 'chip-amber',
+                               'resuelto' => 'chip-green',
+                               default => 'chip-purple'
+                           };
+                           
+                           $label = match($reporte->estado) {
+                               'pendiente' => '🔴 CRÍTICO',
+                               'en_proceso' => '🟡 MODERADO',
+                               'resuelto' => '✅ LIMPIO',
+                               default => 'ESTADO'
+                           };
+                       @endphp
+                       <span class="chip {{ $color }}">{{ $label }}</span>
+                   </div>
+                   <div class="report-address">📍 {{ $reporte->zona }}</div>
+                   <div class="report-date">📅 {{ date('d/m/Y', strtotime($reporte->fecha_reporte ?? $reporte->created_at)) }}</div>
+                   
+                   <form method="POST" action="/municipalidad/reporte/{{ $reporte->id }}/estado" class="report-actions">
+                       @csrf
+                       <button type="submit" name="estado" value="pendiente" class="btn-action {{ $reporte->estado == 'pendiente' ? 'active-red' : '' }}">Pendiente</button>
+                       <button type="submit" name="estado" value="en_proceso" class="btn-action {{ $reporte->estado == 'en_proceso' ? 'active-amber' : '' }}">Proceso</button>
+                       <button type="submit" name="estado" value="resuelto" class="btn-action {{ $reporte->estado == 'resuelto' ? 'active-green' : '' }}">Resuelto</button>
+                   </form>
                 </div>
-                <div class="report-address">📍 {{ $reporte->zona }}</div>
-                <div class="report-date">📅 {{ date('d/m/Y', strtotime($reporte->fecha_reporte ?? $reporte->created_at)) }}</div>
-                
-                <form method="POST" action="/municipalidad/reporte/{{ $reporte->id }}/estado" class="report-actions">
-                    @csrf
-                    <button type="submit" name="estado" value="pendiente" class="btn-action {{ $reporte->estado == 'pendiente' ? 'active-red' : '' }}">Pendiente</button>
-                    <button type="submit" name="estado" value="en_proceso" class="btn-action {{ $reporte->estado == 'en_proceso' ? 'active-amber' : '' }}">Proceso</button>
-                    <button type="submit" name="estado" value="resuelto" class="btn-action {{ $reporte->estado == 'resuelto' ? 'active-green' : '' }}">Resuelto</button>
-                </form>
+                @empty
+                <div style="padding: 24px; text-align: center; color: #8b949e;">
+                    No hay reportes disponibles
+                </div>
+                @endforelse
              </div>
-             @empty
-             <div style="padding: 24px; text-align: center; color: #8b949e;">
-                 No hay reportes disponibles
+
+             <!-- Panel del Gráfico Estadístico (Columna Derecha) -->
+             <div class="dashboard-chart-panel">
+                <div class="chart-card">
+                   <h3 class="chart-card-title">Distribución por Estado</h3>
+                   <p class="chart-card-sub">Resumen de atención de reportes</p>
+                   
+                   <div class="chart-wrapper">
+                      <canvas id="reportesChart"></canvas>
+                      <div class="chart-center-text">
+                         <span class="chart-center-num">{{ $estadisticas['total'] ?? 0 }}</span>
+                         <span class="chart-center-lbl">Total</span>
+                      </div>
+                   </div>
+                   
+                   <div class="chart-legend">
+                      <div class="legend-item">
+                         <span class="legend-bullet" style="background-color: #EF4444; color: #EF4444;"></span>
+                         <span class="legend-label">Pendientes</span>
+                         <span class="legend-val">{{ $estadisticas['pendientes'] ?? 0 }}</span>
+                      </div>
+                      <div class="legend-item">
+                         <span class="legend-bullet" style="background-color: #F59E0B; color: #F59E0B;"></span>
+                         <span class="legend-label">En Proceso</span>
+                         <span class="legend-val">{{ $estadisticas['proceso'] ?? 0 }}</span>
+                      </div>
+                      <div class="legend-item">
+                         <span class="legend-bullet" style="background-color: #1DB954; color: #1DB954;"></span>
+                         <span class="legend-label">Resueltos</span>
+                         <span class="legend-val">{{ $estadisticas['resueltos'] ?? 0 }}</span>
+                      </div>
+                   </div>
+                </div>
              </div>
-             @endforelse
           </div>
         </aside>
       </div>
@@ -270,6 +291,61 @@
     // Iniciar en Dashboard
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('navDashboard').classList.add('active');
+
+      // Inicializar Gráfico de Reportes
+      const ctx = document.getElementById('reportesChart');
+      if (ctx) {
+        const total = {{ $estadisticas['total'] ?? 0 }};
+        const pendientes = {{ $estadisticas['pendientes'] ?? 0 }};
+        const proceso = {{ $estadisticas['proceso'] ?? 0 }};
+        const resueltos = {{ $estadisticas['resueltos'] ?? 0 }};
+
+        const hasData = total > 0;
+        const dataValues = hasData ? [pendientes, proceso, resueltos] : [1];
+        const bgColors = hasData ? ['#EF4444', '#F59E0B', '#1DB954'] : ['#21262d'];
+        const labels = hasData ? ['Pendientes', 'En Proceso', 'Resueltos'] : ['Sin reportes'];
+
+        new Chart(ctx.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: dataValues,
+              backgroundColor: bgColors,
+              borderColor: '#161b22',
+              borderWidth: 2,
+              hoverOffset: hasData ? 6 : 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                enabled: hasData,
+                callbacks: {
+                  label: function(context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed !== null) {
+                      label += context.parsed;
+                    }
+                    const pct = total > 0 ? ((context.parsed / total) * 100).toFixed(1) : 0;
+                    label += ` (${pct}%)`;
+                    return label;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
     });
 
     // ═══════════════════════════════════════════════════════════════════════

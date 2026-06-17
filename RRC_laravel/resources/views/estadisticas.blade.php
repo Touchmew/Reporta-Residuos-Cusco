@@ -9,6 +9,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
+  <!-- Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Estilos específicos del panel municipal -->
   <link rel="stylesheet" href="{{ asset('css/municipalidad.css') }}">
   <style>
@@ -58,6 +61,72 @@
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 700;
+    }
+    /* Estilos para los gráficos en fila */
+    .charts-row-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .chart-display-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    .chart-display-title {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    .chart-display-sub {
+      color: #8b949e;
+      font-size: 0.75rem;
+      margin: 4px 0 20px 0;
+      text-align: center;
+    }
+    .chart-canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 220px;
+      height: 220px;
+      margin-bottom: 12px;
+    }
+    .chart-inner-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+    .chart-inner-num {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      font-family: 'Poppins', sans-serif;
+    }
+    .chart-inner-lbl {
+      font-size: 0.7rem;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    @media (max-width: 1024px) {
+      .charts-row-container {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -205,6 +274,35 @@
 
         </div>
 
+        <!-- Sección de Gráficos Estadísticos (Zonas y Categorías) -->
+        <div class="charts-row-container">
+          <!-- Gráfico de Zonas (Izquierda) -->
+          <div class="chart-display-card">
+            <h2 class="chart-display-title">📍 Distribución por Zona</h2>
+            <p class="chart-display-sub">Cantidad de reportes registrados por sector</p>
+            <div class="chart-canvas-wrapper">
+              <canvas id="zonaChart"></canvas>
+              <div class="chart-inner-text">
+                <span class="chart-inner-num" id="totalZonas">{{ $reportesPorZona->count() }}</span>
+                <span class="chart-inner-lbl">Zonas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gráfico de Categorías (Derecha) -->
+          <div class="chart-display-card">
+            <h2 class="chart-display-title">🏷️ Distribución por Categoría</h2>
+            <p class="chart-display-sub">Tipos de reportes más recurrentes</p>
+            <div class="chart-canvas-wrapper">
+              <canvas id="categoriaChart"></canvas>
+              <div class="chart-inner-text">
+                <span class="chart-inner-num" id="totalCategorias">{{ $reportesPorCategoria->count() }}</span>
+                <span class="chart-inner-lbl">Tipos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Reporte por zonas -->
         @if($reportesPorZona->count() > 0)
         <div class="chart-container">
@@ -284,6 +382,124 @@
     </div>
 
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const zonaData = @json($reportesPorZona);
+      const catData = @json($reportesPorCategoria);
+
+      const premiumColors = [
+        '#3B82F6', // Blue
+        '#10B981', // Emerald
+        '#F59E0B', // Amber
+        '#EC4899', // Pink
+        '#8B5CF6', // Purple
+        '#EF4444', // Red
+        '#06B6D4', // Cyan
+        '#F97316', // Orange
+        '#14B8A6', // Teal
+        '#6366F1'  // Indigo
+      ];
+
+      // 1. Inicializar Gráfico por Zona
+      const ctxZona = document.getElementById('zonaChart');
+      if (ctxZona && zonaData && zonaData.length > 0) {
+        const labels = zonaData.map(z => z.zona || 'N/A');
+        const data = zonaData.map(z => z.total);
+        const totalReportes = data.reduce((a, b) => a + b, 0);
+        const bgColors = zonaData.map((_, i) => premiumColors[i % premiumColors.length]);
+
+        new Chart(ctxZona.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: bgColors,
+              borderColor: '#161b22',
+              borderWidth: 2,
+              hoverOffset: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed !== null) {
+                      label += context.parsed;
+                    }
+                    const pct = totalReportes > 0 ? ((context.parsed / totalReportes) * 100).toFixed(1) : 0;
+                    label += ` (${pct}%)`;
+                    return label;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Inicializar Gráfico por Categoría
+      const ctxCat = document.getElementById('categoriaChart');
+      if (ctxCat && catData && catData.length > 0) {
+        const labels = catData.map(c => c.categoria || 'N/A');
+        const data = catData.map(c => c.total);
+        const totalReportes = data.reduce((a, b) => a + b, 0);
+        const bgColors = catData.map((_, i) => premiumColors[i % premiumColors.length]);
+
+        new Chart(ctxCat.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: bgColors,
+              borderColor: '#161b22',
+              borderWidth: 2,
+              hoverOffset: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed !== null) {
+                      label += context.parsed;
+                    }
+                    const pct = totalReportes > 0 ? ((context.parsed / totalReportes) * 100).toFixed(1) : 0;
+                    label += ` (${pct}%)`;
+                    return label;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
