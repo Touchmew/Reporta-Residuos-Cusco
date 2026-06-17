@@ -73,10 +73,7 @@
             <span class="desktop-nav-icon">📈</span>
             <span>Estadísticas</span>
           </a>
-          <a href="#" class="desktop-nav-item">
-            <span class="desktop-nav-icon">⚙️</span>
-            <span>Configuración</span>
-          </a>
+
         </nav>
 
         <!-- Separator -->

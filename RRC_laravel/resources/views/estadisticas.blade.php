@@ -165,25 +165,6 @@
           Sistema activo
         </div>
 
-        <!-- Estadísticas -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-value">{{ $estadisticas['total'] ?? 0 }}</span>
-            <span class="stat-label">Total</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #EF4444;">{{ $estadisticas['pendientes'] ?? 0 }}</span>
-            <span class="stat-label">Pendientes</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #F59E0B;">{{ $estadisticas['proceso'] ?? 0 }}</span>
-            <span class="stat-label">En Proceso</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" style="color: #1DB954;">{{ $estadisticas['resueltos'] ?? 0 }}</span>
-            <span class="stat-label">Resueltos</span>
-          </div>
-        </div>
 
         <!-- Navegación Principal -->
         <nav class="desktop-nav">
@@ -203,10 +184,7 @@
             <span class="desktop-nav-icon">📈</span>
             <span>Estadísticas</span>
           </a>
-          <a href="#" class="desktop-nav-item">
-            <span class="desktop-nav-icon">⚙️</span>
-            <span>Configuración</span>
-          </a>
+
         </nav>
 
         <!-- Separator -->
