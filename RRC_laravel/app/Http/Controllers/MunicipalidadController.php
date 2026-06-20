@@ -25,6 +25,12 @@ class MunicipalidadController extends Controller
             return $r;
         });
 
+        // Cargar evidencias y mapearlas por reporte_id
+        $evidencias = DB::table('evidencias')->get()->keyBy('reporte_id');
+        foreach ($reportes as $r) {
+            $r->evidencia_ruta = isset($evidencias[$r->id]) ? $evidencias[$r->id]->ruta_imagen : null;
+        }
+
         // Datos para el mapa (igual que PrincipalController)
         $zonas = $reportesModel->map(fn (Reporte $r) => $r->toMapaArray())->values();
 
@@ -54,6 +60,23 @@ class MunicipalidadController extends Controller
             ]);
 
         return back()->with('success', 'Estado actualizado');
+    }
+
+    /**
+     * Muestra el detalle de un reporte desde el panel municipal.
+     */
+    public function detalle($id)
+    {
+        $reporte = Reporte::with(['comentarios.usuario'])->findOrFail($id);
+
+        $zona = $reporte->toDetalleArray();
+
+        // Cargar evidencia fotográfica si existe
+        $evidencia = DB::table('evidencias')
+            ->where('reporte_id', $reporte->id)
+            ->first();
+
+        return view('municipalidad_detalle', compact('zona', 'evidencia', 'reporte'));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Controlador para crear y gestionar reportes de residuos.
@@ -24,6 +25,7 @@ class ReporteController extends Controller
             'descripcion' => 'required|string',
             'tipo'        => 'required|string',
             'severidad'   => 'required|string',
+            'evidencia'   => 'nullable|image|max:10240',
         ]);
 
         // Mapeo de tipos a títulos legibles
@@ -62,6 +64,16 @@ class ReporteController extends Controller
             'longitud'    => $request->longitud,
             'distrito'    => 'San Jerónimo',
         ]);
+
+        // Guardar evidencia fotográfica si se subió una imagen
+        if ($request->hasFile('evidencia')) {
+            $ruta = $request->file('evidencia')->store('evidencias', 'public');
+
+            DB::table('evidencias')->insert([
+                'reporte_id'   => $reporteId,
+                'ruta_imagen'  => $ruta,
+            ]);
+        }
 
         DB::table('comentarios')->insert([
             'reporte_id' => $reporteId,

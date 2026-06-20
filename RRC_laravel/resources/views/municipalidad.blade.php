@@ -131,6 +131,16 @@
                    <div class="report-address">📍 {{ $reporte->zona }}</div>
                    <div class="report-date">📅 {{ date('d/m/Y', strtotime($reporte->fecha_reporte ?? $reporte->created_at)) }}</div>
                    
+                   @if($reporte->evidencia_ruta)
+                   <div style="margin: 8px 0;">
+                     <img
+                       src="{{ asset('storage/' . $reporte->evidencia_ruta) }}"
+                       alt="Evidencia"
+                       style="width: 100%; max-height: 140px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);"
+                     />
+                   </div>
+                   @endif
+
                    <form method="POST" action="/municipalidad/reporte/{{ $reporte->id }}/estado" class="report-actions">
                        @csrf
                        <button type="submit" name="estado" value="pendiente" class="btn-action {{ $reporte->estado == 'pendiente' ? 'active-red' : '' }}">Pendiente</button>
@@ -435,7 +445,7 @@
                   ${zona.reportes} reporte(s)
                 </span>
               </div>
-              <a href="/page4?id=${zona.id}"
+              <a href="/municipalidad/reporte/${zona.id}"
                  style="
                    display:block;
                    background: linear-gradient(135deg, #3B82F6, #1D4ED8);

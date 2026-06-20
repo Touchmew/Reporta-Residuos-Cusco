@@ -42,6 +42,7 @@ Route::middleware('auth.sesion')->group(function () {
     
     // Panel municipal
     Route::get('/municipalidad', [App\Http\Controllers\MunicipalidadController::class, 'index']);
+    Route::get('/municipalidad/reporte/{id}', [App\Http\Controllers\MunicipalidadController::class, 'detalle']);
     Route::post('/municipalidad/reporte/{id}/estado', [App\Http\Controllers\MunicipalidadController::class, 'cambiarEstado']);
     Route::get('/municipalidad/perfil', [App\Http\Controllers\MunicipalidadController::class, 'perfil']);
     Route::get('/municipalidad/estadisticas', [App\Http\Controllers\MunicipalidadController::class, 'estadisticas']);

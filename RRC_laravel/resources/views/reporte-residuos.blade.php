@@ -144,6 +144,7 @@
           id="reportForm"
           action="{{ url('/reportes/guardar') }}"
           method="POST"
+          enctype="multipart/form-data"
         >
           @csrf
 
@@ -358,7 +359,7 @@
             <input
               type="file"
               id="fotoInput"
-              name="foto"
+              name="evidencia"
               accept="image/*"
               capture="environment"
               class="hidden"

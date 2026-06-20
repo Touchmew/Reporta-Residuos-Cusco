@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 /**
@@ -21,6 +22,11 @@ class ZonaController extends Controller
 
         $zona = $reporte->toDetalleArray();
 
-        return view('page4', compact('zona'));
+        // Cargar evidencia fotográfica si existe
+        $evidencia = DB::table('evidencias')
+            ->where('reporte_id', $reporte->id)
+            ->first();
+
+        return view('page4', compact('zona', 'evidencia'));
     }
 }
